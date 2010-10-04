@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Editing Recordings</title>
+</head>
+<body>
+<h2>Editing a Recording</h2>
+<p>
+To edit a recording, select a file in the recordings table and select 
+"Edit Recordings..." from the Recordings menu.  All changes are finalized if and 
+only if the window is dismissed using the OK button.  Several different methods of
+editing and viweing the file are presented.  
+<p>
+<h3>Changing the file format</h3>
+The "Choose possible format" button allows one to select a sampling rate along 
+with several other features.  These settings are not applied, however, until this
+window is dismissed using the "ok" button and the "Change to Possible Format" 
+button is clicked.  This can be undone with the "Restore" button
+
+<h3>Applying Gain</h3>
+<p>The "Apply Gain" button takes a float value from the text dialog box immediately 
+to its right and interprets it as a double.  All samples in the file are multiplied 
+by this value as soon as the "Gain" button is pressed. This can be undone with the 
+"Restore" button.
+
+<h3>Normalizing file</h3>
+<p>This immediately scales the file such that the maximum value is 1.0 by applying
+the appropriate gain.  This can be undone with the "Restore" button.
+
+<h3>Mix Down to One Channel</h3>
+<p>This mixes any stereo or higher recording into a mono recording. This can undone
+with the "Restore" button.
+
+<h3>Play</h3>
+<p>This button plays the file to the default sound output device
+
+<h3>Stop</h3>
+<p>Stops any playback that may be taking place.
+
+<h3>Restore</h3>
+Restores the file to its original state.
+
+<h3>View Samples</h3>
+<p>This provides a mechanism for viewing all the samples of a recording. <b>Note</b>
+This takes a very long time to produce for all but the shortest files.  The system 
+is unresponsive in the meanwhile.
+
+<h3>Plot Samples</h3>
+<p>This provides a mechanism for viewing the samples in a graph.  <b>Note</b> This
+takes a significant amount of time.  Large recordings will cause the system to 
+appear to hang while preparing the display.
+
+<h3>Plot Spectrum</h3>
+<p>This provides a mechanism for viewing the harmonic spectrum of the entire recording.
+<b>Note</b> This takes a significant amount of time to produce.  Large files will cause
+the system to appear to hang while preparing the display.
+
+</body>
+</html>

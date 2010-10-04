@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>Magnitude Spectrum</title>
+</head>
+<body>
+
+<h2>Magnitude Spectrum</h2>
+A feature extractor that extracts the FFT magnitude spectrum from a set of
+samples. This is a good measure of the magnitude of different frequency
+components within a window.
+
+<p>The magnitude spectrum is found by first calculating the FFT with a Hanning
+window. The magnitude spectrum value for each bin is found by first summing
+the squares of the real and imaginary components. The square root of this is
+then found and the result is divided by the number of bins.
+
+<p>The dimensions of this feature depend on the number of FFT bins, which
+depend on the number of input samples. The dimensions are stored in the
+definition field are therefore 0, in order to indicate this variability.
+
+
+</body>
+</html>

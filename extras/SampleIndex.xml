@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE index
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+           "http://java.sun.com/products/javahelp/index_1_0.dtd">
+
+	<index version="1.0">
+		<indexitem text=".prof extension (profile data)" target="prof.profile"/>
+		         
+	        <indexitem text="accelerators (keyboard), see 'keyboard commands'"/>
+			    
+	    	<indexitem text="adding an existing project" expand="false">
+	        	<indexitem text="naming the project" target="proj.importdirectory"/>
+		        <indexitem text="naming the storage directory" target="proj.importdirectory"/>
+			<indexitem text="procedures for" target="proj.importproject2"/>
+	        </indexitem>
+							    
+	    	<indexitem text="arguments" expand="false">
+		        <indexitem text="passing" target="debug.arguments"/>
+		 	<indexitem text="specifying" target="debug.arguments"/>
+	   	</indexitem>
+
+		<indexitem text="beans" expand="false">
+		 	<indexitem text="adding existing sources to a bean project" target="proj.existingbeans"/>
+		        <indexitem text="changing bean file status" target="proj.existingbeans"/>
+			<indexitem text="creating a bean project" target="proj.beansproject"/>
+			<indexitem text="removing existing sources from a bean project" target="proj.existingbeans"/>
+		</indexitem>
+	</index>

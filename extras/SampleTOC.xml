@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE toc
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
+           "../dtd/toc_2_0.dtd">
+<toc version="2.0">
+	<tocitem text="jAudio Help" >
+		<tocitem text="Introduction to jAudio Online Help" target="top"/>
+		<tocitem text="Manipulating Recordings" target="recordings" expand="true">
+			<tocitem text="Adding Recordings" target="addrecordings"/>
+			<tocitem text="Removing Recordings" target="removerecordings"/>
+			<tocitem text="Validate Recordings" target="validaterecordings"/>
+			<tocitem text="Storing Samples of a Recording" target="storesamples"/>
+			<tocitem text="Editing recordings" target="editingrecordings"/>
+			<tocitem text="Record From Microphone" target="recordrecordings"/>
+			<tocitem text="View File Info" target="viewrecordings"/>
+		</tocitem>
+		<tocitem text="Manipulating Features" target="features" expand="true">
+			<tocitem text="Selecting Features" target="selectfeatures"/>
+			<tocitem text="Sorting Features" target="sortingfeatures"/>
+			<tocitem text="Editing Features" target="editingfeatures"/>
+			<tocitem text="Globally Altering Features" target="globalalterfeatures"/>
+			<tocitem text="Adding New Features to jAudio" target="addingfeatures" expand="false"/>
+		</tocitem>
+		<tocitem text="Controlling Analysis" target="analysis" expand="true">
+			<tocitem text="Save Features For Each Window Checkbox" target="perwindow"/>
+			<tocitem text="Save For Overall Recordings Checkbox" target="overall"/>
+			<tocitem text="Choosing the Output Format" target="output"/>
+			<tocitem text="Choosing the Sampling Rate" target="samplerate"/>
+			<tocitem text="Normalising Recordings" target="normalise"/>
+		</tocitem>
+		<tocitem text="Aggregators and Per-File-Processing" target="aggregators" expand="true">
+			<tocitem text="Alter aggregators window" target="editaggregators"/>
+			<tocitem text="Edit Aggregator window" target="editaggregatorproperties"/>
+			<tocitem text="Adding Aggregators" target="addingaggregators"/>
+		</tocitem>
+		<tocitem text="Playback" target="playback" expand="true">
+			<tocitem text="Playback From a File" target="fileplay"/>
+			<tocitem text="Playback From Samples" target="sampleplay"/>
+			<tocitem text="Playback From Midi" target="midiplay"/>
+		</tocitem>
+		<tocitem text="Batch Processing" target="batch" expand="true">
+			<tocitem text="Defining a batch" target="addbatch"/>
+			<tocitem text="Viewing a batch" target="viewbatch"/>
+			<tocitem text="Removing a batch" target="removebatch"/>
+			<tocitem text="Saving and loading batches" target="saveloadbatch"/>
+			<tocitem text="Executing batches" target="executebatch"/>
+		</tocitem>
+		<tocitem text="Feature Appendix" target="featureappendix" expand="false">
+			<tocitem text="2D Polynomial Approximation" target="polynomial"/>
+			<tocitem text="2D Polynomial Approximation of ConstantQ based MFCCs" target="polynomialmfcc"/>
+			<tocitem text="2D Polynomial Approximation of non-linearly scaled ConstantQ" target="polynomiallogconstantq"/>
+			<tocitem text="2D Polynomial Approximation" target="polynomial"/>
+			<tocitem text="Area Method of Moments" target="areamoments"/>
+			<tocitem text="Area Method of Moments of the ConstantQ Transform" target="areamomentslogconstantq"/>
+			<tocitem text="Area Method of Moments of MFCCs" target="areamomentsmfcc"/>
+			<tocitem text="Area Method of Moments of MFCCs using ConstantQ" target="areamomentsconstantqmfcc"/>
+			<tocitem text="Beat Histogram" target="beathistogram"/>
+			<tocitem text="Beat Histogram Labels" target="beathistogramlabels"/>
+			<tocitem text="Beat Sum" target="beatsum"/>
+			<tocitem text="Compactness" target="compactness"/>
+			<tocitem text="ConstantQ Transform" target="constantq"/>
+			<tocitem text="ConstantQ Transform based MFCCs" target="constantq"/>
+			<tocitem text="ConstantQ Transform with non-linear scaling" target="areamomentslogconstantq"/>
+			<tocitem text="Derivative" target="derivative"/>
+			<tocitem text="FFT Bin Frequencies" target="fftbinfrequencies"/>
+			<tocitem text="Fraction of Low Energy Frames" target="fractionoflowenergyframes"/>
+			<tocitem text="LPC" target="lpc"/>
+			<tocitem text="Magnitude Spectrum" target="magnitudespectrum"/>
+			<tocitem text="Mean" target="mean"/>
+			<tocitem text="MFCC" target="mfcc"/>
+			<tocitem text="Method of Moments" target="moments"/>
+			<tocitem text="Peak Based Spectral Centroid" target="harmonicspectralcentroid"/>
+			<tocitem text="Peak Based Spectral FLux" target="harmonicspectralflux"/>
+			<tocitem text="Peak Based Spectral Smoothness" target="harmonicspectralsmoothness"/>
+			<tocitem text="Peak Finder" target="peakfinder"/>
+			<tocitem text="Power Spectrum" target="powerspectrum"/>
+			<tocitem text="Relative Difference Function" target="relativedifferencefunction"/>
+			<tocitem text="RMS" target="rms"/>
+			<tocitem text="Spectral Centroid" target="spectralcentroid"/>
+			<tocitem text="Spectral Deviation" target="spectraldeviation"/>
+			<tocitem text="Spectral Flux" target="spectralflux"/>
+			<tocitem text="Spectral Rolloff Point" target="spectralrolloffpoint"/>
+			<tocitem text="Standard Deviation" target="standarddeviation"/>
+			<tocitem text="Strength of Strongest Beat" target="strengthofstrongestbeat"/>
+			<tocitem text="Strongest Beat" target="strongestbeat"/>
+			<tocitem text="Strongest Frequency Via FFT Max" target="strongestfrequencybyfftmax"/>
+			<tocitem text="Strongest Frequency Via Spectral Centroid" target="strongestfrequencyviaspectralcentroid"/>
+			<tocitem text="Strongest Frequency Via Zero Crossing" target="strongestfrequencyviazerocrossing"/>
+			<tocitem text="Zero Crossing" target="zerocrossing"/>
+		</tocitem>
+		<tocitem text="Aggregator Appendix" target="aggregatorsappendix" expand="false">
+			<tocitem text="Mean" target="agg_mean"/>
+			<tocitem text="Standard Deviation" target="agg_stddev"/>
+			<tocitem text="Area Method of Moments" target="agg_moments"/>
+			<tocitem text="Histgram Binning" target="agg_histogram"/>
+			<tocitem text="2D Polynomial Approximation" target="agg_polynomial"/>
+		</tocitem>
+		<tocitem text="Adding New Features to jAudio" target="addingfeatures" expand="false"/>
+		<tocitem text="Adding New Aggregators to jAudio" target="addingaggregators" expand="false"/>
+		<tocitem text="Javadoc Root" target="Javadoc" expand="false"/>
+		<tocitem text="Embedding jAudio" target="embedding" expand="false"/>
+	</tocitem>
+</toc>

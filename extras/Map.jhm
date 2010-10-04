@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE map
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/map_1_0.dtd">
+
+<map version="1.0">
+	<mapID target="toplevelfolder" url="images/toplevel.gif" />
+	<mapID target="top" url="help/top.html" />
+
+	<mapID target="recordings" url="help/recording.html"/>
+	<mapID target="addrecordings" url="help/addrecording.html"/>
+	<mapID target="removerecordings" url="help/removerecording.html"/>
+	<mapID target="validaterecordings" url="help/validaterecording.html"/>
+	<mapID target="storesamples" url="help/storesamples.html"/>
+	<mapID target="editingrecordings" url="help/editingrecordings.html"/>
+	<mapID target="recordrecordings" url="help/recordrecordings.html"/>
+	<mapID target="viewrecordings" url="help/viewrecordings.html"/>
+
+	<mapID target="features" url="help/features.html"/>
+	<mapID target="selectfeatures"  url="help/selectingfeatures.html"/>
+	<mapID target="sortingfeatures"  url="help/sortingfeatures.html"/>
+	<mapID target="editingfeatures" url="help/editfeatures.html"/>
+	<mapID target="globalalterfeatures" url="help/globaledit.html"/>
+	
+	<mapID target="analysis" url="help/analysis.html"/>
+	<mapID target="perwindow" url="help/perwindow.html"/>
+	<mapID target="overall" url="help/overall.html"/>
+	<mapID target="output" url="help/output.html"/>
+	<mapID target="samplerate" url="help/samplerate.html"/>
+	<mapID target="normalise" url="help/normalise.html"/>
+	
+	<mapID target="aggregators" url="help/aggregators.html"/>
+	<mapID target="editaggregators" url="help/editaggregator.html"/>
+	<mapID target="editaggregatorproperties" url="help/editaggregatorproperties.html"/>
+	<mapID target="addingaggregators" url="help/addingaggregators.html"/>
+	
+	<mapID target="playback" url="help/playback.html"/>
+	<mapID target="fileplay" url="help/fileplay.html"/>
+	<mapID target="sampleplay" url="help/sampleplay.html"/>
+	<mapID target="midiplay" url="help/midiplay.html"/>
+
+	<mapID target="batch" url="help/batch.html"/>
+	<mapID target="addbatch" url="help/addbatch.html"/>
+	<mapID target="viewbatch" url="help/viewbatch.html"/>
+	<mapID target="saveloadbatch" url="help/saveloadbatch.html"/>
+	<mapID target="removebatch" url="help/removebatch.html"/>
+	<mapID target="executebatch" url="help/executebatch.html"/>
+
+		
+	<mapID target="featureappendix" url="features/feature.html"/>
+	<mapID target="2Dpolynomial" url="features/polynomial.html"/>
+	<mapID target="2Dpolynomialmfcc" url="features/polynomialmfcc.html"/>
+	<mapID target="2Dpolynomiallogconstantq" url="features/polynomiallogconstantq.html"/>
+	<mapID target="areamoments" url="features/areamoments.html"/>
+	<mapID target="areamomentsconstantqmfcc" url="features/areamomentsconstantqmfcc.html"/>
+	<mapID target="areamomentslogconstantq" url="features/areamomentslogconstantq.html"/>
+	<mapID target="areamomentsmfcc" url="features/areamomentsmfcc.html"/>
+	<mapID target="beathistogram" url="features/beathistogram.html"/>
+	<mapID target="beathistogramlabels" url="features/beathistogramlabels.html"/>
+	<mapID target="beatsum" url="features/beatsum.html"/>
+	<mapID target="compactness" url="features/compactness.html"/>
+	<mapID target="constantq" url="features/constantq.html"/>
+	<mapID target="constantqmfcc" url="features/constantqmfcc.html"/>
+	<mapID target="derivative" url="features/derivative.html"/>
+	<mapID target="fftbinfrequencies" url="features/fftbinfrequencies.html"/>
+	<mapID target="fractionoflowenergyframes" url="features/fractionoflowenergyframes.html"/>
+	<mapID target="harmonicspectralcentroid" url="features/harmonicspectralcentroid.html"/>
+	<mapID target="harmonicspectralflux" url="features/harmonicspectralflux.html"/>
+	<mapID target="harmonicspectralsmoothness" url="features/harmonicspectralsmoothness.html"/>
+	<mapID target="lpc" url="features/lpc.html"/>
+	<mapID target="logconstantq" url="features/logconstantq.html"/>
+	<mapID target="magnitudespectrum" url="features/magnitudespectrum.html"/>
+	<mapID target="mean" url="features/mean.html"/>
+	<mapID target="mfcc" url="features/mfcc.html"/>
+	<mapID target="moments" url="features/moments.html"/>
+	<mapID target="peakfinder" url="features/peakfinder.html"/>
+	<mapID target="powerspectrum" url="features/powerspectrum.html"/>
+	<mapID target="relativedifferencefunction" url="features/relativedifferencefunction.html"/>
+	<mapID target="rms" url="features/rms.html"/>
+	<mapID target="spectralcentroid" url="features/spectralcentroid.html"/>
+	<mapID target="spectraldeviation" url="features/spectraldeviation.html"/>
+	<mapID target="spectralflux" url="features/spectralflux.html"/>
+	<mapID target="spectralrolloffpoint" url="features/spectralrolloffpoint.html"/>
+	<mapID target="standarddeviation" url="features/standarddeviation.html"/>
+	<mapID target="strengthofstrongestbeat" url="features/strengthofstrongestbeat.html"/>
+	<mapID target="strongestbeat" url="features/strongestbeat.html"/>
+	<mapID target="strongestfrequencybyfftmax" url="features/strongestfrequencybyfftmax.html"/>
+	<mapID target="strongestfrequencyviaspectralcentroid" url="features/strongestfrequencyviaspectralcentroid.html"/>
+	<mapID target="strongestfrequencyviazerocrossing" url="features/strongestfrequencyviazerocrossing.html"/>
+	<mapID target="zerocrossing" url="features/zerocrossing.html"/>
+	
+	<mapID target="aggregatorsappendix" url="aggregators/aggregators.html"/>
+	<mapID target="agg_mean" url="aggregators/mean.html"/>
+	<mapID target="agg_stddev" url="aggregators/stddev.html"/>
+	<mapID target="agg_mfcc" url="aggregators/mfcc.html"/>
+	<mapID target="agg_histogram" url="aggregators/histogram.html"/>
+	<mapID target="agg_areamoments" url="aggregators/areamoments.html"/>
+	<mapID target="agg_2Dpolynomial" url="aggregators/polynomial.html"/>
+	
+	<mapID target="Javadoc" url="javadoc/index.html"/>
+	<mapID target="embedding" url="help/embedding.html"/>
+	
+	<mapID target="addingfeatures" url="help/addingfeatures.html"/>
+	<mapID target="addingaggregators" url="help/addingaggregators.html"/>
+</map>
+
