@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>Choosing Features for Extraction</title>
+</head>
+<body>
+<table width="100%" height="100%">
+	<tr height="150">
+		<td width="100%"><img src="../jAudioLogo3-128.jpg" height="128"
+			width="128" alt="jAudio Logo" />
+		<h1>jAudio 1.0 Online Help</h1>
+		</td>
+	</tr>
+	<tr>
+		<td width="25%" valign="top" bgcolor="DDFFFF" align="left">
+		<ul>
+			<li><a href="../index.html">Overview</a></li>
+			<li><a href="top.html">1.0 GUI Documentation</a>
+			<ul>
+				<li><a href="recording.html">Working with Audio Files</a></li>
+				<li><a href="features.html">Working with jAudio Features</a></li>
+				<li><a href="analysis.html">Analysis Settings</a></li>
+				<li><a href="aggregators.html">Working with Aggregators</a></li>
+				<li><a href="batch.html">Working with Batches</a></li>
+				<li><a href="features/feature.html">Features Appendix</a></li>
+				<li><a href="aggregators/aggregator.html">Aggregator Appendix</a></li>
+			</ul></li>
+			<li><a href="embedding.html">Embedding jAudio 1.0</a></li>
+			<li><a href="javadoc/index.html">jAudio 1.0 Javadoc</a></li>
+			<li><a href="http://www.sourceforge.net/projects/jAudio">Project Page</a></li>
+			<li><a href="http://www.sourceforge.net/projects/jAudio/download">Latest Stable Version</a></li>
+			<li><a href="../roadmap.html">Development Roadmap</a></li>
+		</ul>
+			<a href="http://sourceforge.net/projects/jaudio"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=164405&amp;type=13" width="120" height="30" alt="Get jAudio at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
+		</td>
+		<td width="3%"></td>
+		<td width="72%" bgcolor="00FFFF" align="left">
+<h2>Aggregators</h2>
+<p>Aggregators are a method from reducing a file's sequence of analysis windows to a single fixed length vector for analysis. 
+They are required for per-file feature output, but have built in defaults.
+There exists two types of aggregators - specific aggregators and generic aggregators.</p>
+ <p>
+ Generic aggregators aggregate for each feature (seperately) that is to be
+ saved and should override init and setSource methods. Specific aggregators
+ can aggregate any number of features, but these features must be specified in
+ advance.</p>
+<p>Traditionally, aggregators have been the mean and standard deviation of each dimension and each feature, however more sophisticated measures 
+can also be useful.</p>
+<ul>
+<li><a href="#EditAggregators">Alter aggregators window</a></li>
+<li><a href="#EditAggregatorProperties">Edit aggregator window</a></li>
+<li><a href="#AddingAggregators">Adding New Aggregators</a></li>
+</ul>
+<a name="EditAggregators"></a>
+<h2>Alter aggregators window</h2>
+<p>The list of the left side are the currently selected aggregators. The list on the right side is the current set of all 
+possible aggregators. The <a href="aggregator/index.html">aggregator appendix</a> containing the detailed descriptions of all built 
+in aggregators.</p>
+<p>Adding an aggregator (by double clicking on the right window or clicking the add button) adds an entry on the left side.</p>
+<img src="AggregatorWindow.png"/>
+<br/>
+<a name="EditAggregatorProperties"></a>
+<h2>Edit Aggregator window</h2>
+<p>The top of the window contains the official description.  If any settings need to be set, they are listed next.  If the aggregator 
+only works for a subset of the features (not all of the selected features), a selection window with possible features on the right</p>
+<img src="EditAggregator.png"/>
+<br/>
+<a name="AddingAggregators"></a>
+<h2>Adding New Aggregators</h2>
+<p>jAudio can insert additional aggregators not in its base set using the features.xml file in the base directory.  Each aggregator
+has its own XML descriptor describing it. For instance:</p>
+<p></p>
+<p><code>
+	&lt;aggregator&gt;jAudioFeatureExtractor.Aggregators.AreaPolynomialApproximation&lt;/aggregator&gt;
+</code></p>
+<p>The class must be the fully qualified class name.  
+All other data is included in the <a href="javadoc/jAudioFeatureExtractor/ACE/DataTypes/AggregatorDefinition.html">AggregatorDefinition</a> in the aggregator and does not need to be specified again.</p>
+<h2>Plugin Folder</h2>
+<p>The plugin folder is defined at the start of the features.xml file. All classes inside are automatically loaded into jAudio on startup 
+exactly as javac would compile a java file there.  i.e. jAudioFeatureExtractor.Aggregators.AreaPolynomialApproximation would need to be placed in $plugin$/jAudioFeatureExtractor/Aggregators/AreaPolynomialApproximation.class 
+where $plugin$ is the folder specified in the plugin XML entry.  The plugin folder must be a fully qualified URL (HTTP locations permitted) of the syntax:</p>
+<p></p>
+<p><code><pre>
+        &lt;pluginFolder&gt;file://Users/mcennis/jAudio/plugin&lt;/pluginFolder&gt;
+</pre></code></p>
+</td>
+</tr>
+</table>
+</body>
+</html>

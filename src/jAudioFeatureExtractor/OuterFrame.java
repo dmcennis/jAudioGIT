@@ -9,7 +9,11 @@ package jAudioFeatureExtractor;
 import jAudioFeatureExtractor.actions.ExecuteBatchAction;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+
 import javax.swing.*;
+
+import org.multihelp.HelpWindow;
 //import javax.help.*;
 import java.net.*;
 
@@ -59,6 +63,11 @@ public class OuterFrame extends JFrame {
 	 * Radio button for chosing the ARFF data format
 	 */
 	public JRadioButtonMenuItem arff;
+	
+	/**
+	 * Window for displaying the help system.
+	 */
+	public HelpWindow helpWindow=null;
 
 	/* CONSTRUCTOR ************************************************************ */
 
@@ -191,6 +200,17 @@ public class OuterFrame extends JFrame {
 //		CSH.setHelpIDString(helpTopics, "top");
 //		helpTopics.addActionListener(new CSH.DisplayHelpFromSource(hb));
 
+		helpTopics.addActionListener(new AbstractAction(){
+
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Help Window Started");
+				if(helpWindow != null){
+					helpWindow = new HelpWindow();
+				}
+			}
+			
+		});
+		
 		menu.add(fileMenu);
 		menu.add(editMenu);
 		menu.add(recordingMenu);
@@ -211,25 +231,17 @@ public class OuterFrame extends JFrame {
 
 	}
 
-//	/**
-//	 * This method creates the online help system.
-//	 * 
-//	 * @param helpsetfile
-//	 *            Name of the file where the help file metadata is stored.
-//	 * @return Reference to a newly created help set.
-//	 */
-//	public HelpSet getHelpSet(String helpsetfile) {
-//		HelpSet hs = null;
-//		ClassLoader cl = this.getClass().getClassLoader();
-//		try {
-//			URL hsURL = HelpSet.findHelpSet(cl, helpsetfile);
-//			hs = new HelpSet(null, hsURL);
-//		} catch (Exception ee) {
-//			System.out.println("HelpSet: " + ee.getMessage());
-//			System.out.println("HelpSet: " + helpsetfile + " not found");
-//		}
-//		return hs;
-//	}
+	/**
+	 * This method creates the online help system.
+	 * 
+	 * @param helpsetfile
+	 *            Name of the file where the help file metadata is stored.
+	 * @return Reference to a newly created help set.
+	 */
+	public HelpWindow getHelpSet(String helpsetfile) {
+		HelpWindow hs = new HelpWindow();
+		return hs;
+	}
 	
 	// helper class for creating a splashscreen from Graphic Java: Mastering the JFC: AWT
 	protected class SplashFrame extends Frame{
