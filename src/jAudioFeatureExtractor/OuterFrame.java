@@ -204,11 +204,10 @@ public class OuterFrame extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Help Window Started");
-				if(helpWindow != null){
+				if(helpWindow == null){
 					helpWindow = new HelpWindow();
 				}
 			}
-			
 		});
 		
 		menu.add(fileMenu);
