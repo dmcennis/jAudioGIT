@@ -89,10 +89,6 @@
 		<on/>
 	</feature>
 	<feature>
-		<class>jAudioFeatureExtractor.AudioFeatures.Moments</class>
-		<on/>
-	</feature>
-	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.PeakFinder</class>
 	</feature>
 	<feature>
@@ -120,6 +116,9 @@
 	<feature>
 	  <class>jAudioFeatureExtractor.AudioFeatures.AreaMomentsConstantQMFCC</class>
 	</feature>
+    <feature>
+        <class>jAudioFeatureExtractor.AudioFeatures.AreaMomentsBeatHistogram</class>
+    </feature>
 	<feature>
 	  <class>jAudioFeatureExtractor.AudioFeatures.ConstantQ</class>
 	</feature>
@@ -130,6 +129,9 @@
 	  <class>jAudioFeatureExtractor.AudioFeatures.ConstantQMFCC</class>
 	</feature>
 	<feature>
+	  <class>jAudioFeatureExtractor.AudioFeatures.Chroma</class>
+	</feature>
+	<feature>
 	  <class>jAudioFeatureExtractor.AudioFeatures.AreaPolynomialApproximation</class>
 	</feature>
 	<feature>
@@ -138,6 +140,9 @@
 	<feature>
 	  <class>jAudioFeatureExtractor.AudioFeatures.AreaPolynomialApproximationLogConstantQ</class>
 	</feature>
+    <feature>
+        <class>jAudioFeatureExtractor.AudioFeatures.TraditionalAreaMoments</class>
+    </feature>
 	<aggregator>jAudioFeatureExtractor.Aggregators.Mean</aggregator>
 	<aggregator>jAudioFeatureExtractor.Aggregators.StandardDeviation</aggregator>
 	<aggregator>jAudioFeatureExtractor.Aggregators.AreaMoments</aggregator>

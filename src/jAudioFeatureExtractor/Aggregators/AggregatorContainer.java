@@ -9,6 +9,7 @@ import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 import jAudioFeatureExtractor.AudioFeatures.FeatureExtractor;
 
 import java.io.DataOutputStream;
+import java.io.Writer;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -79,6 +80,7 @@ public class AggregatorContainer {
 	 */
 	public void add(FeatureExtractor[] feature, boolean[] toggle) throws Exception{
 		featureList.clear();
+		featureIndecis2FeatureListMapping.clear();
 		for (int i = 0; i < feature.length; ++i) {
 			if (toggle[i]) {
 				featureList.add(feature[i]);
@@ -169,7 +171,24 @@ public class AggregatorContainer {
 		output.writeBytes(Aggregator.LINE_SEP);
 	}
 
-	void buildAggregatorList() throws Exception{
+    /**
+     * Output the content in a Weka data format.
+     *
+     * @param output data stream to place the Weka data in.
+     * @throws Exception IO error occurs.
+     */
+    public void outputJSONEntries(Writer output) throws Exception {
+        output.write("{"+Aggregator.LINE_SEP);
+        for (int i = 0; i < aggregatorList.size(); ++i) {
+            aggregatorList.get(i).outputJSONEntries(output);
+            if(i< aggregatorList.size()-1){
+                output.write(",");
+            }
+        }
+        output.write("}"+Aggregator.LINE_SEP);
+    }
+
+    void buildAggregatorList() throws Exception{
 		aggregatorList.clear();
 		for(int i=0;i<aggregatorTemplate.size();++i){
 			String[] list = aggregatorTemplate.get(i).getFeaturesToApply();

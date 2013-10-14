@@ -261,10 +261,6 @@ public class DataModel {
 	 *            should features be extracted for every window
 	 * @param overallStats
 	 *            should features be extracted over the entire window
-	 * @param destinationFV
-	 *            file where the extracted features should be stored
-	 * @param destinationFK
-	 *            file where descriptions of features extracted should be stored
 	 * @param info
 	 *            list of the files that are to be analyzed
 	 * @param arff
@@ -300,10 +296,10 @@ public class DataModel {
 			aggregators[0]=new jAudioFeatureExtractor.Aggregators.Mean();
 			aggregators[1]=new jAudioFeatureExtractor.Aggregators.StandardDeviation();
 			aggregators[2]=new jAudioFeatureExtractor.Aggregators.AreaMoments();
-			aggregators[2].setParameters(new String[]{"Area Method of Moments of MFCCs"},new String[]{""});
+			aggregators[2].setParameters(new String[]{"Area Method of Moments of MFCCs"},new String[]{"10"});
 		}
 		container.add(aggregators);
-
+		container.add(features,defaults);
 		// Prepare to extract features
 		FeatureProcessor processor = new FeatureProcessor(window_size,
 				window_overlap, sampling_rate, normalise, this.features,

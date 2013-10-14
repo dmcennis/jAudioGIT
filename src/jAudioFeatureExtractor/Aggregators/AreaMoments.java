@@ -34,57 +34,38 @@ public class AreaMoments extends Aggregator {
 
 	String[] featureNames = null;
 	int[] featureNameIndecis = null;
+
+    int order = 7;
 	
 	/**
 	 * Constructs an AreaMoments aggregator.  This isn't valid until specific features are adde to the system (in a particular order).
 	 */
 	public AreaMoments(){
-		metadata = new AggregatorDefinition("Area Moments","Calculates the first 10 2D statistical moments for the given features",false,null);
+		metadata = new AggregatorDefinition("Area Moments","Calculates 2D statistical moments for the given features",false,
+                new String[]{"maximum order (length is order^2) of 2D statistical moments to calculate"});
 	}
 	
 	@Override
 	public void aggregate(double[][][] values) {
-		result = new double[10];
-		double x,y,x2,xy,y2,x3,x2y,xy2,y3;
-		x=y=x2=xy=y2=x3=x2y=xy2=y3=0.0;
+		result = new double[order*order];
+		java.util.Arrays.fill(result,0.0);
 		int offset = super.calculateOffset(values,featureNameIndecis);
 		int[][] featureIndecis = super.collapseFeatures(values,featureNameIndecis);
-		result[0] = 0.0;
-		for (int i=offset;i<values.length;++i){
-			for(int j=0;j<featureIndecis.length;++j){
-				result[0] += values[i][featureIndecis[j][0]][featureIndecis[j][1]];
-			}
-		}
-		if(result[0] == 0.0){
-			java.util.Arrays.fill(result,0.0);
-		}else{
-			for (int i = offset; i < values.length; ++i) {
-				for (int j = 0; j < featureIndecis.length; ++j) {
-					int feature = featureIndecis[j][0];
-					int dimension = featureIndecis[j][1];
-					double tmp = values[i][feature][dimension] / result[0];
-					x += tmp * i;
-					y += tmp * j;
-					x2 += tmp * i * i;
-					xy += tmp * i * j;
-					y2 += tmp * j * j;
-					x3 += tmp * i * i * i;
-					x2y += tmp * i * i * j;
-					xy2 += tmp * i * j * j;
-					y3 += tmp * j * j * j;
-				}
-			}
-			result[1] = x;
-			result[2] = y;
-			result[3] = x2 - x * x;
-			result[4] = xy - x * y;
-			result[5] = y2 - y * y;
-			result[6] = 2 * Math.pow(x, 3.0) - 3 * x * x2 + x3;
-			result[7] = 2 * x * xy - y * x2 + x2 * y;
-			result[8] = 2 * y * xy - x * y2 + y2 * x;
-			result[9] = 2 * Math.pow(y, 3.0) - 3 * y * y2 + y3;
-
-		}
+        for (int i=offset; i < values.length; ++i) {
+            double row = (2.0*((double)(i-offset))/((double)(values.length - offset))) - 1.0;
+            for (int j = 0; j < featureIndecis.length; ++j) {
+                double column = (2.0*((double)j)/((double)(featureIndecis.length)))-1.0;
+                double xpow = 1.0;
+                for(int x=0;x<order;++x){
+                    double ypow = 1.0;
+                    for (int y=0;y<order;++y){
+                        result[order*x+y] += values[i][featureIndecis[j][0]][featureIndecis[j][1]] * xpow * ypow;
+                        ypow *= column;
+                    }
+                    xpow *= row;
+                }
+            }
+        }
 	}
 
 	@Override
@@ -124,7 +105,22 @@ public class AreaMoments extends Aggregator {
 		for(int i=1;i<featureNames.length;++i){
 			names += " " + featureNames[i];
 		}
-		definition = new FeatureDefinition("Area Moments: "+names,"2D moments constructed from features "+names+".",true,10);
+        if((params != null) && (params.length > 0)){
+            order = Integer.parseInt(params[0]);
+        }
+		definition = new FeatureDefinition("Area Moments: "+names,"2D moments constructed from features "+names+".",true,order*order);
 	}
+
+    /**
+     * Provide a list of the values of all parameters this aggregator uses.
+     * Aggregators without parameters return null.
+     *
+     * @return list of the values of parmeters or null.
+     */
+    @Override
+    public String[] getParamaters() {
+        return new String[]{Integer.toString(order)};   //To change body of overridden methods use File | Settings | File Templates.
+    }
+
 
 }

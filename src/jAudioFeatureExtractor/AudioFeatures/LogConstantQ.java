@@ -80,10 +80,15 @@ public class LogConstantQ extends FeatureExtractor
 		throws Exception
 	{
 		double[] ret = new double[other_feature_values[0].length];
-		for(int i=0;i<ret.length;++i){
-			ret[i] = Math.log(other_feature_values[0][i]);
-			if(ret[i] < -50.0){
-				ret[i]=-50.0;
+		for(int i=0;i<ret.length;++i)
+		{
+			if(other_feature_values[0][i] <= 0.0){
+				ret[i] = -50.0;
+			}else{
+				ret[i] = Math.log(other_feature_values[0][i]);
+				if(ret[i] < -50.0){
+					ret[i]=-50.0;
+				}
 			}
 		}
 		return ret;

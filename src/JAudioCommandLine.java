@@ -157,40 +157,40 @@ public class JAudioCommandLine {
 		HashMap<String, Boolean> active = (HashMap<String, Boolean>) data[7];
 		HashMap<String, String[]> attribute = (HashMap<String, String[]>) data[8];
 		
-//		for (int i = 0; i < dm.features.length; ++i) {
-//			String name = dm.features[i].getFeatureDefinition().name;
-//			if (attribute.containsKey(name)) {
-//				dm.defaults[i] = active.get(name);
-//				String[] att = attribute.get(name);
-//				for (int j = 0; j < att.length; ++j) {
-//					try {
-//						dm.features[i].setElement(j, att[j]);
-//					} catch (Exception e) {
-//						System.out.println("Feature " + name
-//								+ "failed apply its " + j + " attribute");
-//						e.printStackTrace();
-//					}
-//				}
-//			} else {
-//				dm.defaults[i] = false;
-//			}
-//		}
+		for (int i = 0; i < dm.features.length; ++i) {
+			String name = dm.features[i].getFeatureDefinition().name;
+			if (attribute.containsKey(name)) {
+				dm.defaults[i] = active.get(name);
+				String[] att = attribute.get(name);
+				for (int j = 0; j < att.length; ++j) {
+					try {
+						dm.features[i].setElement(j, att[j]);
+					} catch (Exception e) {
+						System.out.println("Feature " + name
+								+ "failed apply its " + j + " attribute");
+						e.printStackTrace();
+					}
+				}
+			} else {
+				dm.defaults[i] = false;
+			}
+		}
 		
 		// now process the aggregators
 		String[] aggNames = ((LinkedList<String>)data[9]).toArray(new String[]{});
 		String[][] aggFeatures = ((LinkedList<String[]>)data[10]).toArray(new String[][]{});
 		String[][] aggParameters = ((LinkedList<String[]>)data[11]).toArray(new String[][]{});
-//		LinkedList<Aggregator> aggregator = new LinkedList<Aggregator>();
-//		for(int i=0;i<aggNames.length;++i){
-//			if(dm.aggregatorMap.containsKey(aggNames[i])){
-//				Aggregator tmp = dm.aggregatorMap.get(aggNames[i]);
-//				if(!tmp.getAggregatorDefinition().generic){
-//					tmp.setParameters(aggFeatures[i],aggParameters[i]);
-//				}
-//				aggregator.add(tmp);
-//			}
-//		}
-//		dm.aggregators = aggregator.toArray(new Aggregator[]{});
+		LinkedList<Aggregator> aggregator = new LinkedList<Aggregator>();
+		for(int i=0;i<aggNames.length;++i){
+			if(dm.aggregatorMap.containsKey(aggNames[i])){
+				Aggregator tmp = dm.aggregatorMap.get(aggNames[i]);
+				if(!tmp.getAggregatorDefinition().generic){
+					tmp.setParameters(aggFeatures[i],aggParameters[i]);
+				}
+				aggregator.add(tmp);
+			}
+		}
+		dm.aggregators = aggregator.toArray(new Aggregator[]{});
 		
 		// now process the files
 		RecordingInfo[] recording_info = new RecordingInfo[args.length - 3];
