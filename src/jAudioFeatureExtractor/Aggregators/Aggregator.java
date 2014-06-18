@@ -3,12 +3,13 @@
  */
 package jAudioFeatureExtractor.Aggregators;
 
-import java.io.DataOutputStream;
-
 import jAudioFeatureExtractor.ACE.DataTypes.AggregatorDefinition;
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 import jAudioFeatureExtractor.AudioFeatures.FeatureExtractor;
 import jAudioFeatureExtractor.GeneralTools.StringMethods;
+
+import java.io.DataOutputStream;
+import java.io.Writer;
 
 /**
  * Aggregator is an interface for specifying the mechanism for collapsing
@@ -89,8 +90,6 @@ public abstract class Aggregator {
 	 * Specifies which Features are to be extracted and the index of these
 	 * features in the values array that will passed into the aggregate function
 	 * 
-	 * @param source
-	 *            FeatureExtractor references used for this instantiation
 	 * @param featureIndecis
 	 *            Indecis of these features in the array passed in aggregate
 	 * @throws Exception
@@ -180,16 +179,37 @@ public abstract class Aggregator {
 	public void outputARFFValueEntries(DataOutputStream output)
 			throws Exception {
 		output.writeBytes(StringMethods.getDoubleInScientificNotation(
-				result[0], 4));
+                result[0], 4));
 		for (int i = 1; i < definition.dimensions; ++i) {
 			output
 					.writeBytes(","
 							+ StringMethods.getDoubleInScientificNotation(
-									result[i], 4));
+                            result[i], 4));
 		}
 	}
 
-	/**
+    /**
+     * Output the data in the ARFF body.
+     *
+     * @param output
+     * @throws Exception
+     */
+    public void outputJSONEntries(Writer output)
+            throws Exception {
+        output.write("\t\""+definition.name+"\" : ["+LINE_SEP);
+        boolean first = true;
+        for (int i = 0; i < definition.dimensions; ++i) {
+            if(first){
+                first = false;
+            }else{
+                output.write(",");
+            }
+            output.write(Double.toString(result[i]));
+        }
+        output.write("\t\t]");
+    }
+
+    /**
 	 * Set parameters of the aggregator to the given values.  For specific aggregators, the feature list
 	 * is non-null and references currently loaded features.
 	 * Throws exception if the feature list is null or contains invalid entries only if the aggregator is specific.
@@ -202,7 +222,7 @@ public abstract class Aggregator {
 	 *
 	 * @param featureNames strings matching features for specific aggregation.
 	 * @param params strings that can be cast by toString to the appropriate parameter types.
-	 * @throws exceptions for a number of format or null entry conditions (see above).
+	 * @throws Exception for a number of format or null entry conditions (see above).
 	 */
 	public void setParameters(String[] featureNames, String[] params)
 			throws Exception {
