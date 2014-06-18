@@ -21,23 +21,7 @@ public class AreaMomentsMFCC extends FeatureExtractor {
 
 	int lengthOfWindow = 10;
 
-	double x;
-
-	double y;
-
-	double x2;
-
-	double xy;
-
-	double y2;
-
-	double x3;
-
-	double x2y;
-
-	double xy2;
-
-	double y3;
+    int order = 10;
 
 	/**
 	 * Constructor that sets description, dependencies, and offsets from
@@ -48,7 +32,7 @@ public class AreaMomentsMFCC extends FeatureExtractor {
 		String description = "2D statistical method of moments of MFCCs";
 		String[] attributes = new String[] {"Area Method of Moments Window Length" };
 
-		definition = new FeatureDefinition(name, description, true, 10,
+		definition = new FeatureDefinition(name, description, true, 0,
 				attributes);
 		dependencies = new String[lengthOfWindow];
 		for (int i = 0; i < dependencies.length; ++i) {
@@ -84,43 +68,24 @@ public class AreaMomentsMFCC extends FeatureExtractor {
 	 */
 	public double[] extractFeature(double[] samples, double sampling_rate,
 			double[][] other_feature_values) throws Exception {
-		double[] ret = new double[10];
-		double sum = 0.0;
-		for (int i = 0; i < other_feature_values.length; ++i) {
-			for (int j = 0; j < other_feature_values[i].length; ++j) {
-				sum += other_feature_values[i][j];
-			}
-		}
-		if(sum==0.0){
-			java.util.Arrays.fill(ret,0.0);
-			return ret;
-		}
-		for (int i = 0; i < other_feature_values.length; ++i) {
-			for (int j = 0; j < other_feature_values[i].length; ++j) {
-				double tmp = other_feature_values[i][j] / sum;
-				x += tmp * i;
-				y += tmp * j;
-				x2 += tmp * i * i;
-				xy += tmp * i * j;
-				y2 += tmp * j * j;
-				x3 += tmp * i * i * i;
-				x2y += tmp * i * i * j;
-				xy2 += tmp * i * j * j;
-				y3 += tmp * j * j * j;
-			}
-		}
-		ret[0] = sum;
-		ret[1] = x;
-		ret[2] = y;
-		ret[3] = x2 - x * x;
-		ret[4] = xy - x * y;
-		ret[5] = y2 - y * y;
-		ret[6] = 2 * Math.pow(x, 3.0) - 3 * x * x2 + x3;
-		ret[7] = 2 * x * xy - y * x2 + x2 * y;
-		ret[8] = 2 * y * xy - x * y2 + y2 * x;
-		ret[9] = 2 * Math.pow(y, 3.0) - 3 * y * y2 + y3;
+        double[] ret = new double[order*order];
+        for (int i = 0; i < other_feature_values.length; ++i) {
+            double row = (2.0*((double)i)/((double)(other_feature_values.length))) - 1.0;
+            for (int j = 0; j < other_feature_values[i].length; ++j) {
+                double column = (2.0*((double)j)/((double)(other_feature_values[0].length)))-1.0;
+		double xpow = 1.0;
+                for(int x=0;x<order;++x){
+                    double ypow = 1.0;
+                    for (int y=0;y<order;++y){
+                        ret[order*x+y] = other_feature_values[i][j] * xpow * ypow;
+                        ypow *= column;
+                    }
+                    xpow *= row;
+                }
+            }
+        }
 
-		return ret;
+        return ret;
 	}
 
 	/**
@@ -140,7 +105,7 @@ public class AreaMomentsMFCC extends FeatureExtractor {
 			dependencies = new String[lengthOfWindow];
 			offsets = new int[lengthOfWindow];
 			for (int i = 0; i < lengthOfWindow; ++i) {
-				dependencies[i] = "Magnitude Spectrum";
+				dependencies[i] = "MFCC";
 				offsets[i] = 0 - i;
 			}
 		}
@@ -155,12 +120,14 @@ public class AreaMomentsMFCC extends FeatureExtractor {
 	 *            which of AreaMoment's attributes should be edited.
 	 */
 	public String getElement(int index) throws Exception {
-		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to AreaMoments:getElement");
-		} else {
-			return Integer.toString(lengthOfWindow);
-		}
+        if (index > 1) {
+            throw new Exception("INTERNAL ERROR: invalid index " + index
+                    + " sent to AreaMoments:getElement");
+        } else if (index == 1){
+            return Integer.toString(order);
+        } else{
+            return Integer.toString(lengthOfWindow);
+        }
 	}
 
 	/**
@@ -175,18 +142,26 @@ public class AreaMomentsMFCC extends FeatureExtractor {
 	 *            new value of the attribute
 	 */
 	public void setElement(int index, String value) throws Exception {
-		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to AreaMoments:setElement");
-		} else {
-			try {
-				int type = Integer.parseInt(value);
-				setWindow(type);
-			} catch (Exception e) {
-				throw new Exception(
-						"Length of Area Method of Moments must be an integer");
-			}
-		}
+        if (index > 1) {
+            throw new Exception("INTERNAL ERROR: invalid index " + index
+                    + " sent to AreaMoments:setElement");
+        } else if(index == 1){
+            try {
+                int type = Integer.parseInt(value);
+                order = type;
+            } catch (Exception e) {
+                throw new Exception(
+                        "Order of Area Method Of Moments must be an integer");
+            }
+        } else {
+            try {
+                int type = Integer.parseInt(value);
+                setWindow(type);
+            } catch (Exception e) {
+                throw new Exception(
+                        "Length of Area Method of Moments must be an integer");
+            }
+        }
 	}
 
 	/**
@@ -195,8 +170,9 @@ public class AreaMomentsMFCC extends FeatureExtractor {
 	 * metafeatures.
 	 */
 	public Object clone() {
-		AreaMoments ret = new AreaMoments();
+		AreaMomentsMFCC ret = new AreaMomentsMFCC();
 		ret.lengthOfWindow = lengthOfWindow;
+        ret.order=order;
 		return ret;
 	}
 
