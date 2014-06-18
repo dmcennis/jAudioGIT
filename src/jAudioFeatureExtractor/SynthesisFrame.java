@@ -7,13 +7,20 @@
 
 package jAudioFeatureExtractor;
 
-import javax.sound.sampled.*;
+import jAudioFeatureExtractor.GeneralTools.StringMethods;
+import jAudioFeatureExtractor.jAudioTools.*;
+
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.SourceDataLine;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import jAudioFeatureExtractor.jAudioTools.*;
-import jAudioFeatureExtractor.GeneralTools.StringMethods;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
 
 
 /**
@@ -102,7 +109,7 @@ public class SynthesisFrame
 	/**
 	 * Dialog box to choose audio format for recording
 	 */
-	private AudioFormatJFrame					audio_format_selector;
+	private AudioFormatJFrame audio_format_selector;
 
 	/**
 	 * JFileChooser for saving recorded audio.
@@ -161,7 +168,7 @@ public class SynthesisFrame
 	{
 		// Set window title
 		setTitle("Synthesize Audio");
-		getContentPane().setBackground(new java.awt.Color((float)0.75,(float)0.85,(float)1.0));
+		getContentPane().setBackground(new Color((float)0.75,(float)0.85,(float)1.0));
 
 		// Cause program to react when the exit box is pressed
 		addWindowListener(new WindowAdapter() {
@@ -353,8 +360,8 @@ public class SynthesisFrame
 			AudioFormat audio_format = audio_format_selector.getAudioFormat(false);
 			AudioInputStream audio_input_stream = AudioMethods.getInputStream(audio_data, audio_format);
 			SourceDataLine source_data_line = AudioMethods.getSourceDataLine(audio_format, null);
-			playback_thread = AudioMethodsPlayback.playAudioInputStreamInterruptible( audio_input_stream,
-																					  source_data_line );
+			playback_thread = AudioMethodsPlayback.playAudioInputStreamInterruptible(audio_input_stream,
+                    source_data_line);
 		}
 		catch (Exception e)
 		{
@@ -584,15 +591,15 @@ public class SynthesisFrame
 		for (int comp = 0; comp < number_components; comp++)
 		{
 			int synthesis_type_code = AudioMethodsSynthesis.getSynthesisTypeCode(temp.synthesis_type);
-			components[comp] = AudioMethodsSynthesis.synthesizeAndWriteToBuffer( null,
-		                                                                         duration,
-													                             audio_format,
-														                         synthesis_type_code,
-														                         gain,
-														                         panning,
-													                             temp.fundamental_frequency,
-		                                                                         temp.max_fraction_of_sampling_rate,
-		                                                                         click_avoid_env_length );
+			components[comp] = AudioMethodsSynthesis.synthesizeAndWriteToBuffer(null,
+                    duration,
+                    audio_format,
+                    synthesis_type_code,
+                    gain,
+                    panning,
+                    temp.fundamental_frequency,
+                    temp.max_fraction_of_sampling_rate,
+                    click_avoid_env_length);
 			temp = temp.next_set_of_parameters;
 		}
 
@@ -608,12 +615,12 @@ public class SynthesisFrame
 					combined_components[chan][samp] += (multipliers[comp] * components[comp][chan][samp]);
 
 		// Translate these sample values into an array of audio bytes
-		int number_bytes_needed = AudioMethods.getNumberBytesNeeded( combined_components[0].length,
-	                                                                 audio_format );
+		int number_bytes_needed = AudioMethods.getNumberBytesNeeded(combined_components[0].length,
+                audio_format);
 		byte[] audio_data = new byte[number_bytes_needed];
-		AudioMethodsSynthesis.writeSamplesToBuffer( combined_components,
-	                                                audio_format.getSampleSizeInBits(),
-	                                                audio_data );
+		AudioMethodsSynthesis.writeSamplesToBuffer(combined_components,
+                audio_format.getSampleSizeInBits(),
+                audio_data);
 
 		// Store the AudioFormat of audio_data
 		return audio_data;

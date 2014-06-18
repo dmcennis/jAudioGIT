@@ -6,8 +6,6 @@ import jAudioFeatureExtractor.Aggregators.AggregatorContainer;
 import jAudioFeatureExtractor.AudioFeatures.FeatureExtractor;
 import jAudioFeatureExtractor.jAudioTools.FeatureProcessor;
 
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -30,7 +28,7 @@ public class AudioStreamProcessor {
     public AudioStreamProcessor(String featureFile,String settingsFile){
         DataModel model = new DataModel(featureFile,null);
         try{
-            Object[] contents = (Object[])XMLDocumentParser.parseXMLDocument(settingsFile,"save_settings");
+            Object[] contents = (Object[]) XMLDocumentParser.parseXMLDocument(settingsFile, "save_settings");
             int windowLength = Integer.parseInt((String)contents[0]);
             double windowOverlap = Double.parseDouble((String)contents[1]);
             double sampleRate = (Double)contents[2];

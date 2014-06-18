@@ -1,9 +1,7 @@
 package jAudioFeatureExtractor;
 
-import javax.swing.JFrame;
-import javax.swing.JProgressBar;
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * This class provides a set of progress bars for the normal (non-batch) feature

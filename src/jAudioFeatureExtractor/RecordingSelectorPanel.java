@@ -6,16 +6,23 @@
 
 package jAudioFeatureExtractor;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-import java.io.*;
-
-import javax.sound.sampled.*;
-import jAudioFeatureExtractor.jAudioTools.*;
 import jAudioFeatureExtractor.ACE.XMLParsers.FileFilterXML;
 import jAudioFeatureExtractor.DataTypes.RecordingInfo;
+import jAudioFeatureExtractor.jAudioTools.AudioMethods;
+import jAudioFeatureExtractor.jAudioTools.AudioMethodsPlayback;
+import jAudioFeatureExtractor.jAudioTools.AudioSamples;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 
 /**
  * A window that allows users to select audio files to extract features from,
@@ -496,7 +503,7 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 				// Begin playback
 				controller.dm_.playback_thread = AudioMethodsPlayback
 						.playAudioInputStreamInterruptible(audio_input_stream,
-								source_data_line);
+                                source_data_line);
 			} catch (UnsupportedAudioFileException ex) {
 				throw new Exception("File " + play_file.getName()
 						+ " has an unsupported audio format.");
@@ -554,7 +561,7 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 				// Begin playback
 				controller.dm_.playback_thread = AudioMethodsPlayback
 						.playAudioInputStreamInterruptible(audio_input_stream,
-								source_data_line);
+                                source_data_line);
 			} catch (UnsupportedAudioFileException ex) {
 				throw new Exception("File " + selected_audio.file_path
 						+ " has an unsupported audio format.");

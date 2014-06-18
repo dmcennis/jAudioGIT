@@ -6,7 +6,9 @@
 
 package jAudioFeatureExtractor.ACE.XMLParsers;
 
-import org.xml.sax.*;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -86,7 +88,7 @@ public class ParseTaxonomyFileHandler
 	 * is the wrong type of XML document.
 	 *
 	 * @param	name			Name of the element that is encountered.
-	 * @throws	SAXException	Exception thrown if is wrong type of XML file.
+	 * @throws	org.xml.sax.SAXException	Exception thrown if is wrong type of XML file.
 	 */
 	public void startElement(String namespace, String name, String qName, Attributes atts)
 		throws SAXException

@@ -3,8 +3,9 @@
  */
 package jAudioFeatureExtractor;
 
-import java.util.Vector;
 import jAudioFeatureExtractor.Aggregators.Aggregator;
+
+import java.util.Vector;
 
 /**
  * AggListTableModel

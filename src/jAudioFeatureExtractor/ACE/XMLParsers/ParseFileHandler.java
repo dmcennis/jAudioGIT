@@ -6,7 +6,6 @@
 
 package jAudioFeatureExtractor.ACE.XMLParsers;
 
-import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
 
@@ -15,7 +14,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * class that adds an array of objects that can contain information
  * derived from files during parsing.
  *
- * @see DefaultHandler
+ * @see org.xml.sax.helpers.DefaultHandler
  */
 public class ParseFileHandler
 	extends DefaultHandler

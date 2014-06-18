@@ -2,19 +2,11 @@ package jAudioFeatureExtractor;
 
 import jAudioFeatureExtractor.ACE.DataTypes.Batch;
 
-import java.awt.Color;
-import java.awt.GridLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
 
 /**
  * AddBatchGui qllows a user to supply a name for an existing batch. It should

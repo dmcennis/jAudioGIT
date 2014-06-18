@@ -3,8 +3,7 @@
  */
 package jAudioFeatureExtractor;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  * Generic executable code snippet designed to send an error report from an

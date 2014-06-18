@@ -3,12 +3,11 @@ package jAudioFeatureExtractor;
 import jAudioFeatureExtractor.ACE.DataTypes.Batch;
 import jAudioFeatureExtractor.AudioFeatures.FeatureExtractor;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
-
-import javax.swing.SwingUtilities;
 
 /**
  * GUI components that handles the execution of the feature extraction. The

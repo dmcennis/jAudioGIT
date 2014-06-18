@@ -6,8 +6,8 @@
 
 package jAudioFeatureExtractor.ACE.XMLParsers;
 
-import java.io.File;
 import javax.swing.filechooser.FileFilter;
+import java.io.File;
 
 
 /**
@@ -19,7 +19,7 @@ import javax.swing.filechooser.FileFilter;
  * end with .xml (case is ignored).
  * 
  * @author	Cory McKay
- * @see		FileFilter
+ * @see		javax.swing.filechooser.FileFilter
  */
 public class FileFilterXML
 	extends FileFilter

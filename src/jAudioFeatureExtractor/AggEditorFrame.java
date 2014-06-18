@@ -3,26 +3,11 @@
  */
 package jAudioFeatureExtractor;
 
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
 import jAudioFeatureExtractor.Aggregators.Aggregator;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.GridLayout;
-import javax.swing.JTextArea;
-import java.awt.Color;
-import javax.swing.BoxLayout;
-import javax.swing.JSplitPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import java.awt.Rectangle;
-import java.awt.Dimension;
+
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Point;
+import java.awt.*;
 
 /**
  * AggEditorFrame

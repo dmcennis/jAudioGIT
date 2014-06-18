@@ -1,18 +1,15 @@
 package jAudioFeatureExtractor.ACE.XMLParsers;
 
 import jAudioFeatureExtractor.Aggregators.Aggregator;
-import jAudioFeatureExtractor.Aggregators.AggregatorContainer;
 import jAudioFeatureExtractor.AudioFeatures.FeatureExtractor;
-import jAudioFeatureExtractor.AudioFeatures.MetaFeatureFactory;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.LinkedList;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 
 public class FeatureListHandler extends ParseFileHandler {
 
@@ -59,7 +56,7 @@ public class FeatureListHandler extends ParseFileHandler {
 		case PLUGIN_LOCATION:
 			try {
 					URL[] pluginURL = new URL[]{new URL(new String(ch,start,length))};
-					classLoader =URLClassLoader.newInstance(pluginURL,java.lang.Thread.currentThread().getContextClassLoader());
+					classLoader =URLClassLoader.newInstance(pluginURL, Thread.currentThread().getContextClassLoader());
 //					java.lang.Thread.currentThread().setContextClassLoader(classLoader);
 				} catch (MalformedURLException e) {
 					throw new SAXException("Plugin location not a valid URL:"+new String(ch,start,length));

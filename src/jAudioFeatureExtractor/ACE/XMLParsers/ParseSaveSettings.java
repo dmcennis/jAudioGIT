@@ -1,13 +1,12 @@
 package jAudioFeatureExtractor.ACE.XMLParsers;
 
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 
 /**
  * Class for parsing XML documents that store GUI settings.
@@ -84,7 +83,7 @@ public class ParseSaveSettings extends ParseFileHandler {
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
 		String tmp = new String(ch,start,length);
-		tmp = tmp.substring(start, start + length);
+
 		switch (tagType){
 			case 0:
 				break;
@@ -172,7 +171,7 @@ public class ParseSaveSettings extends ParseFileHandler {
 				tmpAggregatorParameters_.add(tmp);
 				break;
 			default:
-				throw new SAXException("Unknwon Tag Type " + tagType + "in characters");
+				throw new SAXException("Unknown Tag Type " + tagType + "in characters");
 		}
 	}
 
@@ -237,7 +236,7 @@ public class ParseSaveSettings extends ParseFileHandler {
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
 		if (count == 0) {
-			if (!localName.equals("save_settings")&&!qName.equals("name")) {
+			if (!localName.equals("save_settings")&&!qName.equals("save_settings")) {
 				throw new SAXException("\n\nIt is in reality of the type ["
 						+ localName + "].");
 			}

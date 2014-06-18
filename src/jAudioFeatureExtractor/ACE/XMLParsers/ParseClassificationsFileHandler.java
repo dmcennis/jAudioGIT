@@ -6,9 +6,11 @@
 
 package jAudioFeatureExtractor.ACE.XMLParsers;
 
-import org.xml.sax.*;
-import java.util.LinkedList;
 import jAudioFeatureExtractor.ACE.DataTypes.SegmentedClassification;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+
+import java.util.LinkedList;
 
 
 /**
@@ -45,7 +47,7 @@ public class ParseClassificationsFileHandler
 	/**
 	 * The root-level SegmentedClassification currently being processed.
 	 */
-	private	SegmentedClassification				current_root_classification;
+	private SegmentedClassification current_root_classification;
 	
 
 	/**
@@ -59,7 +61,7 @@ public class ParseClassificationsFileHandler
 	 * The SegmentedClassification that is a sub-set of a root-level
 	 * SegmentedClassification that is currently being processed.
 	 */
-	private	SegmentedClassification				current_subset_classification;
+	private SegmentedClassification current_subset_classification;
 	
 
 	/**
@@ -122,7 +124,7 @@ public class ParseClassificationsFileHandler
 	 *
 	 * @param	name			Name of the element that is encountered.
 	 * @param	atts			The attributes encountered.
-	 * @throws	SAXException	Exception thrown if is wrong type of XML file.
+	 * @throws	org.xml.sax.SAXException	Exception thrown if is wrong type of XML file.
 	 */
 	public void startElement(String namespace, String name, String qName, Attributes atts)
 		throws SAXException

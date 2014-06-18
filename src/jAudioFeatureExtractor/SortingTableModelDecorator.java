@@ -1,15 +1,13 @@
 package jAudioFeatureExtractor;
 
-import java.awt.Component;
-import java.util.Arrays;
-import java.util.Vector;
-
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import java.awt.*;
+import java.util.Vector;
 
 /**
  * Decorator model on top of normal feature selection model.

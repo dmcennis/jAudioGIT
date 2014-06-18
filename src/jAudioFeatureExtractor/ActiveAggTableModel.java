@@ -3,9 +3,10 @@
  */
 package jAudioFeatureExtractor;
 
+import jAudioFeatureExtractor.Aggregators.Aggregator;
+
 import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
-import jAudioFeatureExtractor.Aggregators.Aggregator;
 
 /**
  * ActiveAggTableModel

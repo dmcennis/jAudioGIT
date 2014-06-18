@@ -1,10 +1,8 @@
 package jAudioFeatureExtractor;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileOutputStream;
-
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 /**
  * This is a thread for executing the DataModel.extractFeatures without tying up

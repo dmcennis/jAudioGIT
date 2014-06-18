@@ -6,20 +6,19 @@
 
 package jAudioFeatureExtractor.jAudioTools;
 
+import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
+import jAudioFeatureExtractor.Aggregators.AggregatorContainer;
+import jAudioFeatureExtractor.AudioFeatures.FeatureExtractor;
 import jAudioFeatureExtractor.Cancel;
 import jAudioFeatureExtractor.ExplicitCancel;
 import jAudioFeatureExtractor.Updater;
-import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
-import jAudioFeatureExtractor.Aggregators.Aggregator;
-import jAudioFeatureExtractor.Aggregators.AggregatorContainer;
-import jAudioFeatureExtractor.Aggregators.AreaMoments;
-import jAudioFeatureExtractor.Aggregators.MFCC;
-import jAudioFeatureExtractor.Aggregators.Mean;
-import jAudioFeatureExtractor.Aggregators.MultipleFeatureHistogram;
-import jAudioFeatureExtractor.Aggregators.StandardDeviation;
-import jAudioFeatureExtractor.AudioFeatures.*;
-import javax.sound.sampled.*;
-import java.io.*;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.OutputStream;
 import java.util.LinkedList;
 
 /**
@@ -58,7 +57,7 @@ public class FeatureProcessor {
 	private boolean normalise;
 
 	// The features that are to be extracted.
-	private FeatureExtractor[] feature_extractors;
+	public FeatureExtractor[] feature_extractors;
 
 	// The dependencies of the features in the feature_extractors field.
 	// The first indice corresponds to the feature_extractors indice
@@ -112,6 +111,10 @@ public class FeatureProcessor {
 	
 	private AggregatorContainer aggregator;
 
+    private double[][][] window_feature_values;
+
+    private int[] window_start_indices;
+
 	/* CONSTRUCTOR ************************************************************ */
 
 	/**
@@ -153,16 +156,16 @@ public class FeatureProcessor {
 	 *             invalid.
 	 */
 	public FeatureProcessor(int window_size, double window_overlap,
-			double sampling_rate, boolean normalise,
-			FeatureExtractor[] all_feature_extractors,
-			boolean[] features_to_save_among_all,
-			boolean save_features_for_each_window,
-			boolean save_overall_recording_features,
-			OutputStream feature_values_save_path,
-			OutputStream feature_definitions_save_path, 
-			int outputType,
-			Cancel cancel,
-			AggregatorContainer container)
+                            double sampling_rate, boolean normalise,
+                            FeatureExtractor[] all_feature_extractors,
+                            boolean[] features_to_save_among_all,
+                            boolean save_features_for_each_window,
+                            boolean save_overall_recording_features,
+                            OutputStream feature_values_save_path,
+                            OutputStream feature_definitions_save_path,
+                            int outputType,
+                            Cancel cancel,
+                            AggregatorContainer container)
 			throws Exception {
 		this.cancel = cancel;
 		if(container!=null){
@@ -198,7 +201,7 @@ public class FeatureProcessor {
 				one_selected = true;
 		if (!one_selected)
 			throw new Exception("No features have been set to be saved.");
-		if ((outputType == 0) || (outputType == 1)) {
+		if ((outputType == 0) || (outputType == 1) || outputType == 2) {
 			this.outputType = outputType;
 		} else {
 			throw new Exception(
@@ -248,7 +251,7 @@ public class FeatureProcessor {
 
 		// Find which features need to be extracted and in what order. Also find
 		// the indices of dependencies and the maximum offsets for each feature.
-		findAndOrderFeaturesToExtract(all_feature_extractors,
+	        findAndOrderFeaturesToExtract(all_feature_extractors,
 				features_to_save_among_all);
 
 		// Write the headers of the feature_vector_file
@@ -274,10 +277,29 @@ public class FeatureProcessor {
 	 */
 	public void extractFeatures(File recording_file, Updater updater)
 			throws Exception {
-		// Pre-process the recording and extract the samples from the audio
-		this.updater = updater;
-		double[] samples = preProcessRecording(recording_file);
-		if(cancel.isCancel()){
+
+        // Pre-process the recording and extract the samples from the audio
+        double[] samples = preProcessRecording(recording_file);
+        extractFeaturesBySample(samples,updater);
+        if (outputType == 0) {
+            saveACEFeatureVectorsForARecording(window_feature_values,
+                    window_start_indices, recording_file.getPath(),
+                    aggregator);
+        } else if (outputType == 1) {
+            saveARFFFeatureVectorsForARecording(window_feature_values,
+                    window_start_indices, recording_file.getPath(),
+                    aggregator);
+        }
+
+        // Save the feature definitions
+        if (!definitions_written && (outputType == 0)) {
+            saveFeatureDefinitions(window_feature_values, aggregator);
+        }
+    }
+    public void extractFeaturesBySample(double[] samples, Updater updater)
+            throws Exception{
+        this.updater = updater;
+		if((cancel != null)&&(cancel.isCancel())){
 			throw new ExplicitCancel("Killed after loading data");
 		}
 		// Calculate the window start indices
@@ -289,7 +311,7 @@ public class FeatureProcessor {
 		}
 		Integer[] window_start_indices_I = window_start_indices_list
 				.toArray(new Integer[1]);
-		int[] window_start_indices = new int[window_start_indices_I.length];
+		window_start_indices = new int[window_start_indices_I.length];
 
 		// if were using a progress bar, set its max update
 		if (updater != null) {
@@ -300,7 +322,7 @@ public class FeatureProcessor {
 			window_start_indices[i] = window_start_indices_I[i].intValue();
 
 		// Extract the feature values from the samples
-		double[][][] window_feature_values = getFeatures(samples,
+		window_feature_values = getFeatures(samples,
 				window_start_indices);
 
 		// Find the feature averages and standard deviations if appropriate
@@ -341,20 +363,6 @@ public class FeatureProcessor {
 		// window_feature_values, overall_feature_definitions);
 
 		// Save the feature values for this recording
-		if (outputType == 0) {
-			saveACEFeatureVectorsForARecording(window_feature_values,
-					window_start_indices, recording_file.getPath(),
-					aggregator);
-		} else if (outputType == 1) {
-			saveARFFFeatureVectorsForARecording(window_feature_values,
-					window_start_indices, recording_file.getPath(),
-					aggregator);
-		}
-
-		// Save the feature definitions
-		if (!definitions_written && (outputType == 0)) {
-			saveFeatureDefinitions(window_feature_values, aggregator);
-		}
 	}
 
 	/**
@@ -393,13 +401,12 @@ public class FeatureProcessor {
 	 */
 	private void findAndOrderFeaturesToExtract(
 			FeatureExtractor[] all_feature_extractors,
-			boolean[] features_to_save_among_all) {
+			boolean[] features_to_save_among_all) throws Exception{
 		// Find the names of all features
 		String[] all_feature_names = new String[all_feature_extractors.length];
 		for (int feat = 0; feat < all_feature_extractors.length; feat++)
 			all_feature_names[feat] = all_feature_extractors[feat]
 					.getFeatureDefinition().name;
-
 		// Find dependencies of all features marked to be extracted.
 		// Mark as null if features are not to be extracted. Note that will also
 		// be null if there are no dependencies.
@@ -411,7 +418,6 @@ public class FeatureProcessor {
 			else
 				dependencies[feat] = null;
 		}
-
 		// Add dependencies to dependencies and if any features are not marked
 		// for
 		// saving but are marked as a dependency of a feature that is marked to
@@ -456,6 +462,7 @@ public class FeatureProcessor {
 				number_features_to_extract++;
 		feature_extractors = new FeatureExtractor[number_features_to_extract];
 		features_to_save = new boolean[number_features_to_extract];
+		
 		for (int i = 0; i < features_to_save.length; i++)
 			features_to_save[i] = false;
 		boolean[] feature_added = new boolean[dependencies.length];
@@ -510,20 +517,32 @@ public class FeatureProcessor {
 					}
 			}
 		}
-
+	
+		if (current_position != number_features_to_extract){
+			throw new Exception("A feature has a spelling error in its dependency.");
+		}	
 		// Find the indices of the feature extractor dependencies for each
 		// feature
 		// extractor
 		feature_extractor_dependencies = new int[feature_extractors.length][];
 		String[] feature_names = new String[feature_extractors.length];
 		for (int feat = 0; feat < feature_names.length; feat++) {
-			feature_names[feat] = feature_extractors[feat]
+			try{
+				feature_names[feat] = feature_extractors[feat]
 					.getFeatureDefinition().name;
+			}catch(Exception e){
+				System.out.println("Feature "+feat+" has a bad feature definition");
+			}
 		}
 		String[][] feature_dependencies_str = new String[feature_extractors.length][];
-		for (int feat = 0; feat < feature_dependencies_str.length; feat++)
-			feature_dependencies_str[feat] = feature_extractors[feat]
+		for (int feat = 0; feat < feature_dependencies_str.length; feat++){
+			try{
+				feature_dependencies_str[feat] = feature_extractors[feat]
 					.getDepenedencies();
+			}catch(Exception e){
+				System.out.println("Feature "+feat+" has a bad dependency");
+			}
+		}
 		for (int i = 0; i < feature_dependencies_str.length; i++)
 			if (feature_dependencies_str[i] != null) {
 				feature_extractor_dependencies[i] = new int[feature_dependencies_str[i].length];
@@ -575,6 +594,8 @@ public class FeatureProcessor {
 	 */
 	private double[] preProcessRecording(File recording_file) throws Exception {
 		// Get the original audio and its format
+		System.out.println(recording_file.getAbsolutePath());
+		System.out.println("Present: "+recording_file.exists());
 		AudioInputStream original_stream = AudioSystem
 				.getAudioInputStream(recording_file);
 		AudioFormat original_format = original_stream.getFormat();
@@ -886,17 +907,6 @@ public class FeatureProcessor {
 	 * @param identifier
 	 *            A string to use for identifying this recording. Often a file
 	 *            path.
-	 * @param overall_feature_values
-	 *            The extracted overall average and standard deviations of the
-	 *            window feature values. The first indice identifies the feature
-	 *            and the second identifies the feature value. The order of the
-	 *            features correspond to the overall_feature_definitions
-	 *            parameter. This value is null if overall feature values were
-	 *            not extracted.
-	 * @param overall_feature_definitions
-	 *            The feature definitions of the features that are in the
-	 *            overall_feature_values parameter. Will be null if no overall
-	 *            features were extracted.
 	 * @throws Exception
 	 *             Throws an exception if cannot write.
 	 */
@@ -963,17 +973,6 @@ public class FeatureProcessor {
 	 * @param identifier
 	 *            A string to use for identifying this recording. Often a file
 	 *            path.
-	 * @param overall_feature_values
-	 *            The extracted overall average and standard deviations of the
-	 *            window feature values. The first indice identifies the feature
-	 *            and the second identifies the feature value. The order of the
-	 *            features correspond to the overall_feature_definitions
-	 *            parameter. This value is null if overall feature values were
-	 *            not extracted.
-	 * @param overall_feature_definitions
-	 *            The feature definitions of the features that are in the
-	 *            overall_feature_values parameter. Will be null if no overall
-	 *            features were extracted.
 	 * @throws Exception
 	 *             Throws an exception if cannot write.
 	 */
@@ -1048,10 +1047,6 @@ public class FeatureProcessor {
 	 *            The extracted feature values for a recording. The first indice
 	 *            identifies the window, the second identifies the feature and
 	 *            the third identifies the feature value.
-	 * @param overall_feature_definitions
-	 *            The feature definitions of the features that are in the
-	 *            features for the recording. Will be null if no overallfeatures
-	 *            were extracted.
 	 * @throws Exception
 	 *             Throws an exception if cannot write.
 	 */
@@ -1118,4 +1113,12 @@ public class FeatureProcessor {
 
 		definitions_written = true;
 	}
+
+    public int[] getWindow_start_indices() {
+        return window_start_indices;
+    }
+
+    public double[][][] getWindow_feature_values() {
+        return window_feature_values;
+    }
 }

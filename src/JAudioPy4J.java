@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import py4j.GatewayServer;
+//import py4j.GatewayServer;
 import jAudioFeatureExtractor.AudioStreamProcessor;
 
 public class JAudioPy4J {
@@ -22,7 +22,7 @@ public class JAudioPy4J {
     }
 
     public static void main(String[] args){
-        GatewayServer gateway = new GatewayServer(new JAudioPy4J(args[0],args[1]));
-        gateway.start();
+//        GatewayServer gateway = new GatewayServer(new JAudioPy4J(args[0],args[1]));
+//        gateway.start();
     }
 }

@@ -3,21 +3,13 @@
  */
 package jAudioFeatureExtractor;
 
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import java.awt.Dimension;
-import java.awt.Rectangle;
-import java.awt.GridBagLayout;
-import javax.swing.JButton;
-import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import jAudioFeatureExtractor.Aggregators.Aggregator;
 import jAudioFeatureExtractor.Aggregators.Mean;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * AggregatorFrame
@@ -125,7 +117,7 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 						if(row>=0){
 							aggEditorFrame = new AggEditorFrame((jAudioFeatureExtractor.Aggregators.Aggregator)controller.activeAgg_.getAggregator(row),controller);
 							aggEditorFrame.setVisible(true);
-							((ActiveAggTableModel)ActiveAggTable.getModel()).setAggregator(row, aggEditorFrame.getAggregator(), aggEditorFrame.isEdited());			
+							((ActiveAggTableModel)ActiveAggTable.getModel()).setAggregator(row, aggEditorFrame.getAggregator(), aggEditorFrame.isEdited());
 						}
 					}
 				}
@@ -135,9 +127,9 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * This method initializes AggList	
-	 * 	
-	 * @return javax.swing.JScrollPane	
+	 * This method initializes AggList
+	 *
+	 * @return javax.swing.JScrollPane
 	 */
 	private JScrollPane getAggList() {
 		if (AggList == null) {
@@ -148,9 +140,9 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * This method initializes AggListTable	
-	 * 	
-	 * @return javax.swing.JTable	
+	 * This method initializes AggListTable
+	 *
+	 * @return javax.swing.JTable
 	 */
 	private JTable getAggListTable() {
 		if (AggListTable == null) {
@@ -166,7 +158,7 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 							AggListTableModel list = (AggListTableModel)AggListTable.getModel();
 							Aggregator prototype = list.getAggregator(row[i]);
 							Aggregator newAgg = (Aggregator)prototype.clone();
-							((ActiveAggTableModel)ActiveAggTable.getModel()).addAggregator(newAgg);							
+							((ActiveAggTableModel)ActiveAggTable.getModel()).addAggregator(newAgg);
 						}
 					}
 				}
@@ -176,9 +168,9 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * This method initializes AggButtonPanel	
-	 * 	
-	 * @return javax.swing.JPanel	
+	 * This method initializes AggButtonPanel
+	 *
+	 * @return javax.swing.JPanel
 	 */
 	private JPanel getAggButtonPanel() {
 		if (AggButtonPanel == null) {
@@ -209,17 +201,17 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * This method initializes AggAdd	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes AggAdd
+	 *
+	 * @return javax.swing.JButton
 	 */
 	private JButton getAggAdd() {
 		if (AggAdd == null) {
 			AggAdd = new JButton();
 			AggAdd.setText("Add");
 			AggAdd.setToolTipText("Add a new Aggregator to be applied");
-			AggAdd.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
+			AggAdd.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					int row = AggListTable.getSelectedRow();
 					if(row != -1){
 						AggListTableModel list = (AggListTableModel)AggListTable.getModel();
@@ -234,17 +226,17 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * This method initializes AggRemove	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes AggRemove
+	 *
+	 * @return javax.swing.JButton
 	 */
 	private JButton getAggRemove() {
 		if (AggRemove == null) {
 			AggRemove = new JButton();
 			AggRemove.setText("Remove");
 			AggRemove.setToolTipText("Remove an aggregator that has been previously defined");
-			AggRemove.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
+			AggRemove.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					int row = ActiveAggTable.getSelectedRow();
 					if(row >= 0){
 						((ActiveAggTableModel)ActiveAggTable.getModel()).removeAggregator(row);
@@ -256,17 +248,17 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * This method initializes AggEdit	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes AggEdit
+	 *
+	 * @return javax.swing.JButton
 	 */
 	private JButton getAggEdit() {
 		if (AggEdit == null) {
 			AggEdit = new JButton();
 			AggEdit.setText("Edit");
 			AggEdit.setToolTipText("Edit the properities of the defined aggregator");
-			AggEdit.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
+			AggEdit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					int row = ActiveAggTable.getSelectedRow();
 					if(row != -1){
 						aggEditorFrame = new AggEditorFrame((jAudioFeatureExtractor.Aggregators.Aggregator)controller.activeAgg_.getAggregator(row),controller);

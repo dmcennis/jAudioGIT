@@ -6,21 +6,21 @@
 
 package jAudioFeatureExtractor;
 
-import java.awt.*;
-import java.awt.event.*;
+import jAudioFeatureExtractor.Aggregators.Aggregator;
+import jAudioFeatureExtractor.AudioFeatures.FeatureExtractor;
+import jAudioFeatureExtractor.DataTypes.RecordingInfo;
+import jAudioFeatureExtractor.GeneralTools.FeatureDisplay;
+import jAudioFeatureExtractor.actions.MultipleToggleAction;
+
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-
-import java.io.*;
-
-import jAudioFeatureExtractor.Aggregators.Aggregator;
-import jAudioFeatureExtractor.AudioFeatures.*;
-import jAudioFeatureExtractor.DataTypes.RecordingInfo;
-import jAudioFeatureExtractor.GeneralTools.FeatureDisplay;
-import jAudioFeatureExtractor.actions.MultipleToggleAction;
-import jAudioFeatureExtractor.ACE.XMLParsers.FileFilterXML;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * A window that allows users to select which features to save as well as some
@@ -240,10 +240,16 @@ public class FeatureSelectorPanel extends JPanel implements ActionListener {
 				save_window_features_check_box,
 				save_overall_file_featurese_check_box,
 				window_length_text_field, window_overlap_fraction_text_field);
-		controller.dm_.aggregators = new Aggregator[] {
-				(Aggregator) (controller.dm_.aggregatorMap
-						.get("Standard Deviation").clone()),
-				(Aggregator) (controller.dm_.aggregatorMap.get("Mean").clone()) };
+		try {
+            controller.dm_.aggregators = new Aggregator[]{
+                    (Aggregator) (controller.dm_.aggregatorMap
+                            .get("Zernike Moments").clone())};
+            controller.dm_.aggregators[0].setParameters(new String[]{"ConstantQ"}, null);
+        }catch(Exception e){
+            controller.dm_.aggregators = new Aggregator[]{
+                    (Aggregator) (controller.dm_.aggregatorMap
+                            .get("Mean").clone())};
+        }
 	}
 
 	/* PUBLIC METHODS ********************************************************* */

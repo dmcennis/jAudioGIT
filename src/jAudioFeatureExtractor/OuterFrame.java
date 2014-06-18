@@ -7,15 +7,15 @@
 package jAudioFeatureExtractor;
 
 import jAudioFeatureExtractor.actions.ExecuteBatchAction;
+import org.multihelp.HelpWindow;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-import javax.swing.*;
-
-import org.multihelp.HelpWindow;
 //import javax.help.*;
-import java.net.*;
+//import javax.help.*;
+
 
 /**
  * A panel holding various components of the jAudio Feature Extractor GUI
@@ -221,7 +221,7 @@ public class OuterFrame extends JFrame {
 		add(recording_selector_panel, BorderLayout.WEST);
 		add(feature_selector_panel, BorderLayout.EAST);
 		add(menu, BorderLayout.NORTH);
-		this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage("jAudioLogo3-16.bmp"));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("jAudioLogo3-16.bmp"));
 		// Display GUI
 		pack();
 		splash.endSplash();
@@ -232,7 +232,7 @@ public class OuterFrame extends JFrame {
 
 	/**
 	 * This method creates the online help system.
-	 * 
+	 *
 	 * @param helpsetfile
 	 *            Name of the file where the help file metadata is stored.
 	 * @return Reference to a newly created help set.
@@ -241,17 +241,17 @@ public class OuterFrame extends JFrame {
 		HelpWindow hs = new HelpWindow();
 		return hs;
 	}
-	
+
 	// helper class for creating a splashscreen from Graphic Java: Mastering the JFC: AWT
 	protected class SplashFrame extends Frame{
-			private java.awt.Window window = new java.awt.Window(this);
-			private java.awt.Image image = java.awt.Toolkit.getDefaultToolkit().getImage("jAudioLogo3-400.jpg");
+			private Window window = new Window(this);
+			private Image image = Toolkit.getDefaultToolkit().getImage("jAudioLogo3-400.jpg");
 			private ImageCanvas canvas;
-			
+
 			public void loadSplash(){
 				canvas = new ImageCanvas(image);
 				window.add(canvas,"Center");
-				Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+				Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 				window.setLocation(screenSize.width/2-200,screenSize.height/2-200);
 				window.setSize(400,400);
 				window.pack();

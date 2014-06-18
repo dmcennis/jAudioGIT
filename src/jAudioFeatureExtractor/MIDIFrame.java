@@ -7,12 +7,19 @@
 
 package jAudioFeatureExtractor;
 
-import javax.sound.midi.*;
+import jAudioFeatureExtractor.jMIDITools.FileFilterMIDI;
+import jAudioFeatureExtractor.jMIDITools.MIDIMethodsPlayback;
+
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import jAudioFeatureExtractor.jMIDITools.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
 
 
 /**
@@ -45,7 +52,7 @@ public class MIDIFrame
 	/**
 	 * The GUI component that instantiated this object
 	 */
-	private Controller	controller;
+	private Controller controller;
 
 	/**
 	 * The currently loaded MIDI file contents and a Sequencer to play it

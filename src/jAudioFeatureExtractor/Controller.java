@@ -1,14 +1,11 @@
 package jAudioFeatureExtractor;
 
-import java.util.Vector;
-
 import jAudioFeatureExtractor.ACE.DataTypes.Batch;
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 import jAudioFeatureExtractor.actions.*;
 
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
+import javax.swing.*;
+import java.util.Vector;
 
 /**
  * Controller is a master location for all actions and non-gui components. Not

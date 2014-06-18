@@ -1,11 +1,7 @@
 package jAudioFeatureExtractor;
 
-import java.awt.GridLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JProgressBar;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Frame showing progress bars detailing the progress of the exeuction of batches.

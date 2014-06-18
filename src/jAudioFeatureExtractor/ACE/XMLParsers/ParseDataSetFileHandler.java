@@ -6,9 +6,11 @@
 
 package jAudioFeatureExtractor.ACE.XMLParsers;
 
-import org.xml.sax.*;
-import java.util.LinkedList;
 import jAudioFeatureExtractor.ACE.DataTypes.DataSet;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+
+import java.util.LinkedList;
 
 
 /**
@@ -45,7 +47,7 @@ public class ParseDataSetFileHandler
 	/**
 	 * The root-level DataSet currently being processed.
 	 */
-	private	DataSet					current_root_dataset;
+	private DataSet current_root_dataset;
 	
 
 	/**
@@ -58,7 +60,7 @@ public class ParseDataSetFileHandler
 	/**
 	 * The DataSet that is part of a section of a root-level DataSet.
 	 */
-	private	DataSet					current_subset_dataset;
+	private DataSet current_subset_dataset;
 	
 
 	/**
@@ -121,7 +123,7 @@ public class ParseDataSetFileHandler
 	 *
 	 * @param	name			Name of the element that is encountered.
 	 * @param	atts			The attributes encountered.
-	 * @throws	SAXException	Exception thrown if is wrong type of XML file.
+	 * @throws	org.xml.sax.SAXException	Exception thrown if is wrong type of XML file.
 	 */
 	public void startElement(String namespace, String name, String qName, Attributes atts)
 		throws SAXException

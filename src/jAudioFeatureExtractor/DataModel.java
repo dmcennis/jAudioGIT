@@ -1,19 +1,21 @@
 package jAudioFeatureExtractor;
 
+import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
+import jAudioFeatureExtractor.ACE.XMLParsers.XMLDocumentParser;
+import jAudioFeatureExtractor.Aggregators.*;
+import jAudioFeatureExtractor.AudioFeatures.*;
+import jAudioFeatureExtractor.AudioFeatures.Mean;
+import jAudioFeatureExtractor.AudioFeatures.StandardDeviation;
+import jAudioFeatureExtractor.DataTypes.RecordingInfo;
+import jAudioFeatureExtractor.jAudioTools.AudioMethodsPlayback;
+import jAudioFeatureExtractor.jAudioTools.FeatureProcessor;
+
 import java.io.File;
 import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
-import jAudioFeatureExtractor.ACE.XMLParsers.XMLDocumentParser;
-import jAudioFeatureExtractor.Aggregators.Aggregator;
-import jAudioFeatureExtractor.Aggregators.AggregatorContainer;
-import jAudioFeatureExtractor.AudioFeatures.*;
-import jAudioFeatureExtractor.DataTypes.RecordingInfo;
-import jAudioFeatureExtractor.jAudioTools.AudioMethodsPlayback;
 //import jAudioFeatureExtractor.jAudioTools.AudioSamples;
-import jAudioFeatureExtractor.jAudioTools.FeatureProcessor;
 
 /**
  * All components that are not tightly tied to GUI. Used by console interface as
@@ -171,7 +173,7 @@ public class DataModel {
 		try {
 
 			Object[] lists = (Object[]) XMLDocumentParser.parseXMLDocument(
-					featureXMLLocation, "feature_list");
+                    featureXMLLocation, "feature_list");
 			extractors = (LinkedList<FeatureExtractor>) lists[0];
 			def = (LinkedList<Boolean>) lists[1];
 			Aggregator[] aggArray = ((LinkedList<Aggregator>) lists[2])
@@ -292,11 +294,9 @@ public class DataModel {
 
 		container = new AggregatorContainer();
 		if((aggregators==null)||(aggregators.length==0)){
-			aggregators = new Aggregator[3];
-			aggregators[0]=new jAudioFeatureExtractor.Aggregators.Mean();
-			aggregators[1]=new jAudioFeatureExtractor.Aggregators.StandardDeviation();
-			aggregators[2]=new jAudioFeatureExtractor.Aggregators.AreaMoments();
-			aggregators[2].setParameters(new String[]{"Area Method of Moments of MFCCs"},new String[]{"10"});
+			aggregators = new Aggregator[1];
+			aggregators[0]=new jAudioFeatureExtractor.Aggregators.ZernikeMoments();
+			aggregators[0].setParameters(new String[]{"ConstantQ"},new String[]{"0.5"});
 		}
 		container.add(aggregators);
 		container.add(features,defaults);

@@ -6,8 +6,9 @@
 
 package jAudioFeatureExtractor;
 
-import javax.swing.table.DefaultTableModel;
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
+
+import javax.swing.table.DefaultTableModel;
 
 
 /**

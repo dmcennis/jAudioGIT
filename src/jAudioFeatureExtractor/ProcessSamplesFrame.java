@@ -7,14 +7,18 @@
 
 package jAudioFeatureExtractor;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.io.*;
-import javax.sound.sampled.*;
-import jAudioFeatureExtractor.jAudioTools.*;
-import jAudioFeatureExtractor.GeneralTools.PlotDisplay;
 import jAudioFeatureExtractor.DataTypes.RecordingInfo;
+import jAudioFeatureExtractor.GeneralTools.PlotDisplay;
+import jAudioFeatureExtractor.jAudioTools.*;
+
+import javax.sound.sampled.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
 
 /**
  * A window that allows the user to process and edit the samples belonging to an
@@ -520,7 +524,7 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 
 			// Get the place to play to
 			SourceDataLine source_data_line = AudioMethods.getSourceDataLine(
-					audio_input_stream.getFormat(), null);
+                    audio_input_stream.getFormat(), null);
 
 			// Stop any previous playback
 			stopPlayback();
@@ -528,7 +532,7 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 			// Begin playback
 			playback_thread = AudioMethodsPlayback
 					.playAudioInputStreamInterruptible(audio_input_stream,
-							source_data_line);
+                            source_data_line);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR",
 					JOptionPane.ERROR_MESSAGE);
@@ -565,9 +569,9 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 				float sampling_rate = processed_audio_samples.getAudioFormat()
 						.getSampleRate();
 				start_sample = DSPMethods.convertTimeToSample(start_time,
-						sampling_rate);
+                        sampling_rate);
 				end_sample = DSPMethods.convertTimeToSample(end_time,
-						sampling_rate);
+                        sampling_rate);
 			} else {
 				start_sample = (new Integer(start_text_field.getText()))
 						.intValue();
@@ -619,9 +623,9 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 				float sampling_rate = processed_audio_samples.getAudioFormat()
 						.getSampleRate();
 				start_sample = DSPMethods.convertTimeToSample(start_time,
-						sampling_rate);
+                        sampling_rate);
 				end_sample = DSPMethods.convertTimeToSample(end_time,
-						sampling_rate);
+                        sampling_rate);
 
 			} else {
 				start_sample = (new Integer(start_text_field.getText()))
@@ -677,9 +681,9 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 				float sampling_rate = processed_audio_samples.getAudioFormat()
 						.getSampleRate();
 				start_sample = DSPMethods.convertTimeToSample(start_time,
-						sampling_rate);
+                        sampling_rate);
 				end_sample = DSPMethods.convertTimeToSample(end_time,
-						sampling_rate);
+                        sampling_rate);
 
 			} else {
 				start_sample = (new Integer(start_text_field.getText()))
@@ -823,23 +827,23 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 				int start_sample = (int) (new Double(start_text_field.getText())
 						.doubleValue());
 				double start_time = DSPMethods.convertSampleToTime(
-						start_sample, sampling_rate);
+                        start_sample, sampling_rate);
 				start_text_field.setText(String.valueOf(start_time));
 				int end_sample = (int) (new Double(end_text_field.getText())
 						.doubleValue());
 				double end_time = DSPMethods.convertSampleToTime(end_sample,
-						sampling_rate);
+                        sampling_rate);
 				end_text_field.setText(String.valueOf(end_time));
 			} else {
 				double start_time = (new Double(start_text_field.getText()))
 						.doubleValue();
 				int start_sample = DSPMethods.convertTimeToSample(start_time,
-						sampling_rate);
+                        sampling_rate);
 				start_text_field.setText(String.valueOf(start_sample));
 				double end_time = (new Double(end_text_field.getText()))
 						.doubleValue();
 				int end_sample = DSPMethods.convertTimeToSample(end_time,
-						sampling_rate);
+                        sampling_rate);
 				end_text_field.setText(String.valueOf(end_sample));
 			}
 		}

@@ -21,35 +21,33 @@
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.SpectralCentroid</class>
-		<on/>
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.SpectralRolloffPoint</class>
-		<on/>
 	</feature>
-	<feature>
+    <feature>
+        <class>jAudioFeatureExtractor.AudioFeatures.ZernikeMoments</class>
+    </feature>
+    <feature>
+        <class>jAudioFeatureExtractor.AudioFeatures.ZernikeMomentsBeatHistogram</class>
+    </feature>
+    <feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.SpectralFlux</class>
-		<on/>
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.Compactness</class>
-		<on/>
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.SpectralVariability</class>
-		<on/>
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.RMS</class>
-		<on/>
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.FractionOfLowEnergyWindows</class>
-		<on/>
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.ZeroCrossings</class>
-		<on/>
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.BeatHistogram</class>
@@ -59,15 +57,12 @@
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.StrongestBeat</class>
-		<on/>
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.BeatSum</class>
-		<on/>
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.StrengthOfStrongestBeat</class>
-		<on/>
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.StrongestFrequencyViaZeroCrossings</class>
@@ -86,7 +81,6 @@
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.LPC</class>
-		<on/>
 	</feature>
 	<feature>
 		<class>jAudioFeatureExtractor.AudioFeatures.PeakFinder</class>
@@ -108,7 +102,6 @@
 	</feature>
 	<feature>
 	  <class>jAudioFeatureExtractor.AudioFeatures.AreaMomentsMFCC</class>
-		<on/>
 	</feature>
 	<feature>
 	  <class>jAudioFeatureExtractor.AudioFeatures.AreaMomentsLogConstantQ</class>
@@ -121,6 +114,7 @@
     </feature>
 	<feature>
 	  <class>jAudioFeatureExtractor.AudioFeatures.ConstantQ</class>
+      <on/>
 	</feature>
 	<feature>
 	  <class>jAudioFeatureExtractor.AudioFeatures.LogConstantQ</class>
@@ -131,7 +125,7 @@
 	<feature>
 	  <class>jAudioFeatureExtractor.AudioFeatures.Chroma</class>
 	</feature>
-	<feature>
+    <feature>
 	  <class>jAudioFeatureExtractor.AudioFeatures.AreaPolynomialApproximation</class>
 	</feature>
 	<feature>
@@ -149,4 +143,5 @@
 	<aggregator>jAudioFeatureExtractor.Aggregators.MFCC</aggregator>
 	<aggregator>jAudioFeatureExtractor.Aggregators.MultipleFeatureHistogram</aggregator>
 	<aggregator>jAudioFeatureExtractor.Aggregators.AreaPolynomialApproximation</aggregator>
+    <aggregator>jAudioFeatureExtractor.Aggregators.ZernikeMoments</aggregator>
 </featureList>

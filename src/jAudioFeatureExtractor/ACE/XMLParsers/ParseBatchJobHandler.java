@@ -1,13 +1,12 @@
 package jAudioFeatureExtractor.ACE.XMLParsers;
 
 import jAudioFeatureExtractor.ACE.DataTypes.Batch;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 
 /**
  * Class responsible for the parsing of XML batch files.

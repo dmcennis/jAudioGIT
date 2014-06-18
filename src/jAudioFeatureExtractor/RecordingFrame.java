@@ -7,13 +7,18 @@
 
 package jAudioFeatureExtractor;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.io.*;
-import javax.sound.sampled.*;
-import jAudioFeatureExtractor.jAudioTools.*;
 import jAudioFeatureExtractor.GeneralTools.StringMethods;
+import jAudioFeatureExtractor.jAudioTools.*;
+
+import javax.sound.sampled.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 
 /**
@@ -81,7 +86,7 @@ public class RecordingFrame
 	/**
 	 * Dialog box to choose and store audio format for next recording.
 	 */
-	private AudioFormatJFrame					audio_format_selector;
+	private AudioFormatJFrame audio_format_selector;
 
 	/**
 	 * GUI buttons
@@ -308,12 +313,12 @@ public class RecordingFrame
 		{
 			stopRecording();
 			stopPlayback();
-			SourceDataLine source_data_line = AudioMethods.getSourceDataLine( last_recorded_audio.getFormat(),
-																			  null);
+			SourceDataLine source_data_line = AudioMethods.getSourceDataLine(last_recorded_audio.getFormat(),
+                    null);
 			try
 			{
-				playback_thread = AudioMethodsPlayback.playAudioInputStreamInterruptible( last_recorded_audio,
-																						  source_data_line );
+				playback_thread = AudioMethodsPlayback.playAudioInputStreamInterruptible(last_recorded_audio,
+                        source_data_line);
 			}
 			catch (Exception e)
 			{
