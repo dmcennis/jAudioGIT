@@ -3,8 +3,6 @@
  */
 package org.jaudio.aggregator;
 
-import jAudioFeatureExtractor.jAudioTools.MagSpectrum;
-
 import org.jaudio.Buffer;
 import org.jaudio.FeatureIn;
 import org.jaudio.FeatureOut;

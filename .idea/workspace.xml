@@ -2,20 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf562adc-773b-401d-b576-12fdc18a9f9a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/Buffer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/features/FFT.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/FeatureIn.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/FeatureOut.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/JavaSource.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/features/MFCC.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/aggregator/MeanAggregator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/Memory.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/output/OutputTSV.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/output/OutputXML.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/RevolvingBuffer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/features/RunningAverage.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/SynchronizedBuffer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/features/jAudioOneFeature.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/jaudio/features/FFT.java" afterPath="$PROJECT_DIR$/src/org/jaudio/features/FFT.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/jaudio/aggregator/MeanAggregator.java" afterPath="$PROJECT_DIR$/src/org/jaudio/aggregator/MeanAggregator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="jAudioGIT.iws" />
@@ -79,16 +67,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="features.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extras/features.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.2" vertical-offset="388" max-vertical-offset="2601">
-              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="AggListTableModel.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/jAudioFeatureExtractor/AggListTableModel.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -117,7 +95,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="1133" max-vertical-offset="1479">
               <caret line="80" column="18" selection-start-line="80" selection-start-column="18" selection-end-line="80" selection-end-column="18" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -127,7 +107,13 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="344" max-vertical-offset="1598">
               <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#1031#1121#0" expanded="false" />
+                <element signature="e#1116#1117#0" expanded="false" />
+                <element signature="e#1508#1509#0" expanded="false" />
+                <element signature="e#1537#1538#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -162,7 +148,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OutputTSV.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="OutputTSV.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/jaudio/output/OutputTSV.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3060">
@@ -172,15 +158,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FeatureSelectorPanel.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/jAudioFeatureExtractor/FeatureSelectorPanel.java">
+      <file leaf-file-name="MeanAggregator.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/jaudio/aggregator/MeanAggregator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="8874">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.5895954" vertical-offset="0" max-vertical-offset="3111">
+              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
               <folding>
-                <element signature="e#0#18705#0" expanded="true" />
-                <element signature="e#15039#15386#0" expanded="true" />
-                <element signature="e#15381#15382#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FFT.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/jaudio/features/FFT.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2333" max-vertical-offset="2703">
+              <caret line="154" column="34" selection-start-line="154" selection-start-column="34" selection-end-line="154" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -217,6 +213,8 @@
         <option value="$PROJECT_DIR$/src/jAudioFeatureExtractor/FeatureSelectorPanel.java" />
         <option value="$PROJECT_DIR$/extras/features.xml" />
         <option value="$PROJECT_DIR$/src/jAudioFeatureExtractor/Aggregators/Aggregator.java" />
+        <option value="$PROJECT_DIR$/src/org/jaudio/aggregator/MeanAggregator.java" />
+        <option value="$PROJECT_DIR$/src/org/jaudio/features/FFT.java" />
       </list>
     </option>
   </component>
@@ -861,11 +859,15 @@
       <created>1403060461346</created>
       <updated>1403060461346</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Initial import of jAudio multi-core DSP code.">
+      <created>1403061200575</created>
+      <updated>1403061200575</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5855000" />
+    <option name="totallyTimeSpent" value="6292000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-2" y="5" width="1341" height="742" extended-state="0" />
@@ -881,17 +883,17 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32991454" sideWeight="0.5003897" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32820514" sideWeight="0.5003897" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32991454" sideWeight="0.49961028" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32820514" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991454" sideWeight="0.49961028" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32820514" sideWeight="0.49961028" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24956521" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22369447" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22369447" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31452993" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -916,7 +918,8 @@
     </option>
     <MESSAGE value="Git upload did not run as expected - fixes for the system now uploaded" />
     <MESSAGE value="Fixes that should improve the experience ;-).&#10;&#10;Default is now a Zernike moment aggregator over ConstantQ feature&#10;&#10;Zernike Moments added (2 features and 1 aggregator)&#10;AreaMoments original version added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixes that should improve the experience ;-).&#10;&#10;Default is now a Zernike moment aggregator over ConstantQ feature&#10;&#10;Zernike Moments added (2 features and 1 aggregator)&#10;AreaMoments original version added" />
+    <MESSAGE value="Initial import of jAudio multi-core DSP code." />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial import of jAudio multi-core DSP code." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1168,7 +1171,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1133" max-vertical-offset="1479">
           <caret line="80" column="18" selection-start-line="80" selection-start-column="18" selection-end-line="80" selection-end-column="18" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1176,7 +1181,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="344" max-vertical-offset="1598">
           <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1031#1121#0" expanded="false" />
+            <element signature="e#1116#1117#0" expanded="false" />
+            <element signature="e#1508#1509#0" expanded="false" />
+            <element signature="e#1537#1538#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1209,6 +1220,26 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3060">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/jaudio/features/FFT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2333" max-vertical-offset="2703">
+          <caret line="154" column="34" selection-start-line="154" selection-start-column="34" selection-end-line="154" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/jaudio/aggregator/MeanAggregator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5895954" vertical-offset="0" max-vertical-offset="3111">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

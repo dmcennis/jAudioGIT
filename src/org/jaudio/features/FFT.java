@@ -5,7 +5,6 @@ import org.jaudio.FeatureIn;
 import org.jaudio.FeatureOut;
 import org.jaudio.SynchronizedBuffer;
 
-import jAudioFeatureExtractor.jAudioTools.MagSpectrum;
 
 public class FFT extends Thread implements FeatureIn, FeatureOut {
 
@@ -151,13 +150,13 @@ public class FFT extends Thread implements FeatureIn, FeatureOut {
 	}
 	
 	private double[] getFFT(){
-		MagSpectrum fft=null;
+//		MagSpectrum fft=null;
 		try {
-			fft = new MagSpectrum(data, (double[])null, false, true);
+//			fft = new MagSpectrum(data, (double[])null, false, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return fft.getMagnitudeSpectrum();
+		return new double[]{};//fft.getMagnitudeSpectrum();
 		
 	}
 
