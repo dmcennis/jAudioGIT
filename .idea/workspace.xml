@@ -1,54 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cf562adc-773b-401d-b576-12fdc18a9f9a" name="Default" comment="Fixes that should improve the experience ;-).&#10;&#10;Default is now a Zernike moment aggregator over ConstantQ feature&#10;&#10;Zernike Moments added (2 features and 1 aggregator)&#10;AreaMoments original version added">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AudioFeatures/AreaMomentsBeatHistogram.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AudioFeatures/Chroma.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AudioFeatures/TraditionalAreaMoments.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/Aggregators/ZernikeMoments.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AudioFeatures/ZernikeMoments.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AudioFeatures/ZernikeMomentsBeatHistogram.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ActiveAggTableModel.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ActiveAggTableModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AddBatchGUI.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AddBatchGUI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AggEditorFrame.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AggEditorFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AggListTableModel.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AggListTableModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AggregatorFrame.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AggregatorFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AudioStreamProcessor.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/AudioStreamProcessor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/BatchExecutionThread.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/BatchExecutionThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/BatchProgressFrame.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/BatchProgressFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/Controller.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/DataModel.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/DataModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/EditFeatures.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/EditFeatures.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ErrorGUI.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ErrorGUI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ExtractionThread.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ExtractionThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/FeatureListHandler.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/FeatureListHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/jAudioTools/FeatureProcessor.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/jAudioTools/FeatureProcessor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/FeatureSelectorPanel.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/FeatureSelectorPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/FeatureSelectorTableModel.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/FeatureSelectorTableModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/FileFilterXML.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/FileFilterXML.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/GlobalWindowChange.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/GlobalWindowChange.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/JAudioPy4J.java" afterPath="$PROJECT_DIR$/src/JAudioPy4J.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/MIDIFrame.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/MIDIFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/OuterFrame.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/OuterFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseBatchJobHandler.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseBatchJobHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseClassificationsFileHandler.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseClassificationsFileHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseDataSetFileHandler.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseDataSetFileHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseFeatureDefinitionsFileHandler.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseFeatureDefinitionsFileHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseFileHandler.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseFileHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseSaveSettings.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseSaveSettings.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseTaxonomyFileHandler.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParseTaxonomyFileHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParsingXMLErrorHandler.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/ParsingXMLErrorHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ProcessSamplesFrame.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ProcessSamplesFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ProgressFrame.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ProgressFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/RecordingFrame.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/RecordingFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/RecordingSelectorPanel.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/RecordingSelectorPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/RecordingsTableModel.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/RecordingsTableModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/SampleTextDialog.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/SampleTextDialog.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/SortingTableModelDecorator.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/SortingTableModelDecorator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/SynthesisFrame.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/SynthesisFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/XMLDocumentParser.java" afterPath="$PROJECT_DIR$/src/jAudioFeatureExtractor/ACE/XMLParsers/XMLDocumentParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extras/features.xml" afterPath="$PROJECT_DIR$/extras/features.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="cf562adc-773b-401d-b576-12fdc18a9f9a" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/Buffer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/features/FFT.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/FeatureIn.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/FeatureOut.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/JavaSource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/features/MFCC.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/aggregator/MeanAggregator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/Memory.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/output/OutputTSV.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/output/OutputXML.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/RevolvingBuffer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/features/RunningAverage.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/SynchronizedBuffer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/jaudio/features/jAudioOneFeature.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="jAudioGIT.iws" />
@@ -185,21 +152,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Aggregator.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Aggregator.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/jAudioFeatureExtractor/Aggregators/Aggregator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33333334" vertical-offset="3387" max-vertical-offset="4454">
-              <caret line="224" column="15" selection-start-line="224" selection-start-column="15" selection-end-line="224" selection-end-column="15" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4454">
+              <caret line="230" column="0" selection-start-line="230" selection-start-column="0" selection-end-line="230" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ZernikeMoments.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/jAudioFeatureExtractor/Aggregators/ZernikeMoments.java">
+      <file leaf-file-name="OutputTSV.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/jaudio/output/OutputTSV.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1790" max-vertical-offset="3604">
-              <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3060">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -228,6 +195,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="jAudio1.0" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
@@ -249,7 +221,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
+    <option name="x" value="-2" />
+    <option name="y" value="5" />
     <option name="width" value="1341" />
     <option name="height" value="742" />
   </component>
@@ -326,7 +299,7 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jAudioFeatureExtractor" />
+              <option name="myItemId" value="org" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -344,11 +317,11 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jAudioFeatureExtractor" />
+              <option name="myItemId" value="org" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Aggregators" />
+              <option name="myItemId" value="jaudio" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -366,11 +339,67 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jAudioFeatureExtractor" />
+              <option name="myItemId" value="org" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ACE" />
+              <option name="myItemId" value="jaudio" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="output" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jAudioGIT" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jaudio-git" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jaudio" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="features" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jAudioGIT" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jaudio-git" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jaudio" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aggregator" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -406,6 +435,7 @@
       <recent name="jAudioFeatureExtractor.Aggregators" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\dmcennis\IdeaProjects\jaudio-git\src\org" />
       <recent name="C:\Users\dmcennis\IdeaProjects\jaudio-git\src\jAudioFeatureExtractor\ACE\XMLParsers" />
       <recent name="C:\Users\dmcennis\IdeaProjects\jaudio-git\src\jAudioFeatureExtractor" />
       <recent name="C:\Users\dmcennis\IdeaProjects\jaudio-git\src\jAudioFeatureExtractor\AudioFeatures" />
@@ -827,14 +857,18 @@
       <created>1403060225548</created>
       <updated>1403060225548</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Fixes that should improve the experience ;-).&#10;&#10;Default is now a Zernike moment aggregator over ConstantQ feature&#10;&#10;Zernike Moments added (2 features and 1 aggregator)&#10;AreaMoments original version added">
+      <created>1403060461346</created>
+      <updated>1403060461346</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5119000" />
+    <option name="totallyTimeSpent" value="5855000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1341" height="742" extended-state="0" />
+    <frame x="-2" y="5" width="1341" height="742" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -847,17 +881,17 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32991454" sideWeight="0.5003897" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32991454" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32991454" sideWeight="0.49961028" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32820514" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24956521" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22369447" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22369447" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31452993" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1164,8 +1198,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/jAudioFeatureExtractor/Aggregators/Aggregator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334" vertical-offset="3387" max-vertical-offset="4454">
-          <caret line="224" column="15" selection-start-line="224" selection-start-column="15" selection-end-line="224" selection-end-column="15" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4454">
+          <caret line="230" column="0" selection-start-line="230" selection-start-column="0" selection-end-line="230" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/jaudio/output/OutputTSV.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3060">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
