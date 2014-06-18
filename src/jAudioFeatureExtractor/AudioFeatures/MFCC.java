@@ -1,8 +1,7 @@
 package jAudioFeatureExtractor.AudioFeatures;
 
-import org.oc.ocvolume.dsp.featureExtraction;
-
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
+import org.oc.ocvolume.dsp.featureExtraction;
 
 /**
  * Utilizes the MFCC code from the OrangeCow Volume project.

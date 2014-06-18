@@ -6,8 +6,8 @@
 
 package jAudioFeatureExtractor.AudioFeatures;
 
-import jAudioFeatureExtractor.DataModel;
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
+import jAudioFeatureExtractor.DataModel;
 
 /**
  * The prototype for feature extractors. Each class that extends this class will

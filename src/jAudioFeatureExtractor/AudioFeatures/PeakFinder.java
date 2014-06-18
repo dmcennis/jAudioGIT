@@ -1,8 +1,8 @@
 package jAudioFeatureExtractor.AudioFeatures;
 
-import java.util.LinkedList;
-
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
+
+import java.util.LinkedList;
 
 /**
  * Implements a very basic peak detection algorithm. Peaks are calculated by

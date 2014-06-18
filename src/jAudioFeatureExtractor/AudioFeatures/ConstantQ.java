@@ -27,6 +27,7 @@ public class ConstantQ extends FeatureExtractor
 	double[] freq;
 	double[][] kernelReal;
 	double[][] kernelImaginary;
+	boolean calculated;
 	
 	/* CONSTRUCTOR **************************************************************/
 	
@@ -53,6 +54,8 @@ public class ConstantQ extends FeatureExtractor
 		offsets = null;
 		
 		alpha=1.0;
+
+		calculated = false;
 		
 	}
 
@@ -87,23 +90,25 @@ public class ConstantQ extends FeatureExtractor
 	                                double[][] other_feature_values )
 		throws Exception
 	{
-		calcFreq(samples,sampling_rate);
-		calcNk(samples);
-		calcKernels(samples.length,sampling_rate);
+		if(!calculated){
+			calcFreq(samples,sampling_rate);
+			calcNk(samples);
+			calcKernels();
+			calculated = true;
+		}
+		double[] returnValue = new double[nk.length];
 		double[] ret = new double[2*nk.length];
-        double[] mag = new double[nk.length];
 		java.util.Arrays.fill(ret,0.0);
 		for(int bankCounter=0;bankCounter<(ret.length/2);++bankCounter){
-            double[] data = resample(samples,nk[bankCounter]);
 			for(int i=0;i<nk[bankCounter];++i){
-				ret[bankCounter] += kernelReal[bankCounter][i]*data[i];
-				ret[bankCounter+nk.length] += kernelImaginary[bankCounter][i]*data[i];
+				ret[bankCounter] += kernelReal[bankCounter][i]*samples[i];
+				ret[bankCounter+nk.length] += kernelImaginary[bankCounter][i]*samples[i];
 			}
 		}
-        for(int i=0;i<mag.length;++i){
-            mag[i] = Math.sqrt(ret[i]*ret[i]+ret[i+nk.length]*ret[i+nk.length]);
-        }
-		return mag;
+		for(int i=0;i<nk.length;++i){
+                	returnValue[i] = Math.sqrt(ret[i]*ret[i]+ret[i+nk.length]*ret[i+nk.length]);
+		}
+		return returnValue;
 	}
 	
 	/**
@@ -112,40 +117,25 @@ public class ConstantQ extends FeatureExtractor
 	 * metafeatures.
 	 */
 	public Object clone(){
-		return new ConstantQ();
+		ConstantQ ret = new ConstantQ();
+		ret.alpha = alpha;
+		ret.calculated = false;
+		return ret;
 	}
 
-    private double[] resample(double[] samples, int window_length){
-        double[] ret = new double[window_length];
-        double[] index = new double[window_length];
-        double increment = ((double)samples.length)/((double)window_length);
-        for(int i=0;i<window_length;++i){
-            index[i] = increment * ((double)i);
-        }
-        for(int i=0;i<ret.length;++i){
-            int base = (int) Math.floor(increment*i);
-            if(Math.abs(((double)base) - (increment*i)) < 0.00001){
-                ret[i] = samples[(int)Math.round(increment*i)];
-            }else{
-                ret[i] = samples[base]*(1.0 - ((increment*i)-base)) + samples[base+1]*((increment * i)-base);
-            }
-        }
-        return ret;
-    }
-
-	private void calcFreq(double[] samples, double sampling_rate){
-		double maxFreq = sampling_rate/2.0;
-		double minFreq = sampling_rate/((double)samples.length);
+	private void calcFreq(double[] samples, double samplerate){
+		double maxFreq = samplerate/2.0;
+		double minFreq = samplerate/((double)samples.length);
 		double carry = Math.log(maxFreq/minFreq);
 		carry /= Math.log(2);
-		carry *= 6/alpha;
+		carry *= 12/alpha;
 		int numFields = (int)(Math.floor(carry));
 		
 		freq = new double[numFields];
 		double currentFreq = minFreq;
 		for(int i=0;i<numFields;++i){
 			freq[i]=currentFreq;
-			currentFreq *= Math.pow(2,alpha/12.0);
+			currentFreq = Math.pow(2,alpha/12.0);
 		}
 	}
 	
@@ -157,16 +147,10 @@ public class ConstantQ extends FeatureExtractor
 		}
 	}
 
-	private void calcKernels(double windowLength, double sampleRate){
+	private void calcKernels(){
 		kernelReal = new double[nk.length][];
 		kernelImaginary = new double[nk.length][];
-//		double q = Math.pow(2,alpha/12)-1;
-//        double[] freqInRad = new double[nk.length];
-//        double numWindowsPerSecond = (sampleRate / windowLength);
-//        for (int index=0;index<freqInRad.length;++index){
-//            double binSampleRate = numWindowsPerSecond*nk[index] / 2.0;
-//            freqInRad[index] = freq[index]/ binSampleRate;
-//        }
+		double q = Math.pow(2,alpha/12)-1;
 		double hammingFactor = 25.0/46.0;
 		for(int i=0;i<kernelReal.length;++i){
 			kernelReal[i] = new double[nk[i]];
@@ -175,8 +159,8 @@ public class ConstantQ extends FeatureExtractor
 				kernelReal[i][j] = hammingFactor + (1-hammingFactor)*Math.cos(2.0*Math.PI*((double)j)/((double)nk[i]));
 				kernelReal[i][j] /= ((double)nk[i]);
 				kernelImaginary[i][j] = kernelReal[i][j];
-				kernelReal[i][j] *= Math.cos(-2.0*Math.PI*((double)j)/(Math.pow((double)nk[i],2.0)));
-				kernelImaginary[i][j] *= Math.sin(-2.0*Math.PI*((double)j)/(Math.pow((double)nk[i],2.0)));
+				kernelReal[i][j] *= Math.cos(-2.0*Math.PI*q*((double)j)/((double)nk[i]));
+				kernelImaginary[i][j] *= Math.sin(-2.0*Math.PI*q*((double)j)/((double)nk[i]));
 			}
 		}
 	}

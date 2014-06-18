@@ -1,9 +1,9 @@
 package jAudioFeatureExtractor.AudioFeatures;
 
-import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
-import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.DoubleMatrix2D;
+import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
+import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
 /**
  * 2D Polynomial Approximation Feature
@@ -89,7 +89,7 @@ public class AreaPolynomialApproximation extends FeatureExtractor {
 		}
 		for(int i=0;i<windowLength;++i){
 			for(int j=0;j<featureLength;++j){
-				z.set(0,windowLength*i+j,other_feature_values[i][j]);
+				z.set(0,featureLength*i+j,other_feature_values[i][j]);
 			}
 		}
 		DoubleMatrix2D retMatrix = (new Algebra()).solve(terms,z);
