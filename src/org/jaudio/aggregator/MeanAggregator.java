@@ -156,8 +156,8 @@ public class MeanAggregator extends Thread implements FeatureIn, FeatureOut {
 				if(!inBuffer.isEof()){
 					synchronized(inputMonitor){
 						try {
-//							inputMonitor.wait();
-							Thread.sleep(2);
+							inputMonitor.wait();
+//							Thread.sleep(2);
 //							System.out.print("r");
 //							System.out.flush();
 						} catch (InterruptedException e) {
@@ -173,8 +173,8 @@ public class MeanAggregator extends Thread implements FeatureIn, FeatureOut {
 		while(!out.lock(mean, null, this, false)){
 			synchronized(outputMonitor){
 				try {
-//					outputMonitor.wait();
-					Thread.sleep(2);
+					outputMonitor.wait();
+//					Thread.sleep(2);
 //					System.out.print("w");
 //					System.out.flush();
 				} catch (InterruptedException e) {

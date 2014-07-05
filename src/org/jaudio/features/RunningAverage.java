@@ -158,8 +158,8 @@ public class RunningAverage extends Thread implements FeatureIn, FeatureOut {
 				if(!inBuffer.isEof()){
 					synchronized(inputMonitor){
 						try {
-//							inputMonitor.wait();
-							Thread.sleep(2);
+							inputMonitor.wait();
+//							Thread.sleep(2);
 //							System.out.print("r");
 //							System.out.flush();
 						} catch (InterruptedException e) {
