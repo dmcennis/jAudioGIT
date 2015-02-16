@@ -10,9 +10,11 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
+import jAudioFeatureExtractor.Aggregators.ZernikeMoments;
 import jAudioFeatureExtractor.DataModel;
 import jAudioFeatureExtractor.Aggregators.Aggregator;
 import jAudioFeatureExtractor.DataTypes.RecordingInfo;
+import jAudioFeatureExtractor.ModelListener;
 import jAudioFeatureExtractor.jAudioTools.AudioSamples;
 
 
@@ -30,21 +32,21 @@ public class Batch implements Serializable {
 
 	static final long serialVersionUID = 1;
 
-	String name;
+	String name = "Batch";
 
 	RecordingInfo[] recording = new RecordingInfo[0];
 
-	int windowSize;
+	int windowSize=1024;
 
-	double windowOverlap;
+	double windowOverlap=0.0;
 
-	double samplingRate;
+	double samplingRate=44100.0;
 
-	boolean normalise;
+	boolean normalise=true;
 
-	boolean perWindow;
+	boolean perWindow=false;
 
-	boolean overall;
+	boolean overall=true;
 
 	String destinationFK = null;
 
@@ -52,11 +54,11 @@ public class Batch implements Serializable {
 
 	int outputType;
 
-	transient DataModel dm_;
+	transient DataModel dm_ ;
 
-	HashMap<String, Boolean> activated;
+	HashMap<String, Boolean> activated = new HashMap<String, Boolean>();
 
-	HashMap<String, String[]> attributes;
+	HashMap<String, String[]> attributes = new HashMap<String, String[]>();
 
 	String[] aggregatorNames;
 
@@ -64,6 +66,23 @@ public class Batch implements Serializable {
 
 	String[][] aggregatorParameters;
 
+
+    public Batch(){
+        init("features.xml",null);
+    }
+
+    public Batch(String features, ModelListener l){
+        init(features,l);
+    }
+
+    protected void init(String features, ModelListener l){
+        dm_ = new DataModel(features,l);
+        activated.put("ConstantQ",true);
+        aggregatorNames = new String[]{"ZernikeMoments"};
+        aggregatorFeatures = new String[][]{new String[]{"ConstantQ"}};
+        aggregatorParameters = new String[][]{new String[]{"8"}};
+
+    }
 	/**
 	 * Set the data model against which this batch is executed.
 	 * 
@@ -400,7 +419,7 @@ public class Batch implements Serializable {
 	 * sets parameter values for all features simultaneously. Exceptions for bad parameters
 	 * are thrown on application (i.e. Batch.execute()) not here.
 	 *
-	 * @param map of paramter settings.
+	 * @retun map of paramter settings.
 	 */
 	public void setAttributes(HashMap<String, String[]> attributes) {
 		this.attributes = attributes;
@@ -420,7 +439,7 @@ public class Batch implements Serializable {
 	 * sets the file location for the ACE key XML file. This location is not
 	 * validated until Batch.execute() is run.
 	 * 
-	 * @param location to store the ACE key XML file
+	 * @return location to store the ACE key XML file
 	 */
 	public void setDestinationFK(String destinationFK) {
 		this.destinationFK = destinationFK;
@@ -438,7 +457,7 @@ public class Batch implements Serializable {
 	 * sets the file location for the result file. This location is not
 	 * validated until Batch.execute() is run.
 	 * 
-	 * @param location to store the output data file in
+	 * @return location to store the output data file in
 	 */
 	public void setDestinationFV(String destinationFV) {
 		this.destinationFV = destinationFV;
@@ -474,7 +493,7 @@ public class Batch implements Serializable {
 	/**
 	 * Set the style of output (Weka, ACE, etc.)
 	 *
-	 * @param style of output by constant
+	 * @return style of output by constant
 	 */
 	public void setOutputType(int outputType) {
 		this.outputType = outputType;
@@ -510,7 +529,7 @@ public class Batch implements Serializable {
 	/**
 	 * Should per-window results be generated?
 	 *
-	 * @param overall sets whether to output per-window results or not.
+	 * @return overall sets whether to output per-window results or not.
 	 */
 	public void setPerWindow(boolean perWindow) {
 		this.perWindow = perWindow;
