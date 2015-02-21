@@ -66,6 +66,12 @@ public class Batch implements Serializable {
 
 	String[][] aggregatorParameters;
 
+    double[][][] results = null;
+
+    private String featureList;
+
+    private ModelListener l;
+
 
     public Batch(){
         init("features.xml",null);
@@ -76,6 +82,8 @@ public class Batch implements Serializable {
     }
 
     protected void init(String features, ModelListener l){
+        featureList = features;
+        this.l = l;
         dm_ = new DataModel(features,l);
         activated.put("ConstantQ",true);
         aggregatorNames = new String[]{"Zernike Moments"};
@@ -100,10 +108,49 @@ public class Batch implements Serializable {
 	 * @throws Exception
 	 */
 	public void execute() throws Exception {
-		applyAttributes();
+		applyAttributes(this.dm_);
 		dm_.extract(windowSize, windowOverlap, samplingRate, normalise,
 				perWindow, overall, recording, outputType);
+        results = new double[1][][];
+        results[0] = dm_.container.getResults();
 	}
+
+    public double[][][] executeParallel(){
+        BatchThread[] threads = new BatchThread[recording.length];
+        results = new double[threads.length][][];
+        for(int i=0;i<recording.length;++i){
+            threads[i] = new BatchThread();
+            threads[i].run();
+        }
+        for(int i=0;i<threads.length;++i){
+            try {
+                threads[i].wait();
+                results[i] = threads[i].results;
+            }catch(InterruptedException e){
+                results[i] = new double[][]{};
+            }
+        }
+        return results;
+    }
+
+    protected class BatchThread extends Thread{
+        double[][] results;
+        @Override
+        public void run() {
+            try {
+                DataModel myDM = new DataModel(featureList, l);
+                applyAttributes(myDM);
+                myDM.extract(windowSize, windowOverlap, samplingRate, normalise,
+                        perWindow, overall, recording, outputType);
+                results = myDM.container.getResults();
+            }catch(Exception e){
+                System.err.println(e.getMessage());
+            }
+        }
+    }
+    public double[][][] getResults(){
+        return results;
+    }
 
 	/**
 	 * Sets the recordings that this batch will load and execute.
@@ -217,7 +264,7 @@ public class Batch implements Serializable {
 	 * 
 	 * @throws Exception
 	 */
-	private void applyAttributes() throws Exception {
+	private void applyAttributes(DataModel dm_) throws Exception {
 
 		for (int i = 0; i < dm_.features.length; ++i) {
 			String name = dm_.features[i].getFeatureDefinition().name;
@@ -380,29 +427,39 @@ public class Batch implements Serializable {
 			double[] windowOverlap, double[] samplingRate, boolean[] normalise,
 			boolean[] perWindow, boolean[] overall, String[] destinationFK,
 			String[] destinationFV, int[] outputType) {
-		try {
-			applyAttributes();
-			dm_.featureDefinitions = new FeatureDefinition[dm_.features.length];
-			for (int i = 0; i < dm_.featureDefinitions.length; ++i) {
-				dm_.featureDefinitions[i] = dm_.features[i]
-						.getFeatureDefinition();
-			}
-			dm_.recordingInfo = this.recording;
-		} catch (Exception e) {
-			System.err.println("INTERNAL ERROR: " + e.getMessage());
-			e.printStackTrace();
-		}
-		recording[0] = this.recording;
-		windowSize[0] = this.windowSize;
-		windowOverlap[0] = this.windowOverlap;
-		samplingRate[0] = this.samplingRate;
-		normalise[0] = this.normalise;
-		perWindow[0] = this.perWindow;
-		overall[0] = this.overall;
-		destinationFK[0] = this.destinationFK;
-		destinationFV[0] = this.destinationFV;
-		outputType[0] = this.outputType;
-	}
+        applySettings(this.dm_, recording, windowSize,
+        windowOverlap, samplingRate, normalise,
+         perWindow, overall,  destinationFK,
+                 destinationFV,  outputType);
+    }
+
+    public void applySettings(DataModel dm_, RecordingInfo[][] recording, int[] windowSize,
+                              double[] windowOverlap, double[] samplingRate, boolean[] normalise,
+                              boolean[] perWindow, boolean[] overall, String[] destinationFK,
+                              String[] destinationFV, int[] outputType) {
+            try {
+                applyAttributes(dm_);
+                dm_.featureDefinitions = new FeatureDefinition[dm_.features.length];
+                for (int i = 0; i < dm_.featureDefinitions.length; ++i) {
+                    dm_.featureDefinitions[i] = dm_.features[i]
+                            .getFeatureDefinition();
+                }
+                dm_.recordingInfo = this.recording;
+            } catch (Exception e) {
+                System.err.println("INTERNAL ERROR: " + e.getMessage());
+                e.printStackTrace();
+            }
+            recording[0] = this.recording;
+            windowSize[0] = this.windowSize;
+            windowOverlap[0] = this.windowOverlap;
+            samplingRate[0] = this.samplingRate;
+            normalise[0] = this.normalise;
+            perWindow[0] = this.perWindow;
+            overall[0] = this.overall;
+            destinationFK[0] = this.destinationFK;
+            destinationFV[0] = this.destinationFV;
+            outputType[0] = this.outputType;
+        }
 
 	/**
 	 * Returns a map of all parameters for all features in the feature set.
