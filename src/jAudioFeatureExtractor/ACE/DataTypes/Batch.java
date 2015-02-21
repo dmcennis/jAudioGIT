@@ -232,13 +232,20 @@ public class Batch implements Serializable {
 			}
 		}
 		LinkedList<Aggregator> aggregatorList = new LinkedList<Aggregator>();
-		for(int i=0;i<aggregatorNames.length;++i){
-			Aggregator tmp = (Aggregator)dm_.aggregatorMap.get(aggregatorNames[i]).clone();
+        if(aggregatorNames != null) {
+            for (int i = 0; i < aggregatorNames.length; ++i) {
+                Aggregator tmp;
+                if (dm_.aggregatorMap.containsKey(aggregatorNames[i])) {
+                    tmp = (Aggregator) dm_.aggregatorMap.get(aggregatorNames[i]).clone();
 //			if(!tmp.getAggregatorDefinition().generic){
-				tmp.setParameters(aggregatorFeatures[i],aggregatorParameters[i]);
+                    tmp.setParameters(aggregatorFeatures[i], aggregatorParameters[i]);
 //			}
-			aggregatorList.add(tmp);
-		}
+                    aggregatorList.add(tmp);
+                } else {
+                    throw new Exception("Aggregator " + aggregatorNames[i] + " is not known. Check the spelling?");
+                }
+            }
+        }
 		if(overall && (aggregatorList.size()==0)){
 			throw new Exception("Attempting to get overall stats without specifying any aggregators to create it");
 		}
