@@ -78,7 +78,7 @@ public class Batch implements Serializable {
     protected void init(String features, ModelListener l){
         dm_ = new DataModel(features,l);
         activated.put("ConstantQ",true);
-        aggregatorNames = new String[]{"ZernikeMoments"};
+        aggregatorNames = new String[]{"Zernike Moments"};
         aggregatorFeatures = new String[][]{new String[]{"ConstantQ"}};
         aggregatorParameters = new String[][]{new String[]{"8"}};
 
