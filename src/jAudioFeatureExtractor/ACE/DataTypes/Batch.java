@@ -1,7 +1,6 @@
 package jAudioFeatureExtractor.ACE.DataTypes;
 
-import java.io.File;
-import java.io.Serializable;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -10,6 +9,7 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
+import jAudioFeatureExtractor.ACE.XMLParsers.XMLDocumentParser;
 import jAudioFeatureExtractor.Aggregators.ZernikeMoments;
 import jAudioFeatureExtractor.DataModel;
 import jAudioFeatureExtractor.Aggregators.Aggregator;
@@ -212,6 +212,67 @@ public class Batch implements Serializable {
 		this.overall = overall;
 		this.outputType = outputType;
 	}
+
+    public void setSettings(String reader) throws Exception{
+        Object[] list = (Object[])XMLDocumentParser.parseXMLDocument(reader,"save_settings");
+        Object[] data = null;
+        try {
+            data = (Object[]) XMLDocumentParser.parseXMLDocument(reader,
+                    "save_settings");
+        } catch (Exception e) {
+            System.out.println("Error encountered parsing the settings file");
+            System.out.println(e.getMessage());
+        }
+        int windowLength = 512;
+        double offset = 0.0;
+        double samplingRate;
+        boolean saveWindows;
+        boolean saveOverall;
+        boolean normalise;
+        int outputType;
+        try {
+            windowLength = Integer.parseInt((String) data[0]);
+        } catch (NumberFormatException e) {
+            System.out.println("Error in settings file");
+            System.out.println("Window length of settings must be an integer");
+            System.exit(4);
+        }
+        try {
+            offset = Double.parseDouble((String) data[1]);
+        } catch (NumberFormatException e) {
+            System.out.println("Error in settings file");
+            System.out
+                    .println("Window offset of settings must be an double between 0 and 1");
+            System.exit(4);
+        }
+        samplingRate = ((Double) data[2]).doubleValue();
+        normalise = ((Boolean) data[3]).booleanValue();
+        saveWindows = ((Boolean) data[4]).booleanValue();
+        saveOverall = ((Boolean) data[5]).booleanValue();
+        String outputName = ((String) data[6]);
+        if (outputName.equals("ACE")) {
+            outputType = 0;
+        } else {
+            outputType = 1;
+        }
+
+        this.setSettings(windowLength,offset,samplingRate,normalise,saveWindows,saveOverall,outputType);
+
+        dm_.featureKey = null;
+        dm_.featureValue = null;
+
+        HashMap<String, Boolean> features = (HashMap<String, Boolean>) data[7];
+        HashMap<String, String[]> attributeFeatures = (HashMap<String, String[]>) data[8];
+
+        this.setFeatures(features,attributeFeatures);
+
+        // now process the aggregators
+        String[] names = ((LinkedList<String>)data[9]).toArray(new String[]{});
+        String[][] aggFeatures = ((LinkedList<String[]>)data[10]).toArray(new String[][]{});
+        String[][] parameters = ((LinkedList<String[]>)data[11]).toArray(new String[][]{});
+        this.setAggregators(names,aggFeatures,parameters);
+
+    }
 
 	/**
 	 * Sets where the extracted features should be stored.
