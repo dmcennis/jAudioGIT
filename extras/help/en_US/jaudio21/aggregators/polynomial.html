@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>2D Polynomial Approximation</title>
+</head>
+<body>
+<table width="100%" height="100%">
+	<tr height="150">
+		<td width="100%"><img src="../../jAudioLogo3-128.jpg" height="128"
+			width="128" alt="jAudio Logo" />
+		<h1>jAudio 1.0 Aggregator Appendix</h1>
+		</td>
+	</tr>
+	<tr>
+		<td width="25%" valign="top" bgcolor="DDFFFF" align="left">
+		<ul>
+			<li><a href="../../index.html">Overview</a></li>
+			<li><a href="../top.html">1.0 GUI Documentation</a></li>
+			<li><a href="aggregators.html">Aggregators Overview</a></li>
+			<li><a href="areamoments.html">Area Moments</a></li>
+			<li><a href="histogram.html">Histogram</a></li>
+			<li><a href="mean.html">Mean</a></li>
+			<li><a href="mfcc.html">MFCC</a></li>
+			<li><a href="polynomial.html">Polynomial</a></li>
+			<li><a href="stddev.html">Standard Deviation</a></li>
+		</ul>
+			<a href="http://sourceforge.net/projects/jaudio"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=164405&amp;type=13" width="120" height="30" alt="Get jAudio at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
+		</td>
+		<td width="3%"></td>
+		<td width="72%" bgcolor="00FFFF" align="left">
+<h2>2D Polynomial Approximation</h2>
+<p>This specific aggregator was first released in an August 2010 working paper by Daniel McEnnis.  It transforms
+a 2D matrix of signal feature vectors into a set of coeffecients of the polynomial function f(x,y) that bests matches the 
+given signal. It is calucalated by constructing a matrix of coeffecients by substituting concrete data points into each
+term that coeffecient is attached to (such as x^2*y^3) and a answer matrix is created from the signal at 
+that matrix index.  The coeffecients are then calculated by a least squares minimization matrix solver (colt matrix function).</p>
+</td>
+</tr>
+</table>
+</body>
+</html>
