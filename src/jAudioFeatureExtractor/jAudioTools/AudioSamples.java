@@ -10,6 +10,7 @@ package jAudioFeatureExtractor.jAudioTools;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 
 /**
@@ -375,15 +376,16 @@ public class AudioSamples
 	 */
 	public String getRecordingInfo()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String return_string = AudioMethods.getAudioFormatData(audio_format);
 
-		String number_samples = getNumberSamplesPerChannel() + " samples\n";
-		String duration = getDuration() + " seconds\n";
-		String max_sample_value = getMaximumAmplitude() + "\n";
+//		String number_samples = getNumberSamplesPerChannel() + " samples\n";
+//		String duration = getDuration() + " seconds\n";
+//		String max_sample_value = getMaximumAmplitude() + "\n";
 
-		return_string +=  new String("SAMPLES PER CHANNEL: " + number_samples);
-		return_string +=  new String("DURATION: " + duration);
-		return_string +=  new String("MAX SIGNAL AMPLITUDE: " + max_sample_value);
+		return_string = String.format(bundle.getString("ssamples.per.channel.d.samples.n"),return_string, getNumberSamplesPerChannel());
+		return_string = String.format(bundle.getString("sduration.f.seconds.n"),return_string, getDuration());
+		return_string = String.format(bundle.getString("smax.signal.amplitude.f.n"),return_string, getMaximumAmplitude());
 		return return_string;
 	}
 
@@ -430,7 +432,7 @@ public class AudioSamples
 	 */
 	public double getSamplingRateAsDouble()
 	{
-		return (new Float(audio_format.getSampleRate())).doubleValue();
+		return (Float.valueOf(audio_format.getSampleRate()));
 	}
 
 
@@ -1331,7 +1333,7 @@ public class AudioSamples
 		else if (sample_index >= samples.length)
 			sample_index = samples.length - 1;
 		float time = samples.length / audio_format.getSampleRate();
-		return (new Float(time)).doubleValue();
+		return (Float.valueOf(time));
 	}
 
 

@@ -431,12 +431,12 @@ public class AudioMethods
 		catch (UnsupportedAudioFileException ex)
 		{
             ResourceBundle bundle = ResourceBundle.getBundle("Translations");
-			throw new Exception(String.format("File %s has an unsupported audio format.",audio_file.getName()));
+			throw new Exception(String.format(bundle.getString("file.s.has.an.unsupported.audio.format"),audio_file.getName()));
 		}
 		catch (IOException ex)
 		{
             ResourceBundle bundle = ResourceBundle.getBundle("Translations");
-			throw new Exception(String.format("File %s is not readable.",audio_file.getName()));
+			throw new Exception(String.format(bundle.getString("file.s.is.not.readable"),audio_file.getName()));
 		}
 		return audio_input_stream;
 	}

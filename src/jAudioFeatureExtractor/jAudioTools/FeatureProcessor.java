@@ -20,6 +20,7 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.OutputStream;
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 /**
  * This class is used to pre-process and extract features from audio recordings.
@@ -306,7 +307,7 @@ public class FeatureProcessor {
 		LinkedList<Integer> window_start_indices_list = new LinkedList<Integer>();
 		int this_start = 0;
 		while (this_start < samples.length) {
-			window_start_indices_list.add(new Integer(this_start));
+			window_start_indices_list.add(Integer.valueOf(this_start));
 			this_start += window_size - window_overlap_offset;
 		}
 		Integer[] window_start_indices_I = window_start_indices_list
@@ -517,7 +518,6 @@ public class FeatureProcessor {
 					}
 			}
 		}
-	
 		if (current_position != number_features_to_extract){
 			throw new Exception("A feature has a spelling error in its dependency.");
 		}	
@@ -531,7 +531,8 @@ public class FeatureProcessor {
 				feature_names[feat] = feature_extractors[feat]
 					.getFeatureDefinition().name;
 			}catch(Exception e){
-				System.out.println("Feature "+feat+" has a bad feature definition");
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				System.out.println(String.format(bundle.getString("feature.d.has.a.bad.feature.definition"),feat));
 			}
 		}
 		String[][] feature_dependencies_str = new String[feature_extractors.length][];
@@ -540,7 +541,8 @@ public class FeatureProcessor {
 				feature_dependencies_str[feat] = feature_extractors[feat]
 					.getDepenedencies();
 			}catch(Exception e){
-				System.out.println("Feature "+feat+" has a bad dependency");
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				System.out.println(String.format(bundle.getString("feature.d.has.a.bad.dependency"),feat));
 			}
 		}
 		for (int i = 0; i < feature_dependencies_str.length; i++)
@@ -594,8 +596,8 @@ public class FeatureProcessor {
 	 */
 	private double[] preProcessRecording(File recording_file) throws Exception {
 		// Get the original audio and its format
-		System.out.println(recording_file.getAbsolutePath());
-		System.out.println("Present: "+recording_file.exists());
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+		System.out.println(String.format(bundle.getString("s.npresent.b.n"),recording_file.getAbsolutePath(),recording_file.exists()));
 		AudioInputStream original_stream = AudioSystem
 				.getAudioInputStream(recording_file);
 		AudioFormat original_format = original_stream.getFormat();
@@ -690,7 +692,9 @@ public class FeatureProcessor {
 			if ((updater != null) && (win % updateThreshold == 0)) {
 				updater.announceUpdate(win);
 				if(cancel.isCancel()){
-					throw new ExplicitCancel("Killed while processing features");
+                    ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+					throw new ExplicitCancel(bundle.getString("killed.while.processing.features"));
 				}
 			}
 
@@ -777,18 +781,17 @@ public class FeatureProcessor {
 			if (window_feature_values[window_feature_values.length - 1][feat] != null
 					&& features_to_save[feat]) {
 				// Make the definitions
-				FeatureDefinition this_def = feature_extractors[feat]
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                FeatureDefinition this_def = feature_extractors[feat]
 						.getFeatureDefinition();
 				FeatureDefinition average_definition = new FeatureDefinition(
-						this_def.name + " Overall Average",
-						this_def.description
-								+ "\nThis is the overall average over all windows.",
+						String.format(bundle.getString("s.overall.average"),this_def.name),
+						String.format(bundle.getString("s.nthis.is.the.overall.average.over.all.windows"),this_def.description),
 						this_def.is_sequential,
 						window_feature_values[window_feature_values.length - 1][feat].length);
 				FeatureDefinition stdv_definition = new FeatureDefinition(
-						this_def.name + " Overall Standard Deviation",
-						this_def.description
-								+ "\nThis is the overall standard deviation over all windows.",
+						String.format(bundle.getString("s.overall.standard.deviation"),this_def.name),
+						String.format(bundle.getString("s.nthis.is.the.overall.standard.deviation.over.all.windows"),this_def.description),
 						this_def.is_sequential,
 						window_feature_values[window_feature_values.length - 1][feat].length);
 
