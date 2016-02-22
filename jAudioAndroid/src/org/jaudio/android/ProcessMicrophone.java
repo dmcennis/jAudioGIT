@@ -61,13 +61,13 @@ public class ProcessMicrophone  {
             total -= read;
         }
         short[] audioInput = data.array();
-        double[][] audio = new double[1][audioInput.length];
+        double[] audio = new double[audioInput.length];
         double scaling = Math.pow(2,15);
         for(int i=0;i<audioInput.length;++i){
-            audio[0][i] = ((double)audioInput[i])/scaling;
+            audio[i] = ((double)audioInput[i])/scaling;
         }
         try {
-            AudioSamples samples = new AudioSamples(audio,44100.0f,"MicRecording",false);
+            AudioSamples samples = new AudioSamples(audio,"MicRecording");
         RecordingInfo[] info = new RecordingInfo[]{new RecordingInfo("MicRecording","None",samples,true)};
         batch = new Batch();
         batch.setRecording(info);
