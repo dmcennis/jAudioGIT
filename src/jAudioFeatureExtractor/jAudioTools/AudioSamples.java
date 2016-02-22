@@ -313,6 +313,13 @@ public class AudioSamples
 			normalizeIfClipped();
 	}
 
+	public AudioSamples(double[] samples, String id){
+		unique_ID = id;
+		this.samples = samples;
+		audio_format = null;
+		channel_samples = new double[][]{samples};
+	}
+
 
 	/* PUBLIC METHODS ***********************************************************/
 
