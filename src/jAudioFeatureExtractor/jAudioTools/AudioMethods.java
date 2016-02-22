@@ -173,15 +173,15 @@ public class AudioMethods
 	 */
 	public static AudioFileFormat.Type getAudioFileFormatType(String file_type_name)
 	{
-		if (file_type_name.equals("WAVE"))
+		if (file_type_name.compareTo("WAVE")==0)
 			return AudioFileFormat.Type.WAVE;
-		else if (file_type_name.equals("AIFF"))
+		else if (file_type_name.compareTo("AIFF")==0)
 			return AudioFileFormat.Type.AIFF;
-		else if (file_type_name.equals("AIFC"))
+		else if (file_type_name.compareTo("AIFC")==0)
 			return AudioFileFormat.Type.AIFC;
-		else if (file_type_name.equals("AU"))
+		else if (file_type_name.compareTo("AU")==0)
 			return AudioFileFormat.Type.AU;
-		else if (file_type_name.equals("SND"))
+		else if (file_type_name.compareTo("SND")==0)
 			return AudioFileFormat.Type.SND;
 		else
 			return null;

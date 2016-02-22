@@ -10,6 +10,7 @@ package jAudioFeatureExtractor.jAudioTools;
 import java.nio.*;
 import java.util.Date;
 import java.util.Random;
+import java.util.ResourceBundle;
 import javax.sound.sampled.AudioFormat;
 
 
@@ -124,16 +125,16 @@ public class AudioMethodsSynthesis
 	                                                     double click_avoid_env_length )
 		throws Exception
 	{
-		// Throw exception if a null audio_format is specified
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        // Throw exception if a null audio_format is specified
 		if (audio_format == null)
-			throw new Exception("Null audio format provided.");
+			throw new Exception(bundle.getString("null.audio.format.provided"));
 
 		// Throw exception if incompatible AudioFormat is given
 		if ( (audio_format.getSampleSizeInBits() != 16 && audio_format.getSampleSizeInBits() != 8 )||
 		     !audio_format.isBigEndian() ||
 		     audio_format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED )
-			throw new Exception( "Only 8 or 16 bit signed PCM samples with a big-endian\n" +
-			                     "byte order can be generated currently." );
+			throw new Exception(bundle.getString("only.8.or.16.bit.signed.pcm.samples.with.a.big.endian.nbyte.order.can.be.generated.currently") );
 
 		// Obtain information about the audio encoding to use
 		int number_of_channels = audio_format.getChannels();
@@ -209,7 +210,7 @@ public class AudioMethodsSynthesis
 											    total_number_of_samples_per_channel );
 		}
 		else
-			throw new Exception("Invalid synthesis type specified.");
+			throw new Exception(bundle.getString("invalid.synthesis.type.specified"));
 
 		// Apply gain and panning
 		applyGainAndPanning(sample_values, gain, panning);
@@ -224,7 +225,7 @@ public class AudioMethodsSynthesis
 		int samples_per_channel = sample_values[0].length;
 		for (int chan = 0; chan < sample_values.length; chan++)
 			if (sample_values[chan].length != samples_per_channel)
-				throw new Exception("Channels do not have equal number of samples.");
+				throw new Exception(bundle.getString("channels.do.not.have.equal.number.of.samples"));
 
 		// Write the samples to the buffer using the correct encoding and return
 		// null if appropriate
@@ -276,18 +277,17 @@ public class AudioMethodsSynthesis
 	                                        double panning )
 		throws Exception
 	{
-		// Throw exceptions if invalid parameters provided
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        // Throw exceptions if invalid parameters provided
 		if (gain < 0.0 || gain > 1.0)
-			throw new Exception( "Gain of " + gain + " specified.\n" +
-			                     "This value must be between 0.0 and 1.0." );
+			throw new Exception( String.format(bundle.getString("gain.of.f.specified.nthis.value.must.be.between.0.0.and.1.0"), gain) );
 		if (panning < -1.0 || panning > 1.0)
-			throw new Exception( "Panning of " + panning + " specified.\n" +
-			                     "This value must be between -1.0 and 1.0." );
+			throw new Exception( String.format(bundle.getString("panning.of.f.specified.nthis.value.must.be.between.1.0.and.1.0"), panning) );
 		if (samples_to_modify == null)
-			throw new Exception( "Empty set of samples provided." );
+			throw new Exception(bundle.getString("empty.set.of.samples.provided") );
 		for (int chan = 0; chan < samples_to_modify.length; chan++)
 			if (samples_to_modify[chan] == null)
-				throw new Exception ("Channel " + chan + " is empty.");
+				throw new Exception( String.format(bundle.getString("channel.d.is.empty"),chan));
 
 		// Apply gain to all samples equally accross all channels
 		for (int chan = 0; chan < samples_to_modify.length; chan++)
@@ -340,19 +340,18 @@ public class AudioMethodsSynthesis
 		                                                        float sample_rate )
 		throws Exception
 	 {
-		// Throw exceptions if parameters are invalid
+         ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+         // Throw exceptions if parameters are invalid
 		if (sample_values == null)
-			throw new Exception( "Empty set of samples provided." );
+			throw new Exception(bundle.getString("empty.set.of.samples.provided") );
 		if (sample_rate <= 0.0F)
-			throw new Exception( "Given sample rate is " + sample_rate + " Hz.\n" +
-			                     "This value should be greater than zero." );
+			throw new Exception( String.format("Given sample rate is %f Hz.\nThis value should be greater than zero.",sample_rate) );
 		if (click_avoid_env_length < 0.0)
-			throw new Exception( "Click avoidance envelope length is " + click_avoid_env_length + " seconds.\n" +
-			                     "This value should be 0.0 seconds or higher." );
+			throw new Exception( String.format("Click avoidance envelope length is %f seconds.\nThis value should be 0.0 seconds or higher.", click_avoid_env_length ));
 		double duration_of_audio = sample_values[0].length / sample_rate;
 		if ( (2.0 * click_avoid_env_length) >= duration_of_audio )
-			throw new Exception( "Click avoidance envelope length is " + click_avoid_env_length + " seconds.\n" +
-			                     "This would lead to combined envelope lengths longer than the provided audio." );
+			throw new Exception( String.format("Click avoidance envelope length is %f seconds.\nThis would lead to combined envelope lengths longer than the provided audio.",click_avoid_env_length) );
 
 		// Find the duration in samples of each envelope
 		int sample_duration = (int) (click_avoid_env_length * sample_rate);
@@ -402,14 +401,15 @@ public class AudioMethodsSynthesis
 	                                         byte[] buffer )
 		throws Exception
 	{
-		// Throw exceptions for invalid parameters
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+        // Throw exceptions for invalid parameters
 		if (sample_values == null)
-			throw new Exception( "Empty set of samples to write provided." );
+			throw new Exception(bundle.getString("empty.set.of.samples.to.write.provided") );
 		if (bit_depth != 8 && bit_depth != 16)
-			throw new Exception( "Bit depth of " + bit_depth + " specified." +
-			                     "Only bit depths of 8 or 16 currently accepted." );
+			throw new Exception( String.format(bundle.getString("bit.depth.of.d.specified.only.bit.depths.of.8.or.16.currently.accepted"),bit_depth) );
 		if (buffer == null)
-			throw new Exception("Null buffer for storing samples provided.");
+			throw new Exception(bundle.getString("null.buffer.for.storing.samples.provided"));
 		
 		// Find the maximum value a sample may have under the current bit depth
 		// (assuming signed samples)
@@ -456,25 +456,23 @@ public class AudioMethodsSynthesis
 	public static int getSynthesisTypeCode(String synthesis_type_name)
 		throws Exception
 	{
-		if (synthesis_type_name.equals("Sine Wave"))
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+		if (synthesis_type_name.compareTo("Sine Wave")==0)
 			return SINE_WAVE;
-		else if (synthesis_type_name.equals("Basic Tone"))
+		else if (synthesis_type_name.compareTo("Basic Tone")==0)
 			return BASIC_TONE;
-		else if (synthesis_type_name.equals("Stereo Panning"))
+		else if (synthesis_type_name.compareTo("Stereo Panning")==0)
 			return STEREO_PANNING;
-		else if (synthesis_type_name.equals("Stereo Pingpong"))
+		else if (synthesis_type_name.compareTo("Stereo Pingpong")==0)
 			return STEREO_PINPONG;
-		else if (synthesis_type_name.equals("FM Sweep"))
+		else if (synthesis_type_name.compareTo("FM Sweep")==0)
 			return FM_SWEEP;
-		else if (synthesis_type_name.equals("Decay Pulse"))
+		else if (synthesis_type_name.compareTo("Decay Pulse")==0)
 			return DECAY_PULSE;
-		else if (synthesis_type_name.equals("White Noise"))
+		else if (synthesis_type_name.compareTo("White Noise")==0)
 			return WHITE_NOISE;
 		else
-			throw new Exception( "Unknown type of synthesis specified: " + synthesis_type_name + ".\n" +
-			                     "Known types of synthesis are:\n" +
-			                     "   Sine Wave, Basic Tone, Stereo Panning, Stereo Pingpong\n" +
-			                     "   FM Sweep, White Noise and Decay Pulse." );
+			throw new Exception( String.format(bundle.getString("unknown.type.of.synthesis.specified.s.nknown.types.of.synthesis.are.n.sine.wave.basic.tone.stereo.panning.stereo.pingpong.n.fm.sweep.white.noise.and.decay.pulse"),synthesis_type_name ));
 	}
 
 
@@ -539,30 +537,25 @@ public class AudioMethodsSynthesis
 	                                                  int total_samples_per_chan )
 		throws Exception
 	{
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
 		// Throw an exception if an invalid max_frac_samp_rate is passed
 		if (max_frac_samp_rate <= 0.0)
-			throw new Exception( "Invalid maximum allowable fraction of sampling rate of " + max_frac_samp_rate + " specified.\n" +
-			                     "This value must be above 0." );
+			throw new Exception( String.format(bundle.getString("invalid.maximum.allowable.fraction.of.sampling.rate.of.f.specified.nthis.value.must.be.above.0"),max_frac_samp_rate) );
 
 		// Throw exceptions for invalid fundamental frequencies (avoid aliasing)
 		if (fund_freq <= 0.0)
-			throw new Exception( "Invalid fundamental frequence of " + fund_freq + " Hz specified.\n" +
-			                     "Frequency must be above 0 Hz." );
+			throw new Exception( String.format(bundle.getString("invalid.fundamental.frequence.of.f.hz.specified.nfrequency.must.be.above.0.hz"),fund_freq ));
 		if (fund_freq >= (max_frac_samp_rate * sample_rate) )
-			throw new Exception( "Invalid fundamental frequency of " + fund_freq + " Hz specified.\n" +
-			                     "Frequency must be below " + (max_frac_samp_rate * sample_rate) + " Hz\n" +
-			                     "under current settings. This is done in order to avoid aliasing at this\n" +
-			                     "sampling rate of " + sample_rate + " Hz for this type of synthesis." );
+			throw new Exception( String.format(bundle.getString("invalid.fundamental.frequency.of.f.hz.specified.nfrequency.must.be.below.f.hz.nnder.current.settings.this.is.done.in.order.to.avoid.aliasing.at.this.nsampling.rate.of.f.hz.for.this.type.of.synthesis"),fund_freq,max_frac_samp_rate*sample_rate,sample_rate ));
 
 		// Throw exceptions for invalid number_of_channels, sample_rate or total_samples_per_chan
 		if (number_of_channels < 1)
-			throw new Exception("There must be 1 or more channels. You specified " + number_of_channels + ".");
+			throw new Exception(String.format(bundle.getString("there.must.be.1.or.more.channels.you.specified.d"),number_of_channels));
 		if (sample_rate <= 0.0F)
-			throw new Exception( "Invalid sampling rate of " + sample_rate + " Hz specified.\n" +
-			                     "Must be greater than 0.");
+			throw new Exception( String.format(bundle.getString("invalid.sampling.rate.of.f.hz.specified.nmust.be.greater.than.0"),sample_rate));
 		if (total_samples_per_chan <= 0)
-			throw new Exception( "Invalid total number of samples per channel of " + total_samples_per_chan + " specified.\n" +
-			                     "Must be greater than 0.");
+			throw new Exception( String.format(bundle.getString("invalid.total.number.of.samples.per.channel.of.d.specified.nmust.be.greater.than.0"),total_samples_per_chan));
 
 		// Prepare the array to hold the samples for each channel
 		double[][] samples = new double[number_of_channels][total_samples_per_chan];
@@ -630,30 +623,25 @@ public class AudioMethodsSynthesis
 	                                                   int total_samples_per_chan )
 		throws Exception
 	{
-		// Throw an exception if an invalid max_frac_samp_rate is passed
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+        // Throw an exception if an invalid max_frac_samp_rate is passed
 		if (max_frac_samp_rate <= 0.0)
-			throw new Exception( "Invalid maximum allowable fraction of sampling rate of " + max_frac_samp_rate + " specified.\n" +
-			                     "This value must be above 0." );
+			throw new Exception( String.format(bundle.getString("invalid.maximum.allowable.fraction.of.sampling.rate.of.f.specified.nthis.value.must.be.above.01"),max_frac_samp_rate) );
 
 		// Throw exceptions for invalid fundamental frequencies (avoid aliasing)
 		if (fund_freq <= 0.0)
-			throw new Exception( "Invalid fundamental frequence of " + fund_freq + " Hz specified.\n" +
-			                     "Frequency must be above 0 Hz." );
+			throw new Exception( String.format(bundle.getString("invalid.fundamental.frequence.of.f.hz.specified.nfrequency.must.be.above.0.hz1"),fund_freq ));
 		if (fund_freq >= (max_frac_samp_rate * sample_rate / 1.8) )
-			throw new Exception( "Invalid fundamental frequency of " + fund_freq + " Hz specified.\n" +
-			                     "Frequency must be below " + (max_frac_samp_rate * sample_rate / 1.8) + " Hz\n" +
-			                     "under current settings. This is done in order to avoid aliasing at this\n" +
-			                     "sampling rate of " + sample_rate + " Hz for this type of synthesis." );
+			throw new Exception( String.format(bundle.getString("invalid.fundamental.frequency.of.f.hz.specified.nfrequency.must.be.below.f.hz.n.f.under.current.settings.this.is.done.in.order.to.avoid.aliasing.at.this.nsampling.rate.of.f.hz.for.this.type.of.synthesis"),fund_freq,max_frac_samp_rate*sample_rate /1.8,sample_rate ));
 
 		// Throw exceptions for invalid number_of_channels, sample_rate or total_samples_per_chan
 		if (number_of_channels < 1)
-			throw new Exception("There must be 1 or more channels. You specified " + number_of_channels + ".");
+			throw new Exception(String.format(bundle.getString("there.must.be.1.or.more.channels.you.specified.d"),number_of_channels));
 		if (sample_rate <= 0.0F)
-			throw new Exception( "Invalid sampling rate of " + sample_rate + " Hz specified.\n" +
-			                     "Must be greater than 0.");
+			throw new Exception( String.format(bundle.getString("invalid.sampling.rate.of.f.hz.specified.nmust.be.greater.than.01"),sample_rate));
 		if (total_samples_per_chan <= 0)
-			throw new Exception( "Invalid total number of samples per channel of " + total_samples_per_chan + " specified.\n" +
-			                     "Must be greater than 0.");
+			throw new Exception( String.format(bundle.getString("invalid.total.number.of.samples.per.channel.of.d.specified.nmust.be.greater.than.01"),total_samples_per_chan));
 
 		// Prepare the array to hold the samples for each channel
 		double[][] samples = new double[number_of_channels][total_samples_per_chan];
@@ -725,30 +713,24 @@ public class AudioMethodsSynthesis
 	                                                       int total_samples_per_chan )
 		throws Exception
 	{
-		// Throw an exception if an invalid max_frac_samp_rate is passed
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        // Throw an exception if an invalid max_frac_samp_rate is passed
 		if (max_frac_samp_rate <= 0.0)
-			throw new Exception( "Invalid maximum allowable fraction of sampling rate of " + max_frac_samp_rate + " specified.\n" +
-			                     "This value must be above 0." );
+			throw new Exception( String.format(bundle.getString("invalid.maximum.allowable.fraction.of.sampling.rate.of.f.specified.nthis.value.must.be.above.02"),max_frac_samp_rate) );
 
 		// Throw exceptions for invalid fundamental frequencies (avoid aliasing)
 		if (fund_freq <= 0.0)
-			throw new Exception( "Invalid fundamental frequence of " + fund_freq + " Hz specified.\n" +
-			                     "Frequency must be above 0 Hz." );
+			throw new Exception( String.format(bundle.getString("invalid.fundamental.frequence.of.f.hz.specified.nfrequency.must.be.above.0.hz2"), fund_freq) );
 		if (fund_freq >= (max_frac_samp_rate * sample_rate / 1.8) )
-			throw new Exception( "Invalid fundamental frequency of " + fund_freq + " Hz specified.\n" +
-			                     "Frequency must be below " + (max_frac_samp_rate * sample_rate) + " Hz\n" +
-			                     "under current settings. This is done in order to avoid aliasing at this\n" +
-			                     "sampling rate of " + sample_rate + " Hz for this type of synthesis." );
+			throw new Exception( String.format(bundle.getString("invalid.fundamental.frequency.of.f.hz.specified.nfrequency.must.be.below.f.hz.nunder.current.settings.this.is.done.in.order.to.avoid.aliasing.at.this.nsampling.rate.of.f.hz.for.this.type.of.synthesis"), fund_freq, max_frac_samp_rate*sample_rate,sample_rate) );
 
 		// Throw exceptions for invalid number_of_channels, sample_rate or total_samples_per_chan
 		if (number_of_channels != 2)
-			throw new Exception("There must be 2 channels. You specified " + number_of_channels + ".");
+			throw new Exception( String.format(bundle.getString("there.must.be.2.channels.you.specified.d"), number_of_channels));
 		if (sample_rate <= 0.0F)
-			throw new Exception( "Invalid sampling rate of " + sample_rate + " Hz specified.\n" +
-			                     "Must be greater than 0.");
+			throw new Exception( String.format(bundle.getString("invalid.sampling.rate.of.f.hz.specified.nmust.be.greater.than.02"),sample_rate));
 		if (total_samples_per_chan <= 0)
-			throw new Exception( "Invalid total number of samples per channel of " + total_samples_per_chan + " specified.\n" +
-			                     "Must be greater than 0.");
+			throw new Exception( String.format(bundle.getString("invalid.total.number.of.samples.per.channel.of.d.specified.nmust.be.greater.than.02"),total_samples_per_chan));
 
 		// Prepare the array to hold the samples for each channel
 		double[][] samples = new double[number_of_channels][total_samples_per_chan];
@@ -821,30 +803,24 @@ public class AudioMethodsSynthesis
 	                                                        int total_samples_per_chan )
 		throws Exception
 	{
-		// Throw an exception if an invalid max_frac_samp_rate is passed
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        // Throw an exception if an invalid max_frac_samp_rate is passed
 		if (max_frac_samp_rate <= 0.0)
-			throw new Exception( "Invalid maximum allowable fraction of sampling rate of " + max_frac_samp_rate + " specified.\n" +
-			                     "This value must be above 0." );
+			throw new Exception( String.format(bundle.getString("invalid.maximum.allowable.fraction.of.sampling.rate.of.f.specified.nthis.value.must.be.above.03"),max_frac_samp_rate) );
 
 		// Throw exceptions for invalid fundamental frequencies (avoid aliasing)
 		if (fund_freq <= 0.0)
-			throw new Exception( "Invalid fundamental frequence of " + fund_freq + " Hz specified.\n" +
-			                     "Frequency must be above 0 Hz." );
+			throw new Exception( String.format(bundle.getString("invalid.fundamental.frequence.of.f.hz.specified.nfrequency.must.be.above.0.hz3"),fund_freq) );
 		if (fund_freq >= (max_frac_samp_rate * sample_rate / 1.8) )
-			throw new Exception( "Invalid fundamental frequency of " + fund_freq + " Hz specified.\n" +
-			                     "Frequency must be below " + (max_frac_samp_rate * sample_rate) + " Hz\n" +
-			                     "under current settings. This is done in order to avoid aliasing at this\n" +
-			                     "sampling rate of " + sample_rate + " Hz for this type of synthesis." );
+			throw new Exception( String.format(bundle.getString("invalid.fundamental.frequency.of.f.hz.specified.nfrequency.must.be.below.f.hz.nunder.current.settings.this.is.done.in.order.to.avoid.aliasing.at.this.nsampling.rate.of.f.hz.for.this.type.of.synthesis1"),fund_freq,max_frac_samp_rate*sample_rate,sample_rate) );
 
 		// Throw exceptions for invalid number_of_channels, sample_rate or total_samples_per_chan
 		if (number_of_channels != 2)
-			throw new Exception("There must be 2 channels. You specified " + number_of_channels + ".");
+			throw new Exception( String.format(bundle.getString("there.must.be.2.channels.you.specified.d"),number_of_channels));
 		if (sample_rate <= 0.0F)
-			throw new Exception( "Invalid sampling rate of " + sample_rate + " Hz specified.\n" +
-			                     "Must be greater than 0.");
+			throw new Exception( String.format(bundle.getString("invalid.sampling.rate.of.f.hz.specified.nmust.be.greater.than.03"),sample_rate));
 		if (total_samples_per_chan <= 0)
-			throw new Exception( "Invalid total number of samples per channel of " + total_samples_per_chan + " specified.\n" +
-			                     "Must be greater than 0.");
+			throw new Exception( String.format(bundle.getString("invalid.total.number.of.samples.per.channel.of.d.specified.nmust.be.greater.than.03"),total_samples_per_chan));
 
 		// Prepare the array to hold the samples for each channel
 		double[][] samples = new double[number_of_channels][total_samples_per_chan];
@@ -929,30 +905,24 @@ public class AudioMethodsSynthesis
 	                                                 int total_samples_per_chan )
 		throws Exception
 	{
-		// Throw an exception if an invalid max_frac_samp_rate is passed
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        // Throw an exception if an invalid max_frac_samp_rate is passed
 		if (max_frac_samp_rate <= 0.0)
-			throw new Exception( "Invalid maximum allowable fraction of sampling rate of " + max_frac_samp_rate + " specified.\n" +
-			                     "This value must be above 0." );
+			throw new Exception( String.format(bundle.getString("invalid.maximum.allowable.fraction.of.sampling.rate.of.f.specified.nthis.value.must.be.above.04"),max_frac_samp_rate) );
 
 		// Throw exceptions for invalid fundamental frequencies (avoid aliasing)
 		if (fund_freq <= 0.0)
-			throw new Exception( "Invalid fundamental frequence of " + fund_freq + " Hz specified.\n" +
-			                     "Frequency must be above 0 Hz." );
+			throw new Exception( String.format(bundle.getString("invalid.fundamental.frequence.of.f.hz.specified.nfrequency.must.be.above.0.hz4"),fund_freq) );
 		if (fund_freq >= (max_frac_samp_rate * sample_rate) )
-			throw new Exception( "Invalid fundamental frequency of " + fund_freq + " Hz specified.\n" +
-			                     "Frequency must be below " + (max_frac_samp_rate * sample_rate) + " Hz\n" +
-			                     "under current settings. This is done in order to avoid aliasing at this\n" +
-			                     "sampling rate of " + sample_rate + " Hz for this type of synthesis." );
+			throw new Exception( String.format(bundle.getString("invalid.fundamental.frequency.of.f.hz.specified.n.f.frequency.must.be.below.f.hz.nunder.current.settings.this.is.done.in.order.to.avoid.aliasing.at.this.n.fsampling.rate.of.f.hz.for.this.type.of.synthesis"), fund_freq,max_frac_samp_rate*sample_rate,sample_rate) );
 
 		// Throw exceptions for invalid number_of_channels, sample_rate or total_samples_per_chan
 		if (number_of_channels < 1)
-			throw new Exception("There must be 1 or more channels. You specified " + number_of_channels + ".");
+			throw new Exception( String.format(bundle.getString("there.must.be.1.or.more.channels.you.specified.d"),number_of_channels));
 		if (sample_rate <= 0.0F)
-			throw new Exception( "Invalid sampling rate of " + sample_rate + " Hz specified.\n" +
-			                     "Must be greater than 0.");
+			throw new Exception( String.format(bundle.getString("invalid.sampling.rate.of.f.hz.specified.nmust.be.greater.than.04"),sample_rate));
 		if (total_samples_per_chan <= 0)
-			throw new Exception( "Invalid total number of samples per channel of " + total_samples_per_chan + " specified.\n" +
-			                     "Must be greater than 0.");
+			throw new Exception( String.format(bundle.getString("invalid.total.number.of.samples.per.channel.of.d.specified.nmust.be.greater.than.04"),total_samples_per_chan));
 
 		// Prepare the array to hold the samples for each channel
 		double[][] samples = new double[number_of_channels][total_samples_per_chan];
@@ -1029,30 +999,24 @@ public class AudioMethodsSynthesis
 	                                                    int total_samples_per_chan )
 		throws Exception
 	{
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		// Throw an exception if an invalid max_frac_samp_rate is passed
 		if (max_frac_samp_rate <= 0.0)
-			throw new Exception( "Invalid maximum allowable fraction of sampling rate of " + max_frac_samp_rate + " specified.\n" +
-			                     "This value must be above 0." );
+			throw new Exception( String.format(bundle.getString("invalid.maximum.allowable.fraction.of.sampling.rate.of.f.specified.nthis.value.must.be.above.05"),max_frac_samp_rate) );
 
 		// Throw exceptions for invalid fundamental frequencies (avoid aliasing)
 		if (fund_freq <= 0.0)
-			throw new Exception( "Invalid fundamental frequence of " + fund_freq + " Hz specified.\n" +
-			                     "Frequency must be above 0 Hz." );
+			throw new Exception( String.format(bundle.getString("invalid.fundamental.frequence.of.f.hz.specified.nfrequency.must.be.above.0.hz5"),fund_freq) );
 		if (fund_freq >= (max_frac_samp_rate * sample_rate) )
-			throw new Exception( "Invalid fundamental frequency of " + fund_freq + " Hz specified.\n" +
-			                     "Frequency must be below " + (max_frac_samp_rate * sample_rate) + " Hz\n" +
-			                     "under current settings. This is done in order to avoid aliasing at this\n" +
-			                     "sampling rate of " + sample_rate + " Hz for this type of synthesis." );
+			throw new Exception( String.format(bundle.getString("invalid.fundamental.frequency.of.f.hz.specified.nfrequency.must.be.below.f.hz.nunder.current.settings.this.is.done.in.order.to.avoid.aliasing.at.this.nsampling.rate.of.f.hz.for.this.type.of.synthesis2"),fund_freq,max_frac_samp_rate*sample_rate,sample_rate ));
 
 		// Throw exceptions for invalid number_of_channels, sample_rate or total_samples_per_chan
 		if (number_of_channels < 1)
-			throw new Exception("There must be 1 or more channels. You specified " + number_of_channels + ".");
+			throw new Exception( String.format(bundle.getString("there.must.be.1.or.more.channels.you.specified.d"),number_of_channels));
 		if (sample_rate <= 0.0F)
-			throw new Exception( "Invalid sampling rate of " + sample_rate + " Hz specified.\n" +
-			                     "Must be greater than 0.");
+			throw new Exception( String.format(bundle.getString("invalid.sampling.rate.of.f.hz.specified.nmust.be.greater.than.05"),sample_rate));
 		if (total_samples_per_chan <= 0)
-			throw new Exception( "Invalid total number of samples per channel of " + total_samples_per_chan + " specified.\n" +
-			                     "Must be greater than 0.");
+			throw new Exception( String.format(bundle.getString("invalid.total.number.of.samples.per.channel.of.d.specified.nmust.be.greater.than.05"),total_samples_per_chan));
 
 		// Prepare the array to hold the samples for each channel
 		double[][] samples = new double[number_of_channels][total_samples_per_chan];
@@ -1105,12 +1069,12 @@ public class AudioMethodsSynthesis
 	                                            int total_samples_per_chan )
 		throws Exception
 	{
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		// Throw exceptions for invalid number_of_channels or total_samples_per_chan
 		if (number_of_channels < 1)
-			throw new Exception("There must be 1 or more channels. You specified " + number_of_channels + ".");
+			throw new Exception( String.format("There must be 1 or more channels. You specified %d.",number_of_channels));
 		if (total_samples_per_chan <= 0)
-			throw new Exception( "Invalid total number of samples per channel of " + total_samples_per_chan + " specified.\n" +
-			                     "Must be greater than 0.");
+			throw new Exception( String.format("Invalid total number of samples per channel of %d specified.\nMust be greater than 0.",total_samples_per_chan));
 
 		// Prepare the array to hold the samples for each channel
 		double[][] samples = new double[number_of_channels][total_samples_per_chan];

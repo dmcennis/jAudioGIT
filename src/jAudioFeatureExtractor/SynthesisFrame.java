@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.ResourceBundle;
 
 
 /**
@@ -166,8 +167,10 @@ public class SynthesisFrame
 	 */
 	public SynthesisFrame(Controller c)
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
 		// Set window title
-		setTitle("Synthesize Audio");
+		setTitle(bundle.getString("synthesize.audio"));
 		getContentPane().setBackground(new Color((float)0.75,(float)0.85,(float)1.0));
 
 		// Cause program to react when the exit box is pressed
@@ -219,19 +222,19 @@ public class SynthesisFrame
 		selected_components_scroll_pane = new JScrollPane(selected_components_text_area);
 
 		// Initialize buttons and combo box
-		choose_encoding_format_button = new JButton("Choose Audio Format");
+		choose_encoding_format_button = new JButton(bundle.getString("choose.audio.format"));
 		choose_encoding_format_button.addActionListener(this);
-		add_synthesis_component_button = new JButton("Add Component");
+		add_synthesis_component_button = new JButton(bundle.getString("add.component"));
 		add_synthesis_component_button.addActionListener(this);
-		clear_synthesis_components_button = new JButton("Clear All Components");
+		clear_synthesis_components_button = new JButton(bundle.getString("clear.all.components"));
 		clear_synthesis_components_button.addActionListener(this);
-		play_button = new JButton("Play");
+		play_button = new JButton(bundle.getString("play"));
 		play_button.addActionListener(this);
-		stop_playback_button = new JButton("Stop Playback");
+		stop_playback_button = new JButton(bundle.getString("stop.playback"));
 		stop_playback_button.addActionListener(this);
-		save_button = new JButton("Save");
+		save_button = new JButton(bundle.getString("save"));
 		save_button.addActionListener(this);
-		cancel_button = new JButton("Cancel");
+		cancel_button = new JButton(bundle.getString("cancel"));
 		cancel_button.addActionListener(this);
 		choose_file_format_combo_box = new JComboBox();
 		String file_types[] = AudioMethods.getAvailableFileFormatTypes();
@@ -250,36 +253,36 @@ public class SynthesisFrame
 		buttons_panel.setBackground(this.getContentPane().getBackground());
 		
 		// Add elements to containers
-		selections_panel.add(new JLabel("OVERALL SYNTHESIS:"));
+		selections_panel.add(new JLabel(bundle.getString("overall.synthesis")));
 		selections_panel.add(new JLabel(""));
-		selections_panel.add(new JLabel("Synthesis Encoding Format:"));
+		selections_panel.add(new JLabel(bundle.getString("synthesis.encoding.format")));
 		selections_panel.add(choose_encoding_format_button);
-		selections_panel.add(new JLabel("Duration (sec):"));
+		selections_panel.add(new JLabel(bundle.getString("duration.sec")));
 		selections_panel.add(duration_text_area);
-		selections_panel.add(new JLabel("Gain (0.0 to 1.0):"));
+		selections_panel.add(new JLabel(bundle.getString("gain.0.0.to.1.0")));
 		selections_panel.add(gain_text_area);
-		selections_panel.add(new JLabel("Panning (-1.0 to 1.0):"));
+		selections_panel.add(new JLabel(bundle.getString("panning.1.0.to.1.0")));
 		selections_panel.add(panning_text_area);
-		selections_panel.add(new JLabel("Click Avoidance Env. Length (sec):"));
+		selections_panel.add(new JLabel(bundle.getString("click.avoidance.env.length.sec")));
 		selections_panel.add(click_avoid_env_length_text_area);
 		selections_panel.add(new JLabel(""));
 		selections_panel.add(new JLabel(""));
-		selections_panel.add(new JLabel("INDIVIDUAL COMPONENTS:"));
+		selections_panel.add(new JLabel(bundle.getString("individual.components")));
 		selections_panel.add(new JLabel(""));
-		selections_panel.add(new JLabel("Synthesis Type:"));
+		selections_panel.add(new JLabel(bundle.getString("synthesis.type")));
 		selections_panel.add(synthesis_selection_combo_box);
-		selections_panel.add(new JLabel("Fundamental Frequency (Hz):"));
+		selections_panel.add(new JLabel(bundle.getString("fundamental.frequency.hz")));
 		selections_panel.add(fund_freq_text_area);
-		selections_panel.add(new JLabel("Relative Amplitude (0.0 to 1.0):"));
+		selections_panel.add(new JLabel(bundle.getString("relative.amplitude.0.0.to.1.0")));
 		selections_panel.add(relative_amplitude_multiplier_text_area);
-		selections_panel.add(new JLabel("Max Fraction of Sampling Rate:"));
+		selections_panel.add(new JLabel(bundle.getString("max.fraction.of.sampling.rate")));
 		selections_panel.add(max_fraction_of_sampling_rate_text_area);
 		selections_panel.add(clear_synthesis_components_button);
 		selections_panel.add(add_synthesis_component_button);
 		report_panel.add(selected_components_scroll_pane);
 		buttons_panel.add(play_button);
 		buttons_panel.add(stop_playback_button);
-		buttons_panel.add(new JLabel("File Format For Saving:"));
+		buttons_panel.add(new JLabel(bundle.getString("file.format.for.saving1")));
 		buttons_panel.add(choose_file_format_combo_box);
 		buttons_panel.add(new JLabel(""));
 		buttons_panel.add(new JLabel(""));
@@ -365,7 +368,7 @@ public class SynthesisFrame
 		}
 		catch (Exception e)
 		{
-			JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -430,8 +433,10 @@ public class SynthesisFrame
 				// See if user wishes to overwrite if a file with the same name exists
 				if (save_file.exists())
 				{
-					int overwrite = JOptionPane.showConfirmDialog( null,
-																  "This file already exists.\nDo you wish to overwrite it?",
+                    ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+                    int overwrite = JOptionPane.showConfirmDialog( null,
+                            bundle.getString("this.file.already.exists.ndo.you.wish.to.overwrite.it4"),
 																  "WARNING",
 																  JOptionPane.YES_NO_OPTION );
 					if (overwrite != JOptionPane.YES_OPTION)
@@ -452,14 +457,14 @@ public class SynthesisFrame
 					}
 					catch (Exception e)
 					{
-						JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);							
+						JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
 		}
 		catch (Exception e)
 		{
-			JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -504,7 +509,7 @@ public class SynthesisFrame
 		}
 		catch (Exception e)
 		{
-			JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -540,7 +545,9 @@ public class SynthesisFrame
 	private byte[] performAdditiveSynthesis()
 		throws Exception
 	{
-		// Get the overall parameters for the synthesis
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+        // Get the overall parameters for the synthesis
 		AudioFormat audio_format = audio_format_selector.getAudioFormat(false);
 		double gain = Double.parseDouble(gain_text_area.getText());
 		double panning = Double.parseDouble(panning_text_area.getText());
@@ -551,18 +558,16 @@ public class SynthesisFrame
 		// a duration is selected. Maximum duration is there to avoid memory errors
 		// and int overflows.
 		if (duration > 7200)
-			throw new Exception( "You have selected a duration of " + duration + " seconds,\n" +
-								 "which is too long. Duration must be less than 2 hours.");
+			throw new Exception( String.format(bundle.getString("you.have.selected.a.duration.of.f.seconds.nwhich.is.too.long.duration.must.be.less.than.2.hours"),duration));
 		if (duration <= 0)
-			throw new Exception( "You have selected a duration of " + duration + "seconds.\n" +
-								 "Duration must be over seconds.");
+			throw new Exception( String.format(bundle.getString("you.have.selected.a.duration.of.f.seconds.nduration.must.be.over.seconds"),duration));
 
 		// Find the number of components and the total of their amplitude multipliers.
 		// Throw an exception if no components are available.
 		int number_components = 0;
 		double total_multipliers = 0.0;
 		if (selected_components == null)
-			throw new Exception("No additive synthesis components have been added yet.");
+			throw new Exception(bundle.getString("no.additive.synthesis.components.have.been.added.yet"));
 		else
 		{
 			SynthesisParameters temp = selected_components;
@@ -653,7 +658,9 @@ public class SynthesisFrame
 			path = StringMethods.removeExtension(path) + correct_extension;
 		else
 			return file_to_verify;
-		JOptionPane.showMessageDialog(null, "Incorrect file extension specified.\nChanged from " + ext + " to " + correct_extension + ".", "WARNING", JOptionPane.ERROR_MESSAGE);
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+        JOptionPane.showMessageDialog(null, String.format(bundle.getString("incorrect.file.extension.specified.nchanged.from.s.to.s1"),ext,correct_extension), "WARNING", JOptionPane.ERROR_MESSAGE);
 		return new File(path);
 	}
 
@@ -689,23 +696,22 @@ public class SynthesisFrame
 		                            double max_fraction_of_sampling_rate )
 			throws Exception
 		{
-			// Throw exceptions for invalid parameters
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+            // Throw exceptions for invalid parameters
 			String synthesis_types[] = AudioMethodsSynthesis.getSynthesisNames();
 			boolean type_ok = false;
 			for (int i = 0; i < synthesis_types.length; i++)
 				if (synthesis_types[i].equals(synthesis_type))
 					type_ok = true;
 			if (!type_ok)
-				throw new Exception("Synthesis type " + synthesis_type + " is unknown.");
+				throw new Exception(String.format(bundle.getString("synthesis.type.s.is.unknown"),synthesis_type));
 			if (fundamental_frequency <= 0.0)
-				throw new Exception( "Fundamental frequency is " + fundamental_frequency + ".\n" +
-				                     "This value must be above zero." );
+				throw new Exception( String.format(bundle.getString("fundamental.frequency.is.f.nthis.value.must.be.above.zero"),fundamental_frequency) );
 			if (relative_amplitude < 0.0 || relative_amplitude > 1.0)
-				throw new Exception( "Relative amplitude is " + relative_amplitude + ".\n" +
-				                     "This value must be between 0 and 1." );
+				throw new Exception( String.format(bundle.getString("relative.amplitude.is.f.nthis.value.must.be.between.0.and.1"),relative_amplitude) );
 			if (max_fraction_of_sampling_rate <= 0.0)
-				throw new Exception( "Maximum fraction of sampling rate is " + max_fraction_of_sampling_rate + ",\n" +
-				                     "This value must be above zero." );
+				throw new Exception( String.format(bundle.getString("maximum.fraction.of.sampling.rate.is.f.nthis.value.must.be.above.zero"),max_fraction_of_sampling_rate ));
 
 			// Set fields
 			this.synthesis_type = synthesis_type;

@@ -250,13 +250,14 @@ public class RecordingFrame
 	 */
 	private void displayCurrentAudioFormat()
 	{
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		if (last_recorded_audio != null)
 		{
 			String data = AudioMethods.getAudioFormatData(last_recorded_audio.getFormat());
-			JOptionPane.showMessageDialog(null, data, "Current Audio Encoding", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, data, bundle.getString("current.audio.encoding"), JOptionPane.INFORMATION_MESSAGE);
 		}
 		else
-			JOptionPane.showMessageDialog(null, "No audio has been stored.", "WARNING", JOptionPane.ERROR_MESSAGE);							
+			JOptionPane.showMessageDialog(null, bundle.getString("no.audio.has.been.stored"), "WARNING", JOptionPane.ERROR_MESSAGE);
 	}
 
 
@@ -273,7 +274,8 @@ public class RecordingFrame
 	 */
 	private void record()
 	{
-		try
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        try
 		{
 			stopRecording();
 			stopPlayback();
@@ -283,7 +285,7 @@ public class RecordingFrame
 		}
 		catch (Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Could not record because:\n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, String.format(bundle.getString("could.not.record.because.n.s"),e.getLocalizedMessage()), "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -324,7 +326,8 @@ public class RecordingFrame
 			}
 			catch (Exception e)
 			{
-				JOptionPane.showMessageDialog(null, "Could not play because:\n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                JOptionPane.showMessageDialog(null, String.format(bundle.getString("could.not.play.because.n.s"),e.getLocalizedMessage()), "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -346,7 +349,8 @@ public class RecordingFrame
 			}
 			catch (Exception e)
 			{
-				JOptionPane.showMessageDialog(null, "Could not reset playback position:\n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                JOptionPane.showMessageDialog(null, String.format(bundle.getString("could.not.reset.playback.position.n.s"),e.getLocalizedMessage()), "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		playback_thread = null;
@@ -379,8 +383,9 @@ public class RecordingFrame
 		// or of going back to make a recording.
 		if (last_recorded_audio == null)
 		{
-			int end = JOptionPane.showConfirmDialog( null,
-												     "No recording has been made.\nDo you wish to make a recording?",
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            int end = JOptionPane.showConfirmDialog( null,
+                    bundle.getString("no.recording.has.been.made.ndo.you.wish.to.make.a.recording"),
 													 "WARNING",
 													 JOptionPane.YES_NO_OPTION );
 			if (end == JOptionPane.NO_OPTION)
@@ -423,8 +428,9 @@ public class RecordingFrame
 				// See if user wishes to overwrite if a file with the same name exists
 				if (save_file.exists())
 				{
-					int overwrite = JOptionPane.showConfirmDialog( null,
-																  "This file already exists.\nDo you wish to overwrite it?",
+                    ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                    int overwrite = JOptionPane.showConfirmDialog( null,
+                            bundle.getString("this.file.already.exists.ndo.you.wish.to.overwrite.it2"),
 																  "WARNING",
 																  JOptionPane.YES_NO_OPTION );
 					if (overwrite != JOptionPane.YES_OPTION)
@@ -446,7 +452,7 @@ public class RecordingFrame
 					}
 					catch (Exception e)
 					{
-						JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);							
+						JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -480,7 +486,8 @@ public class RecordingFrame
 			path = StringMethods.removeExtension(path) + correct_extension;
 		else
 			return file_to_verify;
-		JOptionPane.showMessageDialog(null, "Incorrect file extension specified.\nChanged from " + ext + " to " + correct_extension + ".", "WARNING", JOptionPane.ERROR_MESSAGE);
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        JOptionPane.showMessageDialog(null, String.format(bundle.getString("incorrect.file.extension.specified.nchanged.from.s.to.s"),ext,correct_extension), "WARNING", JOptionPane.ERROR_MESSAGE);
 		return new File(path);
 	}
 }

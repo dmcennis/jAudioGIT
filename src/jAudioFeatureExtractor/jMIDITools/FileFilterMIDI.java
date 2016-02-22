@@ -7,6 +7,7 @@
 package jAudioFeatureExtractor.jMIDITools;
 
 import java.io.File;
+import java.util.ResourceBundle;
 import javax.swing.filechooser.FileFilter;
 
 
@@ -36,6 +37,7 @@ public class FileFilterMIDI
 
 	public String getDescription()
 	{
-		return "MIDI (mid, midi) files";
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+		return bundle.getString("midi.mid.midi.files");
 	}
 }
