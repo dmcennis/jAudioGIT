@@ -8,6 +8,7 @@ import jAudioFeatureExtractor.jAudioTools.AudioSamples;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ResourceBundle;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.SourceDataLine;
@@ -56,11 +57,12 @@ public class PlaySamplesAction extends AbstractAction {
 			// Get the RecordingInfo selected for playback
 			int selected_row = recordings_table.getSelectedRow();
 			if (selected_row < 0)
-				throw new Exception("No file selcected for playback.");
+				throw new Exception("No file selected for playback.");
 			// controller.stopPlayBackAction.setEnabled(true);
 			RecordingInfo selected_audio = controller.dm_.recordingInfo[selected_row];
 
 			// Perform playback of the file
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			try {
 				// Extract the audio data in the file into raw samples if not
 				// done already, and convert this into an AudioInputStream
@@ -93,11 +95,9 @@ public class PlaySamplesAction extends AbstractAction {
 						.playAudioInputStreamInterruptible(audio_input_stream,
 								source_data_line);
 			} catch (UnsupportedAudioFileException ex) {
-				throw new Exception("File " + selected_audio.file_path
-						+ " has an unsupported audio format.");
+				throw new Exception(String.format(bundle.getString("file.s.has.an.unsupported.audio.format"),selected_audio.file_path));
 			} catch (Exception ex) {
-				throw new Exception("File " + selected_audio.file_path
-						+ " is not playable.\n" + ex.getMessage());
+				throw new Exception(String.format(bundle.getString("file.s.is.not.playable.n.s"), selected_audio.file_path,ex.getMessage()));
 			}
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR",

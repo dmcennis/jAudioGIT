@@ -7,9 +7,9 @@
 package jAudioFeatureExtractor.ACE.DataTypes;
 
 import java.io.*;
-import java.util.Vector;
 import jAudioFeatureExtractor.ACE.XMLParsers.XMLDocumentParser;
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 
 /**
@@ -230,7 +230,7 @@ public class SegmentedClassification
 			String[] classes = model_classifications[inst].classifications;
 			if (classes != null)
 				for (int clas = 0; clas < classes.length; clas++)
-					if (classes[clas].equals(class_of_interest))
+					if (classes[clas].compareTo(class_of_interest)==0)
 					{
 						clas = classes.length;
 						count++;
@@ -316,7 +316,7 @@ public class SegmentedClassification
 		boolean unique = true;
 		for (int i = 0; i < seg_classes.length - 1; i++)
 			for (int j = i + 1; j < seg_classes.length; j++)
-				if ( seg_classes[i].identifier.equals(seg_classes[j].identifier) )
+				if ( seg_classes[i].identifier.compareTo(seg_classes[j].identifier)==0 )
 				{
 					unique = false;
 					i = seg_classes.length;
@@ -350,9 +350,10 @@ public class SegmentedClassification
 	                                                     SegmentedClassification[] set_classifications )
 		throws Exception
 	{
-		if (!SegmentedClassification.verifyUniquenessOfIdentifiers(set_classifications))
-			throw new Exception( "Given classifications contain multiple references\n" + 
-			                     "to instances with the same identifier." );
+		if (!SegmentedClassification.verifyUniquenessOfIdentifiers(set_classifications)) {
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(bundle.getString("given.classifications.contain.multiple.references.nto.instances.with.the.same.identifier"));
+		}
 
 		String[][] data_set_overall_labels = new String[data_sets.length][];
 		for (int set = 0; set < data_sets.length; set++)
@@ -360,7 +361,7 @@ public class SegmentedClassification
 			data_set_overall_labels[set] = null;
 			for (int clas = 0; clas < set_classifications.length; clas++)
 			{
-				if (data_sets[set].identifier.equals(set_classifications[clas].identifier))
+				if (data_sets[set].identifier.compareTo(set_classifications[clas].identifier)==0)
 				{
 					data_set_overall_labels[set] = set_classifications[clas].classifications;
 					clas = set_classifications.length;
@@ -401,10 +402,10 @@ public class SegmentedClassification
 	                                                          SegmentedClassification[] set_classifications )
 		throws Exception
 	{
-		if (!SegmentedClassification.verifyUniquenessOfIdentifiers(set_classifications))
-			throw new Exception( "Given classifications contain multiple references\n" + 
-			                     "to instances with the same identifier." );
-
+		if (!SegmentedClassification.verifyUniquenessOfIdentifiers(set_classifications)) {
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            throw new Exception(bundle.getString("given.classifications.contain.multiple.references.nto.instances.with.the.same.identifier1"));
+        }
 		String[][][] labels = new String[data_sets.length][][];
 		for (int set = 0; set < data_sets.length; set++)
 		{
@@ -413,7 +414,7 @@ public class SegmentedClassification
 			{
 				// Find the DataSet and the SegmentedClassification that have
 				// the same identifier
-				if (data_sets[set].identifier.equals(set_classifications[clas].identifier))
+				if (data_sets[set].identifier.compareTo(set_classifications[clas].identifier)==0)
 				{
 					// Refer to the sub-sections of both the DataSet and the
 					// SegmentedClassification
@@ -526,7 +527,7 @@ public class SegmentedClassification
 		// Find the success rate for overall instances
 		for (int r = 0; r < results.length; r++)
 			for (int m = 0; m < models.length; m++)
-				if (models[m].identifier.equals(results[r].identifier))
+				if (models[m].identifier.compareTo(results[r].identifier)==0)
 				{
 					String[] model_clas = models[m].classifications;
 					String[] result_clas = results[r].classifications;
@@ -541,7 +542,7 @@ public class SegmentedClassification
 							boolean found = false;
 							for (int m_clas = 0; m_clas < model_clas.length; m_clas++)
 							{
-								if (model_clas[m_clas].equals(result_clas[r_clas]))
+								if (model_clas[m_clas].compareTo(result_clas[r_clas])==0)
 								{
 									found = true;
 									found_number_classes++;
@@ -575,7 +576,7 @@ public class SegmentedClassification
 		// Find the success rate for sections of instances
 		for (int r = 0; r < results.length; r++)
 			for (int m = 0; m < models.length; m++)
-				if (models[m].identifier.equals(results[r].identifier))
+				if (models[m].identifier.compareTo(results[r].identifier)==0)
 				{
 					// Refer to the sub-sections
 					SegmentedClassification[] mod_sec = models[m].sub_classifications;
@@ -656,7 +657,7 @@ public class SegmentedClassification
 								boolean found = false;
 								for (int m_clas = 0; m_clas < model_clas.length; m_clas++)
 								{
-									if (model_clas[m_clas].equals(result_clas[r_clas]))
+									if (model_clas[m_clas].compareTo(result_clas[r_clas])==0)
 									{
 										found = true;
 										found_number_classes++;
@@ -795,7 +796,8 @@ public class SegmentedClassification
 		}
 		catch (Exception e)
 		{
-			throw new Exception("Unable to write file " + to_save_to.getName() + ".");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            throw new Exception(String.format(bundle.getString("unable.to.write.file.s"),to_save_to.getName()));
 		}
 	}
 }

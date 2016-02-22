@@ -11,6 +11,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 
 /**
@@ -130,19 +131,21 @@ public class ParseDataSetFileHandler
 	{
 		// Make sure is correct file type
 		if (count == 0)
-			if (!name.equals("feature_vector_file")&&!qName.equals("feature_vector_file"))
-				throw new SAXException("\n\nIt is in reality of the type " + name + ".");
+			if ((name.compareTo("feature_vector_file")!=0)&&(qName.compareTo("feature_vector_file")!=0)){
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new SAXException(String.format(bundle.getString("n.nit.is.in.reality.of.the.type.s"),name));
+			}
 		count++;
 
 		// Identify the type of tag
 		tag_identifier = 0;
-		if (name.equals("data_set")||qName.equals("data_set"))
+		if ((name.compareTo("data_set")==0)||(qName.compareTo("data_set")==0))
 		{
 			// Create a new Dataset and add it to root_datasets.
 			current_root_dataset = new DataSet();
 			root_datasets.add(current_root_dataset);
 		}
-		else if (name.equals("section")||qName.equals("section"))
+		else if ((name.compareTo("section")==0)||(qName.compareTo("section")==0))
 		{
 			// Create a new set of sub-sets of a data set if subset_datasets is null
 			if (subset_datasets == null)
@@ -159,7 +162,7 @@ public class ParseDataSetFileHandler
 			current_subset_dataset.start = Double.parseDouble(atts.getValue(0));
 			current_subset_dataset.stop = Double.parseDouble(atts.getValue(1));
 		}
-		else if (name.equals("feature")||qName.equals("feature"))
+		else if ((name.compareTo("feature")==0)||(qName.compareTo("feature")==0))
 		{
 			// Prepare the linked lists to store feature values
 			if (feature_name_list == null)
@@ -169,11 +172,11 @@ public class ParseDataSetFileHandler
 			}
 			feature_indidual_values_list = new LinkedList<String>();
 		}
-		else if (name.equals("data_set_id")||qName.equals("data_set_id"))
+		else if ((name.compareTo("data_set_id")==0)||(qName.compareTo("data_set_id")==0))
 			tag_identifier = 1;
-		else if (name.equals("name")||qName.equals("name"))
+		else if ((name.compareTo("name")==0)||(qName.compareTo("name")==0))
 			tag_identifier = 2;
-		else if (name.equals("v")||qName.equals("v"))
+		else if ((name.compareTo("v")==0)||(qName.compareTo("v")==0))
 			tag_identifier = 3;
 	}
 
@@ -203,7 +206,7 @@ public class ParseDataSetFileHandler
 	 */
 	public void endElement(String namespace, String name, String qName)
 	{
-		if (name.equals("data_set")||qName.equals("data_set"))
+		if ((name.compareTo("data_set")==0)||(qName.compareTo("data_set")==0))
 		{
 			// Store feature_name_list and feature_values_list in 
 			// current_root_dataset
@@ -238,7 +241,7 @@ public class ParseDataSetFileHandler
 			subset_datasets = null;
 			current_root_dataset = null;
 		}
-		else if (name.equals("section")||qName.equals("section"))
+		else if ((name.compareTo("section")==0)||(qName.compareTo("section")==0))
 		{
 			// Store feature_name_list and feature_values_list in 
 			// current_subset_dataset
@@ -262,7 +265,7 @@ public class ParseDataSetFileHandler
 			feature_values_list = null;
 			current_subset_dataset = null;
 		}
-		else if (name.equals("feature")||qName.equals("feature"))
+		else if ((name.compareTo("feature")==0)||(qName.compareTo("feature")==0))
 		{
 			// Convert the feature_indidual_values_list into doubles
 			// and store it in feature_values_list

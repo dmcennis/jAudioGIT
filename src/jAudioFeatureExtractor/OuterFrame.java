@@ -12,6 +12,8 @@ import org.multihelp.HelpWindow;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 //import javax.help.*;
 //import javax.help.*;
@@ -26,6 +28,8 @@ public class OuterFrame extends JFrame {
 	/* FIELDS ***************************************************************** */
 
 	static final long serialVersionUID = 1;
+
+	static public final ResourceBundle resourceBundle = ResourceBundle.getBundle("Translations");
 
 	/**
 	 * A panel allowing the user to select files to extract features from.
@@ -100,7 +104,7 @@ public class OuterFrame extends JFrame {
 		recording_selector_panel = new RecordingSelectorPanel(this, c);
 		feature_selector_panel = new FeatureSelectorPanel(this, c);
 
-		controller.normalise = new JCheckBoxMenuItem("Normalise Recordings",
+		controller.normalise = new JCheckBoxMenuItem(resourceBundle.getString("normalise.recordings"),
 				false);
 
 		Color blue = new Color((float) 0.75, (float) 0.85, (float) 1.0);
@@ -138,11 +142,11 @@ public class OuterFrame extends JFrame {
 		controller.removeBatch = new JMenu();
 		controller.viewBatch = new JMenu();
 
-		JMenuItem helpTopics = new JMenuItem("Help Topics");
+		JMenuItem helpTopics = new JMenuItem(resourceBundle.getString("help.topics"));
 
 		menu = new JMenuBar();
 		menu.setBackground(blue);
-		JMenu fileMenu = new JMenu("File");
+		JMenu fileMenu = new JMenu(resourceBundle.getString("file"));
 		fileMenu.add(c.saveAction);
 		fileMenu.add(c.saveBatchAction);
 		fileMenu.add(c.loadAction);
@@ -150,19 +154,19 @@ public class OuterFrame extends JFrame {
 		fileMenu.addSeparator();
 		fileMenu.add(c.addBatchAction);
 		fileMenu.add(c.executeBatchAction);
-		controller.removeBatch = new JMenu("Remove Batch");
+		controller.removeBatch = new JMenu(resourceBundle.getString("remove.batch"));
 		controller.removeBatch.setEnabled(false);
 		fileMenu.add(c.removeBatch);
-		controller.viewBatch = new JMenu("View Batch");
+		controller.viewBatch = new JMenu(resourceBundle.getString("view.batch"));
 		controller.viewBatch.setEnabled(false);
 		fileMenu.add(c.viewBatch);
 		fileMenu.addSeparator();
 		fileMenu.add(c.exitAction);
-		JMenu editMenu = new JMenu("Edit");
+		JMenu editMenu = new JMenu(resourceBundle.getString("edit"));
 		editMenu.add(c.cutAction);
 		editMenu.add(c.copyAction);
 		editMenu.add(c.pasteAction);
-		JMenu recordingMenu = new JMenu("Recording");
+		JMenu recordingMenu = new JMenu(resourceBundle.getString("recording"));
 		recordingMenu.add(c.addRecordingsAction);
 		recordingMenu.add(c.editRecordingsAction);
 		recordingMenu.add(c.removeRecordingsAction);
@@ -171,13 +175,13 @@ public class OuterFrame extends JFrame {
 		recordingMenu.add(c.viewFileInfoAction);
 		recordingMenu.add(c.storeSamples);
 		recordingMenu.add(c.validate);
-		JMenu analysisMenu = new JMenu("Analysis");
+		JMenu analysisMenu = new JMenu(resourceBundle.getString("analysis"));
 		analysisMenu.add(c.globalWindowChangeAction);
-		c.outputType = new JMenu("Output Format");
+		c.outputType = new JMenu(resourceBundle.getString("output.format"));
 		c.outputType.add(ace);
 		c.outputType.add(arff);
 		analysisMenu.add(c.outputType);
-		c.sampleRate = new JMenu("Sample Rate (kHz)");
+		c.sampleRate = new JMenu(resourceBundle.getString("sample.rate.khz"));
 		c.sampleRate.add(sample8);
 		c.sampleRate.add(sample11);
 		c.sampleRate.add(sample16);
@@ -185,12 +189,12 @@ public class OuterFrame extends JFrame {
 		c.sampleRate.add(sample44);
 		analysisMenu.add(c.sampleRate);
 		analysisMenu.add(controller.normalise);
-		JMenu playbackMenu = new JMenu("Playback");
+		JMenu playbackMenu = new JMenu(resourceBundle.getString("playback"));
 		playbackMenu.add(c.playNowAction);
 		playbackMenu.add(c.playSamplesAction);
 		playbackMenu.add(c.stopPlayBackAction);
 		playbackMenu.add(c.playMIDIAction);
-		JMenu helpMenu = new JMenu("Help");
+		JMenu helpMenu = new JMenu(resourceBundle.getString("help"));
 		helpMenu.add(helpTopics);
 		helpMenu.add(c.aboutAction);
 
@@ -203,7 +207,7 @@ public class OuterFrame extends JFrame {
 		helpTopics.addActionListener(new AbstractAction(){
 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Help Window Started");
+				System.out.println(resourceBundle.getString("help.window.started"));
 				if(helpWindow == null){
 					helpWindow = new HelpWindow();
 				}

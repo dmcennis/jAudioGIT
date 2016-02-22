@@ -14,7 +14,7 @@ public class CopyAction extends AbstractAction {
 	static final long serialVersionUID = 1;
 
 	/**
-	 * Construtor that sets the menu item text.
+	 * Constructor that sets the menu item text.
 	 *
 	 */
 	public CopyAction(){

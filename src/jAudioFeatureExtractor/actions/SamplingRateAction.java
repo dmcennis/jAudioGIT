@@ -1,6 +1,7 @@
 package jAudioFeatureExtractor.actions;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JRadioButtonMenuItem;
@@ -36,7 +37,7 @@ public class SamplingRateAction extends AbstractAction {
 	/**
 	 * Sets references to the RadioButtons for sampling rate.
 	 * 
-	 * @param s
+	 * @param s array of menu buttons describing the sample rate
 	 */
 	public void setTarget(JRadioButtonMenuItem[] s) {
 		samplingRates = new JRadioButtonMenuItem[s.length];
@@ -66,13 +67,13 @@ public class SamplingRateAction extends AbstractAction {
 	}
 
 	/**
-	 * Allows the initial settings of the radiobuttons.
+	 * Allows the initial settings of the radio buttons.
 	 * @param i which button is to be selected.
 	 */
 	public void setSelected(int i) {
 		if ((i < 0) || (i >= samplingRates.length)) {
-			System.err.println("INTERNAL ERROR: " + i
-					+ " does not correspond to any sampling rate index");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			System.err.println(String.format(bundle.getString("internal.error.d.does.not.correspond.to.any.sampling.rate.index"),i));
 		} else {
 			samplingRates[i].setSelected(true);
 			sampleRateIndex = i;

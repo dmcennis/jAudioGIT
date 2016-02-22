@@ -11,6 +11,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 
 /**
@@ -91,21 +92,23 @@ public class ParseFeatureDefinitionsFileHandler
 	{
 		// Make sure is correct file type
 		if (count == 0)
-			if (!name.equals("feature_key_file")&&!qName.equals("feature_key_file"))
-				throw new SAXException("\n\nIt is in reality of the type " + name + ".");
+			if ((name.compareTo("feature_key_file")!=0)&&(qName.compareTo("feature_key_file")!=0)){
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new SAXException(String.format(bundle.getString("n.nit.is.in.reality.of.the.type.s"),name));
+			}
 		count++;
 
 		// Identify the type of tag
 		tag_identifier = 0;
-		if (name.equals("feature")||qName.equals("feature"))
+		if ((name.compareTo("feature")==0)||(qName.compareTo("feature")==0))
 			current_definition = new FeatureDefinition();
-		else if (name.equals("name")||qName.equals("name"))
+		else if ((name.compareTo("name")==0)||(qName.compareTo("name")==0))
 			tag_identifier = 1;
-		else if (name.equals("description")||qName.equals("description"))
+		else if ((name.compareTo("description")==0)||(qName.compareTo("description")==0))
 			tag_identifier = 2;
-		else if (name.equals("is_sequential")||qName.equals("is_sequential"))
+		else if ((name.compareTo("is_sequential")==0)||(qName.compareTo("is_sequential")==0))
 			tag_identifier = 3;
-		else if (name.equals("parallel_dimensions")||qName.equals("parallel_dimensions"))
+		else if ((name.compareTo("parallel_dimensions")==0)||(qName.compareTo("parallel_dimensions")==0))
 			tag_identifier = 4;
 	}
 
@@ -130,7 +133,7 @@ public class ParseFeatureDefinitionsFileHandler
 			current_definition.description = contents;
 		else if (tag_identifier == 3)
 		{
-			if (contents.equals("false"))
+			if (contents.compareTo("false")==0)
 				current_definition.is_sequential = false;
 			else
 				current_definition.is_sequential = true;
@@ -149,7 +152,7 @@ public class ParseFeatureDefinitionsFileHandler
 	 */
 	public void endElement(String namespace, String name, String qName)
 	{
-		if (name.equals("feature")||qName.equals("feature"))
+		if ((name.compareTo("feature")==0)||(qName.compareTo("feature")==0))
 			definitions.add(current_definition);
 	}
 

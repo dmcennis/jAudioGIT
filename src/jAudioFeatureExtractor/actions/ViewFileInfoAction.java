@@ -4,6 +4,7 @@ import jAudioFeatureExtractor.Controller;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.text.MessageFormat;import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
@@ -33,7 +34,7 @@ public class ViewFileInfoAction extends AbstractAction {
 	
 	/**
 	 * Sets reference to the table containing references to files to be analyzed.
-	 * @param jt
+	 * @param jt sets the sister jTable
 	 */
 	public void setTable(JTable jt){
 		recordings_table = jt;
@@ -52,9 +53,9 @@ public class ViewFileInfoAction extends AbstractAction {
 				JOptionPane.showMessageDialog(null, data, "FILE INFORMATION",
 						JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e1) {
-				String message = "Could not display file information for file "
-						+ controller.dm_.recordingInfo[selected_rows[i]].file_path + "\n"
-						+ e1.getMessage();
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+				String message = MessageFormat.format(bundle.getString("could.not.display.file.information.for.file.0.n.1"), controller.dm_.recordingInfo[selected_rows[i]].file_path, e1.getMessage());
 				JOptionPane.showMessageDialog(null, message, "ERROR",
 						JOptionPane.ERROR_MESSAGE);
 			}

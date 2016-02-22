@@ -7,6 +7,7 @@ import org.xml.sax.SAXException;
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 /**
  * Class responsible for the parsing of XML batch files.
@@ -104,7 +105,9 @@ public class ParseBatchJobHandler extends ParseFileHandler {
 	
 	String fileName = "";
 
-	/**
+    ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+    /**
 	 * Used to process character data in the XML file.  
 	 */
 	public void characters(char[] ch, int start, int length)
@@ -126,7 +129,7 @@ public class ParseBatchJobHandler extends ParseFileHandler {
 				try {
 					windowSize = Integer.parseInt(data);
 				} catch (NumberFormatException e) {
-					throw new SAXException("windowSize data must be an integer");
+					throw new SAXException(bundle.getString("windowsize.data.must.be.an.integer"));
 				}
 				break;
 			case WINDOW_OVERLAP:
@@ -135,44 +138,44 @@ public class ParseBatchJobHandler extends ParseFileHandler {
 					if (Double.isNaN(d) || Double.isNaN(d) || (d < 0.0)
 							|| (d >= 1.0)) {
 						throw new SAXException(
-								"windowOverlap must be at least zero and less than the window size");
+                                bundle.getString("windowoverlap.must.be.at.least.zero.and.less.than.the.window.size"));
 					} else {
 						windowOverlap = d;
 					}
 				} catch (NumberFormatException e) {
-					throw new SAXException("windowOverlap must be a double");
+					throw new SAXException(bundle.getString("windowoverlap.must.be.a.double"));
 				}
 				break;
 			case SAMPLING_RATE:
 				try {
 					sampleRate = Double.parseDouble(data);
 				} catch (NumberFormatException e) {
-					throw new SAXException("Sampling rate must be a double");
+					throw new SAXException(bundle.getString("sampling.rate.must.be.a.double"));
 				}
 				break;
 			case NORMALISE:
-				if (data.equals("true")) {
+				if (data.compareTo("true")==0) {
 					normalise = true;
 				} else {
 					normalise = false;
 				}
 				break;
 			case PER_WINDOW_STATS:
-				if (data.equals("true")) {
+				if (data.compareTo("true")==0) {
 					saveWindows = true;
 				} else {
 					saveWindows = false;
 				}
 				break;
 			case OVERALL_STATS:
-				if (data.equals("true")) {
+				if (data.compareTo("true")==0) {
 					overall = true;
 				} else {
 					overall = false;
 				}
 				break;
 			case OUTPUT_TYPE:
-				if (data.equals("ACE")) {
+				if (data.compareTo("ACE")==0) {
 					outputType = 0;
 				} else {
 					outputType = 1;
@@ -181,7 +184,7 @@ public class ParseBatchJobHandler extends ParseFileHandler {
 			case FEATURE:
 				break;
 			case ACTIVE:
-				if (data.equals("true")) {
+				if (data.compareTo("true")==0) {
 					activeFeatureSet.put(featureName,true);
 				} else {
 					activeFeatureSet.put(featureName,false);
@@ -212,7 +215,7 @@ public class ParseBatchJobHandler extends ParseFileHandler {
 				tmpAggregatorParameters.add(data);
 				break;
 			default:
-				throw new SAXException("Unknwon tagType "+tagType+" in characters");
+				throw new SAXException(String.format(bundle.getString("unknown.tagtype.s.in.characters"),tagType));
 		}
 	}
 
@@ -328,7 +331,7 @@ public class ParseBatchJobHandler extends ParseFileHandler {
 				tagType = AGGREGATOR;
 				break;
 			default:
-				throw new SAXException("Unknown tag type "+tagType+" in end element");
+				throw new SAXException(String.format(bundle.getString("unknown.tag.type.s.in.end.element"),tagType));
 		}
 	}
 
@@ -354,56 +357,56 @@ public class ParseBatchJobHandler extends ParseFileHandler {
 	 */
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
-		if (localName.equals("batchFile")||qName.equals("batchFile")) {
+		if ((localName.compareTo("batchFile")==0)||(qName.compareTo("batchFile")==0)) {
 			tagType = BATCH_FILE;
-		} else if (localName.equals("batch")||qName.equals("batch")) {
+		} else if ((localName.compareTo("batch")==0)||(qName.compareTo("batch")==0)) {
 	//		System.out.println(attributes.getLength());
 			if(attributes.getLength() != 1){
-				throw new SAXException("Batch must have an ID attribute");
+				throw new SAXException(bundle.getString("batch.must.have.an.id.attribute"));
 			}
 			name = attributes.getValue(0);
 			tagType = BATCH;
-		} else if (localName.equals("fileSet")||qName.equals("fileSet")) {
+		} else if ((localName.compareTo("fileSet")==0)||(qName.compareTo("fileSet")==0)) {
 			tagType = FILE_SET;
-		} else if (localName.equals("file")||qName.equals("file")) {
+		} else if ((localName.compareTo("file")==0)||(qName.compareTo("file")==0)) {
 			tagType = FILE;
 			fileName = "";
-		} else if (localName.equals("settings")||qName.equals("settings")) {
+		} else if ((localName.compareTo("settings")==0)||(qName.compareTo("settings")==0)) {
 			tagType = SETTINGS;
-		} else if (localName.equals("windowSize")||qName.equals("windowSize")) {
+		} else if ((localName.compareTo("windowSize")==0)||(qName.compareTo("windowSize")==0)) {
 			tagType = WINDOW_SIZE;
-		} else if (localName.equals("windowOverlap")||qName.equals("windowOverlap")) {
+		} else if ((localName.compareTo("windowOverlap")==0)||(qName.compareTo("windowOverlap")==0)) {
 			tagType = WINDOW_OVERLAP;
-		} else if (localName.equals("samplingRate")||qName.equals("samplingRate")) {
+		} else if ((localName.compareTo("samplingRate")==0)||(qName.compareTo("samplingRate")==0)) {
 			tagType = SAMPLING_RATE;
-		} else if (localName.equals("normalise")||qName.equals("normalise")) {
+		} else if ((localName.compareTo("normalise")==0)||(qName.compareTo("normalise")==0)) {
 			tagType = NORMALISE;		
-		} else if (localName.equals("perWindowStats")||qName.equals("perWindowStats")) {
+		} else if ((localName.compareTo("perWindowStats")==0)||(qName.compareTo("perWindowStats")==0)) {
 			tagType = PER_WINDOW_STATS;
-		} else if (localName.equals("overallStats")||qName.equals("overallStats")) {
+		} else if ((localName.compareTo("overallStats")==0)||(qName.compareTo("overallStats")==0)) {
 			tagType = OVERALL_STATS;
-		} else if (localName.equals("outputType")||qName.equals("outputType")) {
+		} else if ((localName.compareTo("outputType")==0)||(qName.compareTo("outputType")==0)) {
 			tagType = OUTPUT_TYPE;
-		} else if (localName.equals("feature")||qName.equals("feature")) {
+		} else if ((localName.compareTo("feature")==0)||(qName.compareTo("feature")==0)) {
 			tagType = FEATURE;
-		}else if (localName.equals("name")||qName.equals("name")){
+		}else if ((localName.compareTo("name")==0)||(qName.compareTo("name")==0)){
 			tagType=NAME;
-		} else if (localName.equals("active")||qName.equals("active")) {
+		} else if ((localName.compareTo("active")==0)||(qName.compareTo("active")==0)) {
 			tagType = ACTIVE;
-		} else if (localName.equals("attribute")||qName.equals("attribute")) {
+		} else if ((localName.compareTo("attribute")==0)||(qName.compareTo("attribute")==0)) {
 			tagType = ATTRIBUTE;
-		} else if (localName.equals("destination")||qName.equals("destination")) {
+		} else if ((localName.compareTo("destination")==0)||(qName.compareTo("destination")==0)) {
 			tagType = DESTINATION;
-		} else if(localName.equals("aggregator")||qName.equals("aggregator")){
+		} else if((localName.compareTo("aggregator")==0)||(qName.compareTo("aggregator")==0)){
 			tagType = AGGREGATOR;
-		} else if(localName.equals("aggregatorName")||qName.equals("aggregatorName")){
+		} else if((localName.compareTo("aggregatorName")==0)||(qName.compareTo("aggregatorName")==0)){
 			tagType = AGGREGATOR_NAME;
-		} else if(localName.equals("aggregatorFeature")||qName.equals("aggregatorFeature")){
+		} else if((localName.compareTo("aggregatorFeature")==0)||(qName.compareTo("aggregatorFeature")==0)){
 			tagType = AGGREGATOR_FEATURE;
-		} else if(localName.equals("aggregatorAttribute")||qName.equals("aggregatorAttribute")){
+		} else if((localName.compareTo("aggregatorAttribute")==0)||(qName.compareTo("aggregatorAttribute")==0)){
 			tagType = AGGREGATOR_PARAMETER;
 		}else{
-			throw new SAXException("Unknown tag '" + localName + "'");
+			throw new SAXException(String.format(bundle.getString("unknown.tag.s"),localName));
 		}
 	}
 	

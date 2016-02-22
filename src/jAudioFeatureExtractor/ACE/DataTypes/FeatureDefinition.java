@@ -7,6 +7,7 @@
 package jAudioFeatureExtractor.ACE.DataTypes;
 
 import java.io.*;
+import java.util.ResourceBundle;
 import java.util.Vector;
 import jAudioFeatureExtractor.ACE.XMLParsers.XMLDocumentParser;
 
@@ -67,7 +68,9 @@ public class FeatureDefinition implements Serializable {
 	 * Generate an empty FeatureDefinition with the name "Undefined Feature".
 	 */
 	public FeatureDefinition() {
-		name = "Undefined Feature";
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+		name = bundle.getString("undefined.feature");
 		description = new String("");
 		is_sequential = false;
 		dimensions = 1;
@@ -141,10 +144,7 @@ public class FeatureDefinition implements Serializable {
 	 * @return The formatted description.
 	 */
 	public String getFeatureDescription() {
-		String info = "NAME: " + name + "\n";
-		info += "DESCRIPTION: " + description + "\n";
-		info += "IS SEQUENTIAL: " + is_sequential + "\n";
-		info += "DIMENSIONS: " + dimensions + "\n\n";
+		String info = String.format("NAME: %s\nDESCRIPTION: %s\nIS SEQUENTIAL: %b\nDIMENSIONS: %d\n\n",name,description,is_sequential,dimensions);
 		return info;
 	}
 
@@ -159,7 +159,7 @@ public class FeatureDefinition implements Serializable {
 	public static String getFeatureDescriptions(FeatureDefinition[] definitions) {
 		String combined_descriptions = new String();
 		for (int i = 0; i < definitions.length; i++)
-			combined_descriptions += definitions[i].getFeatureDescription();
+			combined_descriptions = String.format("%s%s",combined_descriptions,definitions[i].getFeatureDescription());
 		return combined_descriptions;
 	}
 
@@ -188,10 +188,10 @@ public class FeatureDefinition implements Serializable {
 		// Throw an exception if the definitions have features with duplicate
 		// names
 		String duplicates = verifyFeatureNameUniqueness(parse_results);
-		if (duplicates != null)
-			throw new Exception("Could not parse because there are multiple\n"
-					+ "occurences of the following feature names:\n"
-					+ duplicates);
+		if (duplicates != null){
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("could.not.parse.because.there.are.multiple.noccurences.of.the.following.feature.names.s.n"),duplicates));
+		}
 
 		// Return the results
 		return parse_results;
@@ -219,10 +219,10 @@ public class FeatureDefinition implements Serializable {
 		// Throw an exception if the definitions have features with duplicate
 		// names
 		String duplicates = verifyFeatureNameUniqueness(definitions);
-		if (duplicates != null)
-			throw new Exception("Could not save because there are multiple\n"
-					+ "occurences of the following feature names:\n"
-					+ duplicates);
+		if (duplicates != null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            throw new Exception(String.format(bundle.getString("could.not.save.because.there.are.multiple.noccurences.of.the.following.feature.names.n.s"), duplicates));
+        }
 
 		// Perform the save
 		try {
@@ -251,7 +251,7 @@ public class FeatureDefinition implements Serializable {
 				writer.writeBytes("   <feature>\n");
 				writer.writeBytes("      <name>" + definitions[feat].name
 						+ "</name>\n");
-				if (!definitions[feat].description.equals(""))
+				if (definitions[feat].description.compareTo("")!=0)
 					writer.writeBytes("      <description>"
 							+ definitions[feat].description
 							+ "</description>\n");
@@ -268,8 +268,8 @@ public class FeatureDefinition implements Serializable {
 			// Close the output stream
 			writer.close();
 		} catch (Exception e) {
-			throw new Exception("Unable to write file " + to_save_to.getName()
-					+ ".");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("unable.to.write.file.s"),to_save_to.getName()));
 		}
 	}
 
@@ -289,7 +289,7 @@ public class FeatureDefinition implements Serializable {
 		Vector<String> duplicates = new Vector<String>();
 		for (int i = 0; i < definitions.length - 1; i++)
 			for (int j = i + 1; j < definitions.length; j++)
-				if (definitions[i].name.equals(definitions[j].name)) {
+				if (definitions[i].name.compareTo(definitions[j].name)==0) {
 					found_duplicate = true;
 					duplicates.add(definitions[i].name);
 					j = definitions.length;

@@ -1,3 +1,5 @@
+package org.jaudio;
+
 import jAudioFeatureExtractor.AudioStreamProcessor;
 
 import java.io.DataInputStream;

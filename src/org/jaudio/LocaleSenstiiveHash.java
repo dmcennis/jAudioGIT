@@ -1,3 +1,5 @@
+package org.jaudio;
+
 import jAudioFeatureExtractor.ACE.DataTypes.Batch;
 
 import java.io.File;

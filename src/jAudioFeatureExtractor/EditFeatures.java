@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ResourceBundle;
 
 /**
  * Window for allowing a user to edit the individual features in the table. The
@@ -65,7 +66,9 @@ public class EditFeatures extends JFrame implements ActionListener {
 	 *            The feature which is being edited by this window
 	 */
 	EditFeatures(FeatureSelectorPanel parent, FeatureExtractor fe) {
-		setTitle("Edit " + fe.getFeatureDefinition().name);
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+		setTitle(String.format(bundle.getString("edit.s"), fe.getFeatureDefinition().name));
 		Color blue = new Color((float)0.75,(float)0.85,(float)1.0);
 		this.getContentPane().setBackground(blue);
 		this.setAlwaysOnTop(true);
@@ -84,13 +87,13 @@ public class EditFeatures extends JFrame implements ActionListener {
 			try {
 				inputBoxes[i].setText(fe_.getElement(i));
 			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage(), "ERROR",
+				JOptionPane.showMessageDialog(null, e1.getLocalizedMessage(), "ERROR",
 						JOptionPane.ERROR_MESSAGE);
 			}
 			inputBoxLabels[i] = new JLabel(attributes[i]);
 		}
 
-		descriptionTitle = new JLabel("Description");
+		descriptionTitle = new JLabel(bundle.getString("description"));
 
 		infoLabel = new JTextArea(fe.getFeatureDefinition().description);
 		infoLabel.setWrapStyleWord(true);
@@ -100,9 +103,9 @@ public class EditFeatures extends JFrame implements ActionListener {
 		Dimension base = new Dimension(400, 100);
 		infoLabel.setPreferredSize(base);
 
-		save = new JButton("Save");
+		save = new JButton(bundle.getString("save"));
 		save.addActionListener(this);
-		cancel = new JButton("Cancel");
+		cancel = new JButton(bundle.getString("cancel"));
 		cancel.addActionListener(this);
 
 		JPanel editingPanel = new JPanel();
@@ -170,7 +173,7 @@ public class EditFeatures extends JFrame implements ActionListener {
 			} catch (Exception e) {
 				good = false;
 				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR",
+				JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "ERROR",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}

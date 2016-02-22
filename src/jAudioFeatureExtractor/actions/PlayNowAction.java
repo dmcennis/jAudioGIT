@@ -6,6 +6,7 @@ import jAudioFeatureExtractor.jAudioTools.AudioMethodsPlayback;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ResourceBundle;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -29,7 +30,7 @@ public class PlayNowAction extends AbstractAction {
 	private JTable recordings_table;
 
 	/**
-	 * Contructor that sets menu text and keeps a reference to the controller
+	 * Constructor that sets menu text and keeps a reference to the controller
 	 * 
 	 * @param c
 	 *            near global controller
@@ -56,12 +57,12 @@ public class PlayNowAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			// Get the file selected for playback
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			int selected_row = recordings_table.getSelectedRow();
 			if (selected_row < 0)
-				throw new Exception("No file selcected for playback.");
+				throw new Exception(bundle.getString("no.file.selcected.for.playback"));
 			File play_file = new File(
 					controller.dm_.recordingInfo[selected_row].file_path);
-
 			// Perform playback of the file
 			try {
 				// Get the AudioInputStream from the file and the SourceDataLine
@@ -82,11 +83,9 @@ public class PlayNowAction extends AbstractAction {
 						.playAudioInputStreamInterruptible(audio_input_stream,
 								source_data_line);
 			} catch (UnsupportedAudioFileException ex) {
-				throw new Exception("File " + play_file.getName()
-						+ " has an unsupported audio format.");
+				throw new Exception(String.format(bundle.getString("file.s.has.an.unsupported.audio.format"),play_file.getName()));
 			} catch (Exception ex) {
-				throw new Exception("File " + play_file.getName()
-						+ " is not playable.\n" + ex.getMessage());
+				throw new Exception(String.format(bundle.getString("file.s.is.not.playable.ns"),play_file.getName(),ex.getMessage()));
 			}
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR",

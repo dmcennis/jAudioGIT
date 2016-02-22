@@ -19,6 +19,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ResourceBundle;
 
 
 /**
@@ -116,8 +117,9 @@ public class RecordingFrame
 	 */
 	public RecordingFrame(Controller c)
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		// Set window title
-		setTitle("Record Audio");
+		setTitle(bundle.getString("record.audio"));
 		Color blue = new Color((float)0.75,(float)0.85,(float)1.0);
 		getContentPane().setBackground(blue);
 
@@ -147,22 +149,22 @@ public class RecordingFrame
 		int horizontal_gap = 6; // horizontal space between GUI elements
 		int vertical_gap = 11; // horizontal space between GUI elements
 		setLayout(new GridLayout(6, 2, horizontal_gap, vertical_gap));
-		choose_encoding_format_button = new JButton("Change Encoding Format");
+		choose_encoding_format_button = new JButton(bundle.getString("change.encoding.format"));
 		choose_encoding_format_button.addActionListener(this);
 		add(choose_encoding_format_button);
-		display_current_audio_format_button = new JButton("Display Current Encoding");
+		display_current_audio_format_button = new JButton(bundle.getString("display.current.encoding"));
 		display_current_audio_format_button.addActionListener(this);
 		add(display_current_audio_format_button);
-		record_button = new JButton("Record");
+		record_button = new JButton(bundle.getString("record"));
 		record_button.addActionListener(this);
 		add(record_button);
-		stop_recording_button = new JButton("Stop Recording");
+		stop_recording_button = new JButton(bundle.getString("stop.recording"));
 		stop_recording_button.addActionListener(this);
 		add(stop_recording_button);
-		play_recording_button = new JButton("Play Last Recording");
+		play_recording_button = new JButton(bundle.getString("play.last.recording"));
 		play_recording_button.addActionListener(this);
 		add(play_recording_button);
-		stop_playback_button = new JButton("Stop Playback");
+		stop_playback_button = new JButton(bundle.getString("stop.playback"));
 		stop_playback_button.addActionListener(this);
 		add(stop_playback_button);
 		choose_file_format_combo_box = new JComboBox();
@@ -170,14 +172,14 @@ public class RecordingFrame
 		for (int i = 0; i < file_types.length; i++)
 			choose_file_format_combo_box.addItem(file_types[i]);
 		choose_file_format_combo_box.setBackground(this.getContentPane().getBackground());
-		add(new JLabel("File Format For Saving:"));
+		add(new JLabel(bundle.getString("file.format.for.saving")));
 		add(choose_file_format_combo_box);
 		add(new JLabel(""));
 		add(new JLabel(""));
-		cancel_button = new JButton("Cancel");
+		cancel_button = new JButton(bundle.getString("cancel"));
 		cancel_button.addActionListener(this);
 		add(cancel_button);
-		save_button = new JButton("Save");
+		save_button = new JButton(bundle.getString("save"));
 		save_button.addActionListener(this);
 		add(save_button);
 
@@ -251,7 +253,7 @@ public class RecordingFrame
 		if (last_recorded_audio != null)
 		{
 			String data = AudioMethods.getAudioFormatData(last_recorded_audio.getFormat());
-			JOptionPane.showMessageDialog(null, data, "Current Audio Encoding", JOptionPane.INFORMATION_MESSAGE);							
+			JOptionPane.showMessageDialog(null, data, "Current Audio Encoding", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else
 			JOptionPane.showMessageDialog(null, "No audio has been stored.", "WARNING", JOptionPane.ERROR_MESSAGE);							

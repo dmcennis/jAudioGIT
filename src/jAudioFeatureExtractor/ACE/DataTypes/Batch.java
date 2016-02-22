@@ -1,21 +1,13 @@
 package jAudioFeatureExtractor.ACE.DataTypes;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
-
-import javax.swing.JOptionPane;
+import java.util.*;
 
 import jAudioFeatureExtractor.ACE.XMLParsers.XMLDocumentParser;
-import jAudioFeatureExtractor.Aggregators.ZernikeMoments;
 import jAudioFeatureExtractor.DataModel;
 import jAudioFeatureExtractor.Aggregators.Aggregator;
 import jAudioFeatureExtractor.DataTypes.RecordingInfo;
 import jAudioFeatureExtractor.ModelListener;
-import jAudioFeatureExtractor.jAudioTools.AudioSamples;
 
 
 /**
@@ -175,8 +167,8 @@ public class Batch implements Serializable {
 				}
 			} else {
 				recording = null;
-				throw new Exception("The selected file " + files[i].getName()
-						+ " does not exist.");
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new Exception(String.format("The selected file %s does not exist.",files[i].getName()));
 			}
 		}
 	}
@@ -216,12 +208,13 @@ public class Batch implements Serializable {
     public void setSettings(String reader) throws Exception{
         Object[] list = (Object[])XMLDocumentParser.parseXMLDocument(reader,"save_settings");
         Object[] data = null;
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
         try {
             data = (Object[]) XMLDocumentParser.parseXMLDocument(reader,
                     "save_settings");
         } catch (Exception e) {
-            System.out.println("Error encountered parsing the settings file");
-            System.out.println(e.getMessage());
+            System.out.println(bundle.getString("error.encountered.parsing.the.settings.file"));
+            System.out.println(e.getLocalizedMessage());
         }
         int windowLength = 512;
         double offset = 0.0;
@@ -233,16 +226,16 @@ public class Batch implements Serializable {
         try {
             windowLength = Integer.parseInt((String) data[0]);
         } catch (NumberFormatException e) {
-            System.out.println("Error in settings file");
-            System.out.println("Window length of settings must be an integer");
+            System.out.println(bundle.getString("error.in.settings.file"));
+            System.out.println(bundle.getString("window.length.of.settings.must.be.an.integer"));
             System.exit(4);
         }
         try {
             offset = Double.parseDouble((String) data[1]);
         } catch (NumberFormatException e) {
-            System.out.println("Error in settings file");
+            System.out.println(bundle.getString("error.in.settings.file"));
             System.out
-                    .println("Window offset of settings must be an double between 0 and 1");
+                    .println(bundle.getString("window.offset.of.settings.must.be.an.double.between.0.and.1"));
             System.exit(4);
         }
         samplingRate = ((Double) data[2]).doubleValue();
@@ -250,7 +243,7 @@ public class Batch implements Serializable {
         saveWindows = ((Boolean) data[4]).booleanValue();
         saveOverall = ((Boolean) data[5]).booleanValue();
         String outputName = ((String) data[6]);
-        if (outputName.equals("ACE")) {
+        if (outputName.compareTo("ACE")==0) {
             outputType = 0;
         } else {
             outputType = 1;
@@ -350,12 +343,14 @@ public class Batch implements Serializable {
 //			}
                     aggregatorList.add(tmp);
                 } else {
-                    throw new Exception("Aggregator " + aggregatorNames[i] + " is not known. Check the spelling?");
+                    ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                    throw new Exception(String.format(bundle.getString("aggregator.s.is.not.known.check.the.spelling"),aggregatorNames[i]));
                 }
             }
         }
 		if(overall && (aggregatorList.size()==0)){
-			throw new Exception("Attempting to get overall stats without specifying any aggregators to create it");
+            ResourceBundle bundle= ResourceBundle.getBundle("Translations");
+			throw new Exception(bundle.getString("attempting.to.get.overall.stats.without.specifying.any.aggregators.to.create.it"));
 		}
 		dm_.aggregators = aggregatorList.toArray(new Aggregator[]{});
 	}
@@ -378,7 +373,8 @@ public class Batch implements Serializable {
 			}
 		}
 		if(overall && (aggregatorList.size()==0)){
-			throw new Exception("Attempting to get overall stats without specifying any aggregators to create it");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(bundle.getString("attempting.to.get.overall.stats.without.specifying.any.aggregators.to.create.it"));
 		}
 		return aggregatorList.toArray(new Aggregator[]{});
 
@@ -507,7 +503,8 @@ public class Batch implements Serializable {
                 }
                 dm_.recordingInfo = this.recording;
             } catch (Exception e) {
-                System.err.println("INTERNAL ERROR: " + e.getMessage());
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                System.err.println(String.format(bundle.getString("internal.error.s"),e.getLocalizedMessage()));
                 e.printStackTrace();
             }
             recording[0] = this.recording;
@@ -759,13 +756,9 @@ public class Batch implements Serializable {
 			aggregatorFeatures = aggFeatures;
 			aggregatorParameters = aggParam;
 		} else {
-			System.out
-					.println("INTERNAL ERROR: Parameters are not of the same length - implying differing numbers of aggregators to define:"
-							+ aggNames.length
-							+ " "
-							+ aggFeatures.length
-							+ " "
-							+ aggParam.length);
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            System.out
+					.println(String.format(bundle.getString("internal.error.parameters.are.not.of.the.same.length.implying.differing.numbers.of.aggregators.to.define.d.d.d"),aggNames.length, aggFeatures.length, aggParam.length));
 		}
 	}
 

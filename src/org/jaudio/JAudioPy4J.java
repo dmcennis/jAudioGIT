@@ -1,4 +1,4 @@
-/**
+package org.jaudio; /**
  * Created with IntelliJ IDEA.
  * User: dmcennis
  * Date: 9/24/13
@@ -22,7 +22,7 @@ public class JAudioPy4J {
     }
 
     public static void main(String[] args){
-//        GatewayServer gateway = new GatewayServer(new JAudioPy4J(args[0],args[1]));
+//        GatewayServer gateway = new GatewayServer(new org.jaudio.JAudioPy4J(args[0],args[1]));
 //        gateway.start();
     }
 }

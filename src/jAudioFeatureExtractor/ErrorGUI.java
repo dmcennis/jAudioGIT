@@ -33,7 +33,7 @@ class ErrorGUI implements Runnable {
 	 */
 	public void run() {
 		frame.setVisible(false);
-		JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR",
+		JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "ERROR",
 				JOptionPane.ERROR_MESSAGE);
 	}
 }

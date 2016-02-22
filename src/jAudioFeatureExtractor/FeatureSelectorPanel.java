@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ResourceBundle;
 
 /**
  * A window that allows users to select which features to save as well as some
@@ -178,41 +179,42 @@ public class FeatureSelectorPanel extends JPanel implements ActionListener {
 
 		// Set up the list of feature extractors
 		setUpFeatureTable();
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 
 		// Add an overall title for this panel
-		add(new JLabel("FEATURES:"), BorderLayout.NORTH);
+		add(new JLabel(bundle.getString("features")), BorderLayout.NORTH);
 
 		// Set up buttons and text area
 		JPanel control_panel = new JPanel(new GridLayout(4, 2, horizontal_gap,
 				vertical_gap));
 
 		save_window_features_check_box = new JCheckBox(
-				"Save Features For Each Window", false);
+				bundle.getString("save.features.for.each.window"), false);
 		save_window_features_check_box.setBackground(blue);
 		save_window_features_check_box.addActionListener(this);
 		control_panel.add(save_window_features_check_box);
 
 		save_overall_file_featurese_check_box = new JCheckBox(
-				"Save For Overall Recordings", true);
+				bundle.getString("save.for.overall.recordings"), true);
 		save_overall_file_featurese_check_box.setBackground(blue);
 		save_overall_file_featurese_check_box.addActionListener(this);
 
 		control_panel.add(save_overall_file_featurese_check_box);
 
-		control_panel.add(new JLabel("Window Size (samples):"));
+		control_panel.add(new JLabel(bundle.getString("window.size.samples")));
 
 		window_length_text_field = new JTextArea("512", 1, 20);
 		control_panel.add(window_length_text_field);
 
-		control_panel.add(new JLabel("Window Overlap (fraction):"));
+		control_panel.add(new JLabel(bundle.getString("window.overlap.fraction")));
 		window_overlap_fraction_text_field = new JTextArea("0.0", 1, 20);
 		control_panel.add(window_overlap_fraction_text_field);
 
-		set_aggregators_button = new JButton("Alter Aggregators");
+		set_aggregators_button = new JButton(bundle.getString("alter.aggregators"));
 		set_aggregators_button.addActionListener(this);
 		control_panel.add(set_aggregators_button);
 
-		extract_features_button = new JButton("Extract Features");
+		extract_features_button = new JButton(bundle.getString("extract.features"));
 		extract_features_button.addActionListener(this);
 		control_panel.add(extract_features_button);
 
@@ -270,10 +272,11 @@ public class FeatureSelectorPanel extends JPanel implements ActionListener {
 			if (tmp.isSelected()) {
 				if (save_window_features_check_box.isSelected()) {
 					if (controller.outputTypeAction.getSelected() == 1) {
+						ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 						JOptionPane
 								.showMessageDialog(
 										null,
-										"Weka format only supports one type of output - either output per file or output per window.",
+                                        bundle.getString("weka.format.only.supports.one.type.of.output.either.output.per.file.or.output.per.window"),
 										"ERROR", JOptionPane.ERROR_MESSAGE);
 						tmp.setSelected(false);
 
@@ -285,10 +288,11 @@ public class FeatureSelectorPanel extends JPanel implements ActionListener {
 			if (tmp.isSelected()) {
 				if (save_overall_file_featurese_check_box.isSelected()) {
 					if (controller.outputTypeAction.getSelected() == 1) {
-						JOptionPane
+                        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                        JOptionPane
 								.showMessageDialog(
 										null,
-										"Weka format only supports one type of output - either output per file or output per window.",
+                                        bundle.getString("weka.format.only.supports.one.type.of.output.either.output.per.file.or.output.per.window"),
 										"ERROR", JOptionPane.ERROR_MESSAGE);
 						tmp.setSelected(false);
 					}
@@ -331,9 +335,11 @@ public class FeatureSelectorPanel extends JPanel implements ActionListener {
 			// exception
 			// if there are none
 			RecordingInfo[] recordings = controller.dm_.recordingInfo;
-			if (recordings == null)
-				throw new Exception(
-						"No recordings available to extract features from.");
+			if (recordings == null) {
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                throw new Exception(
+                        bundle.getString("no.recordings.available.to.extract.features.from"));
+            }
 
 			// Ask user if s/he wishes to change window size to a power of 2 if
 			// it
@@ -342,10 +348,8 @@ public class FeatureSelectorPanel extends JPanel implements ActionListener {
 				int pow_2_size = jAudioFeatureExtractor.GeneralTools.Statistics
 						.ensureIsPowerOfN(window_size, 2);
 				if (window_size != pow_2_size) {
-					String message = "Given window size is " + window_size
-							+ ", which is not a power\n"
-							+ "of 2. Would you like to increase this to the\n"
-							+ "next highest power of 2 (" + pow_2_size + ")?";
+                    ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                    String message = String.format(bundle.getString("given.window.size.is.d.which.is.not.a.power.nof.2.would.you.like.to.increase.this.to.the.nnext.highest.power.of.2.d"),window_size,pow_2_size);
 					int convert = JOptionPane.showConfirmDialog(null, message,
 							"WARNING", JOptionPane.YES_NO_OPTION);
 					if (convert == JOptionPane.YES_OPTION) {
@@ -380,13 +384,14 @@ public class FeatureSelectorPanel extends JPanel implements ActionListener {
 
 		} catch (Throwable t) {
 			// React to the Java Runtime running out of memory
-			if (t.toString().equals("java.lang.OutOfMemoryError"))
-				JOptionPane
-						.showMessageDialog(
-								null,
-								"The Java Runtime ran out of memory. Please rerun this program\n"
-										+ "with a higher amount of memory assigned to the Java Runtime heap.",
-								"ERROR", JOptionPane.ERROR_MESSAGE);
+			if (t.toString().equals("java.lang.OutOfMemoryError")) {
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                JOptionPane
+                        .showMessageDialog(
+                                null,
+                                bundle.getString("the.java.runtime.ran.out.of.memory.please.rerun.this.program.nwith.a.higher.amount.of.memory.assigned.to.the.java.runtime.heap"),
+                                "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
 			else if (t instanceof Exception) {
 				Exception e = (Exception) t;
 				JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR",
@@ -399,13 +404,14 @@ public class FeatureSelectorPanel extends JPanel implements ActionListener {
 	 * Initialize the table displaying the features which can be extracted.
 	 */
 	private void setUpFeatureTable() {
-		controller.fstm_.fillTable(controller.dm_.featureDefinitions,
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        controller.fstm_.fillTable(controller.dm_.featureDefinitions,
 				controller.dm_.defaults, controller.dm_.is_primary);
 		decorator = new SortingTableModelDecorator(controller.fstm_);
 		features_table = new JTable(decorator);
 
 		multipleToggleAction = new MultipleToggleAction(features_table);
-		String key = "MultipleToggleAction";
+		String key = bundle.getString("multipletoggleaction");
 		features_table.getInputMap().put(KeyStroke.getKeyStroke(' '), key);
 		features_table.getActionMap().put(key, multipleToggleAction);
 

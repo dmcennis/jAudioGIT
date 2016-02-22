@@ -7,10 +7,7 @@ import jAudioFeatureExtractor.AudioFeatures.FeatureExtractor;
 import jAudioFeatureExtractor.jAudioTools.FeatureProcessor;
 
 import java.io.FileWriter;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,6 +17,8 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class AudioStreamProcessor {
+    static final ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
     private FeatureProcessor analysisEngine;
     private AggregatorContainer container;
     private boolean window = false;
@@ -53,8 +52,7 @@ public class AudioStreamProcessor {
                         try {
                             model.features[i].setElement(j, att[j]);
                         } catch (Exception e) {
-                            System.out.println("Feature " + name
-                                    + "failed apply its " + j + " attribute");
+                            System.out.println(String.format("Feature %s failed apply its %d attribute",name,j));
                             e.printStackTrace();
                         }
                     }
@@ -145,7 +143,8 @@ public class AudioStreamProcessor {
         }
         overallWriter.flush();
         overallWriter.close();
-	System.out.println("Analysis of "+filePrefix+" finished");
+
+	System.out.println(String.format(bundle.getString("analysis.of.s.finished"),filePrefix));
         }
     }
 

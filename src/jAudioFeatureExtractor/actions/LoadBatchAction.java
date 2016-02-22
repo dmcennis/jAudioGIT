@@ -7,6 +7,7 @@ import jAudioFeatureExtractor.ACE.XMLParsers.XMLDocumentParser;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -64,8 +65,9 @@ public class LoadBatchAction extends AbstractAction {
 					controller.removeBatch.setEnabled(true);
 					controller.viewBatch.setEnabled(true);
 				}
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 				JOptionPane.showMessageDialog(null,
-						"Loading of batch file successful.", "Information",
+						bundle.getString("loading.of.batch.file.successful"), "Information",
 						JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage(), "ERROR",

@@ -11,6 +11,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 
 /**
@@ -131,19 +132,21 @@ public class ParseClassificationsFileHandler
 	{
 		// Make sure is correct file type
 		if (count == 0)
-			if (!name.equals("classifications_file")&&!qName.equals("classifications_file"))
-				throw new SAXException("\n\nIt is in reality of the type " + name + ".");
+			if ((name.compareTo("classifications_file")!=0)&&(qName.compareTo("classifications_file")!=0)){
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new SAXException(String.format(bundle.getString("n.nit.is.in.reality.of.the.type.s"),name));
+			}
 		count++;
 
 		// Identify the type of tag
 		tag_identifier = 0;
-		if (name.equals("data_set")||qName.equals("data_set"))
+		if ((name.compareTo("data_set")==0)||(qName.compareTo("data_set")==0))
 		{
 			// Create a new SegmentedClassification and add it to root_classifications.
 			current_root_classification = new SegmentedClassification();
 			root_classifications.add(current_root_classification);
 		}
-		else if (name.equals("section")||qName.equals("section"))
+		else if ((name.compareTo("section")==0)||(qName.compareTo("section")==0))
 		{
 			// Create a new set of sub-sets of a SegmentedClassificaiton if
 			// subset_classifications is null
@@ -155,7 +158,7 @@ public class ParseClassificationsFileHandler
 			current_subset_classification = new SegmentedClassification();
 			subset_classifications.add(current_subset_classification);
 		}
-		else if (name.equals("class")||qName.equals("class"))
+		else if ((name.compareTo("class")==0)||(qName.compareTo("class")==0))
 		{
 			// Create a new set of classes if classes is null
 			if (classes == null)
@@ -164,7 +167,7 @@ public class ParseClassificationsFileHandler
 			// Notify the characters method
 			tag_identifier = 1;
 		}
-		else if (name.equals("misc_info")||qName.equals("misc_info"))
+		else if ((name.compareTo("misc_info")==0)||(qName.compareTo("misc_info")==0))
 		{
 			// Create a new set of meta_data_keys and meta_data_info
 			// if meta_data_keys is null
@@ -181,13 +184,13 @@ public class ParseClassificationsFileHandler
 			// Notify the characters method
 			tag_identifier = 2;
 		}
-		else if (name.equals("data_set_id")||qName.equals("data_set_id"))
+		else if ((name.compareTo("data_set_id")==0)||(qName.compareTo("data_set_id")==0))
 			tag_identifier = 3;
-		else if (name.equals("role")||qName.equals("role"))
+		else if ((name.compareTo("role")==0)||(qName.compareTo("role")==0))
 			tag_identifier = 4;
-		else if (name.equals("start")||qName.equals("start"))
+		else if ((name.compareTo("start")==0)||(qName.compareTo("start")==0))
 			tag_identifier = 5;
-		else if (name.equals("stop")||qName.equals("stop"))
+		else if ((name.compareTo("stop")==0)||(qName.compareTo("stop")==0))
 			tag_identifier = 6;
 	}
 
@@ -223,7 +226,7 @@ public class ParseClassificationsFileHandler
 	 */
 	public void endElement(String namespace, String name, String qName)
 	{
-		if (name.equals("data_set"))
+		if ((name.compareTo("data_set")==0))
 		{
 			// Store the classes in current_root_classification
 			if (classes != null)
@@ -272,7 +275,7 @@ public class ParseClassificationsFileHandler
 			subset_classifications = null;
 			current_root_classification = null;
 		}
-		else if (name.equals("section"))
+		else if ((name.compareTo("section")==0))
 		{
 			// Store the classes in current_subset_classification
 			if (classes != null)

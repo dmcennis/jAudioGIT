@@ -11,6 +11,7 @@ import org.xml.sax.SAXException;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import java.util.ResourceBundle;
 
 
 /**
@@ -95,12 +96,14 @@ public class ParseTaxonomyFileHandler
 	{
 		if (is_first_element == true)
 		{
-			if (!name.equals("taxonomy_file")&&!qName.equals("taxonomy_file"))
-				throw new SAXException("\n\nIt is in reality of the type " + name + ".");
+			if ((name.compareTo("taxonomy_file")!=0)&&(qName.compareTo("taxonomy_file")!=0)){
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new SAXException(String.format(bundle.getString("n.nit.is.in.reality.of.the.type.s"),name));
+			}
 			is_first_element = false;
 		}
 
-		if (name.equals("comments")||qName.equals("comments"))
+		if ((name.compareTo("comments")==0)||(qName.compareTo("comments")==0))
 			is_comment = true;
 		else
 			is_comment = false;
@@ -118,9 +121,9 @@ public class ParseTaxonomyFileHandler
 	 */
 	public void endElement(String namespace, String name, String qName)
 	{
-		if (name.equals("taxonomy_file")||qName.equals(""))
+		if ((name.compareTo("taxonomy_file")==0)||(qName.compareTo("")==0))
 			current_node = (DefaultMutableTreeNode) current_node.getRoot();
-		else if (name.equals("sub_class") || name.equals("parent_class")||qName.equals("sub_class")||qName.equals("parent_class"))
+		else if ((name.compareTo("sub_class")==0) || (name.compareTo("parent_class")==0)||(qName.compareTo("sub_class")==0)||(qName.compareTo("parent_class")==0))
 			current_node = (DefaultMutableTreeNode) current_node.getParent();
 	}
 

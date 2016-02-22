@@ -5,6 +5,7 @@ package jAudioFeatureExtractor;
 
 import jAudioFeatureExtractor.Aggregators.Aggregator;
 
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 /**
@@ -18,12 +19,14 @@ import java.util.Vector;
 public class AggListTableModel extends javax.swing.table.DefaultTableModel{
 
 	private Vector<Aggregator> agg;
-	
+	static final ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
 	/**
 	 * Construct an empty list of aggregators
 	 */
 	public AggListTableModel(){
-		super(new Object[]{"Global","Name"},2);
+
+		super(new Object[]{bundle.getString("global"), bundle.getString("name")},2);
 		agg = new Vector<Aggregator>();
 		
 	}

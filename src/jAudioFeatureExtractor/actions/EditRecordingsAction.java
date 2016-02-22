@@ -7,6 +7,7 @@ import jAudioFeatureExtractor.RecordingSelectorPanel;
 import jAudioFeatureExtractor.DataTypes.RecordingInfo;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
@@ -31,7 +32,7 @@ public class EditRecordingsAction extends AbstractAction {
 
 	/**
 	 * Gives EditRecordingsAction access to the global controller.
-	 * @param c
+	 * @param c controller to alter GUI state
 	 */
 	public EditRecordingsAction(Controller c) {
 		super("Edit Recordings...");
@@ -54,10 +55,11 @@ public class EditRecordingsAction extends AbstractAction {
 	 * one is edited.
 	 */
 	public void actionPerformed(ActionEvent e) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle("Translations");
 		int selected_row = recordings_table.getSelectedRow();
 		if (selected_row < 0)
 			JOptionPane.showMessageDialog(null,
-					"No recording selected for editing.", "ERROR",
+                    resourceBundle.getString("no.recording.selected.for.editing"), "ERROR",
 					JOptionPane.ERROR_MESSAGE);
 		else {
 			RecordingInfo selected_audio = controller.dm_.recordingInfo[selected_row];

@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
+import java.util.ResourceBundle;
 
 /**
  * AddBatchGui qllows a user to supply a name for an existing batch. It should
@@ -30,6 +31,8 @@ public class AddBatchGUI extends JFrame implements ActionListener {
 	private JTextArea nameArea;
 
 	private Batch batch;
+	static final ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
 
 	/**
 	 * Create the gui interface requesting a unique batch name from the user.
@@ -49,15 +52,15 @@ public class AddBatchGUI extends JFrame implements ActionListener {
 		Color blue = new Color((float) 0.75, (float) 0.85, (float) 1.0);
 		this.getContentPane().setBackground(blue);
 
-		nameLabel = new JLabel("Batch Name");
+		nameLabel = new JLabel(bundle.getString("batch.name"));
 		nameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		nameArea = new JTextArea("", 1, 20);
 		nameArea.setColumns(15);
 
-		saveBatch = new JButton("Save");
+		saveBatch = new JButton(bundle.getString("save"));
 		saveBatch.addActionListener(this);
-		cancel = new JButton("Cancel");
+		cancel = new JButton(bundle.getString("cancel"));
 		cancel.addActionListener(this);
 
 		this.setLayout(new GridLayout(2, 2, 6, 11));
@@ -96,7 +99,7 @@ public class AddBatchGUI extends JFrame implements ActionListener {
 		int count = 0;
 		int same = -1;
 		if (nameArea.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "Batch names cannot be empty",
+			JOptionPane.showMessageDialog(null, bundle.getString("batch.names.cannot.be.empty"),
 					"ERROR", JOptionPane.ERROR_MESSAGE);
 		} else {
 			batch.setName(nameArea.getText());
@@ -111,7 +114,7 @@ public class AddBatchGUI extends JFrame implements ActionListener {
 				int state = JOptionPane
 						.showConfirmDialog(
 								this,
-								"This will overwrite an existing batch.  Continue Anyways?",
+                                bundle.getString("this.will.overwrite.an.existing.batch.continue.anyways"),
 								"Confirm Overwrite", JOptionPane.YES_NO_OPTION);
 				if (state == JOptionPane.OK_OPTION) {
 					System.out.println(same);
