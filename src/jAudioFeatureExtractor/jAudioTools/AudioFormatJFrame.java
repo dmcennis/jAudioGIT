@@ -8,8 +8,10 @@ package jAudioFeatureExtractor.jAudioTools;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.sound.sampled.*;
+import javax.swing.text.NumberFormatter;
 
 
 /**
@@ -113,55 +115,56 @@ import javax.sound.sampled.*;
 	 */
 	public AudioFormatJFrame()
 	{
-		Color blue = new Color((float)0.75,(float)0.85,(float)1.0);
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        Color blue = new Color((float)0.75,(float)0.85,(float)1.0);
 		// Instantiate sampling rate GUI elements
 		sampling_rate_rb_group = new ButtonGroup();
-		sr_8000_rb = new JRadioButton("8 kHz");
+		sr_8000_rb = new JRadioButton(bundle.getString("8.khz"));
 		sr_8000_rb.setBackground(blue);
-		sr_11025_rb = new JRadioButton("11.025 kHz");
+		sr_11025_rb = new JRadioButton(bundle.getString("11.025.khz"));
 		sr_11025_rb.setBackground(blue);
-		sr_16000_rb = new JRadioButton("16 kHz");
+		sr_16000_rb = new JRadioButton(bundle.getString("16.khz"));
 		sr_16000_rb.setBackground(blue);
-		sr_22050_rb = new JRadioButton("22.05 kHz");
+		sr_22050_rb = new JRadioButton(bundle.getString("22.05.khz"));
 		sr_22050_rb.setBackground(blue);
-		sr_44100_rb = new JRadioButton("44.1 kHz");
+		sr_44100_rb = new JRadioButton(bundle.getString("44.1.khz"));
 		sr_44100_rb.setBackground(blue);
-		sr_other_rb = new JRadioButton("Other (kHz):");
+		sr_other_rb = new JRadioButton(bundle.getString("other.khz"));
 		sr_other_rb.setBackground(blue);
 		sr_text_area = new JTextArea("");
 
 		// Instantiate bit depth GUI elements
 		bit_depth_rb_group = new ButtonGroup();
-		bd_8_rb = new JRadioButton("8 bit");
+		bd_8_rb = new JRadioButton(bundle.getString("8.bit"));
 		bd_8_rb.setBackground(blue);
-		bd_16_rb = new JRadioButton("16 bit");
+		bd_16_rb = new JRadioButton(bundle.getString("16.bit"));
 		bd_16_rb.setBackground(blue);
-		bd_other_rb = new JRadioButton("Other:");
+		bd_other_rb = new JRadioButton(bundle.getString("other"));
 		bd_other_rb.setBackground(blue);
 		bd_text_area = new JTextArea("");
 
 		// Instantiate channels GUI elements
 		channels_rb_group = new ButtonGroup();
-		chan_1_rb = new JRadioButton("Mono");
+		chan_1_rb = new JRadioButton(bundle.getString("mono"));
 		chan_1_rb.setBackground(blue);
-		chan_2_rb = new JRadioButton("Stereo");
+		chan_2_rb = new JRadioButton(bundle.getString("stereo"));
 		chan_2_rb.setBackground(blue);
-		chan_other_rb = new JRadioButton("Other:");
+		chan_other_rb = new JRadioButton(bundle.getString("other1"));
 		chan_other_rb.setBackground(blue);
 		chan_text_area = new JTextArea("");
 
 		// Instantiate signed GUI elemens
 		signed_rb_group = new ButtonGroup();
-		signed_rb = new JRadioButton("Signed PCM");
+		signed_rb = new JRadioButton(bundle.getString("signed.pcm"));
 		signed_rb.setBackground(blue);
-		unsigned_rb = new JRadioButton("Unsigned PCM");
+		unsigned_rb = new JRadioButton(bundle.getString("unsigned.pcm"));
 		unsigned_rb.setBackground(blue);
 
 		// Instantiate endian GUI elements
 		endian_rb_group = new ButtonGroup();;
-		big_endian_rb = new JRadioButton("Big Endian");
+		big_endian_rb = new JRadioButton(bundle.getString("big.endian"));
 		big_endian_rb.setBackground(blue);
-		little_endian_rb = new JRadioButton("Little Endian");
+		little_endian_rb = new JRadioButton(bundle.getString("little.endian"));
 		little_endian_rb.setBackground(blue);
 
 		// Add radio buttons to their groups
@@ -183,11 +186,11 @@ import javax.sound.sampled.*;
 		endian_rb_group.add(little_endian_rb);
 
 		// Instantiate buttons
-		low_quality_button = new JButton("Low Quality Settings");
-		mid_quality_button = new JButton("Mid Quality Settings");
-		high_quality_button = new JButton("High Quality Settings");
-		cancel_button = new JButton("Cancel");
-		ok_button = new JButton("OK");
+		low_quality_button = new JButton(bundle.getString("low.quality.settings"));
+		mid_quality_button = new JButton(bundle.getString("mid.quality.settings"));
+		high_quality_button = new JButton(bundle.getString("high.quality.settings"));
+		cancel_button = new JButton(bundle.getString("cancel"));
+		ok_button = new JButton(bundle.getString("ok"));
 
 		// Attach action listeners to buttons
 		low_quality_button.addActionListener(this);
@@ -207,7 +210,7 @@ import javax.sound.sampled.*;
 		});
 
 		// Configure overall window settings
-		setTitle("PCM Audio Format Selector");
+		setTitle(bundle.getString("pcm.audio.format.selector"));
 		int horizontal_gap = 6; // horizontal space between GUI elements
 		int vertical_gap = 11; // horizontal space between GUI elements
 		content_pane = getContentPane();
@@ -219,7 +222,7 @@ import javax.sound.sampled.*;
 		button_panel.setBackground(blue);
 
 		// Add items to settings panel (with labels)
-		settings_panel.add(new JLabel("Sampling Rate:"));
+		settings_panel.add(new JLabel(bundle.getString("sampling.rate")));
 		settings_panel.add(sr_8000_rb);
 		settings_panel.add(new JLabel(""));
 		settings_panel.add(sr_11025_rb);
@@ -233,7 +236,7 @@ import javax.sound.sampled.*;
 		settings_panel.add(sr_other_rb);
 		settings_panel.add(new JLabel(""));
 		settings_panel.add(sr_text_area);
-		settings_panel.add(new JLabel("Bit Depth:"));
+		settings_panel.add(new JLabel(bundle.getString("bit.depth")));
 		settings_panel.add(bd_8_rb);
 		settings_panel.add(new JLabel(""));
 		settings_panel.add(bd_16_rb);
@@ -241,7 +244,7 @@ import javax.sound.sampled.*;
 		settings_panel.add(bd_other_rb);
 		settings_panel.add(new JLabel(""));
 		settings_panel.add(bd_text_area);
-		settings_panel.add(new JLabel("Channels:"));
+		settings_panel.add(new JLabel(bundle.getString("channels")));
 		settings_panel.add(chan_1_rb);
 		settings_panel.add(new JLabel(""));
 		settings_panel.add(chan_2_rb);
@@ -249,11 +252,11 @@ import javax.sound.sampled.*;
 		settings_panel.add(chan_other_rb);
 		settings_panel.add(new JLabel(""));
 		settings_panel.add(chan_text_area);
-		settings_panel.add(new JLabel("Signed Samples:"));
+		settings_panel.add(new JLabel(bundle.getString("signed.samples")));
 		settings_panel.add(signed_rb);
 		settings_panel.add(new JLabel(""));
 		settings_panel.add(unsigned_rb);
-		settings_panel.add(new JLabel("Byte Order:"));
+		settings_panel.add(new JLabel(bundle.getString("byte.order")));
 		settings_panel.add(big_endian_rb);
 		settings_panel.add(new JLabel(""));
 		settings_panel.add(little_endian_rb);
@@ -379,7 +382,7 @@ import javax.sound.sampled.*;
 			else
 			{
 				sr_other_rb.setSelected(true);
-				sr_text_area.setText((new Float(sample_rate * 1000.0F)).toString());
+				sr_text_area.setText(String.format("%f",sample_rate * 1000.0F));
 			}
 
 			// Set bit depth GUI elements
@@ -389,7 +392,7 @@ import javax.sound.sampled.*;
 			else
 			{
 				bd_other_rb.setSelected(true);
-				bd_text_area.setText((new Integer(bit_depth)).toString());
+				bd_text_area.setText(String.format("%d",bit_depth));
 			}
 
 			// Set channel GUI elements
@@ -399,7 +402,7 @@ import javax.sound.sampled.*;
 			else
 			{
 				chan_other_rb.setSelected(true);
-				chan_text_area.setText((new Integer(bit_depth)).toString());
+				chan_text_area.setText(String.format("%d",bit_depth));
 			}
 
 			// Set signed GUI elements
@@ -439,16 +442,13 @@ import javax.sound.sampled.*;
 		// and this is not allowed
 		if (!allow_text_selections)
 		{
-			if (sr_other_rb.isSelected())
-				throw new Exception( "Illegal sampling rate of " + sr_text_area.getText() + ".\n" +
-				                     "Only sampling rates of 8, 11.025, 16, 22.05 and 44.1 kHz are\n" +
-				                     "accepted under the current settings." );
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            if (sr_other_rb.isSelected())
+				throw new Exception( String.format(bundle.getString("illegal.sampling.rate.of.s.nonly.sampling.rates.of.8.11.025.16.22.05.and.44.1.khz.are.naccepted.under.the.current.settings"),sr_text_area.getText() ));
 			if (bd_other_rb.isSelected())
-				throw new Exception( "Illegal bit depth of " + bd_text_area.getText() + ".\n" +
-				                     "Only bit depths of 8 or 16 bits are accepted under the current settings." );
+				throw new Exception(String.format(bundle.getString("illegal.bit.depth.of.s.nonly.bit.depths.of.8.or.16.bits.are.accepted.under.the.current.settings"),bd_text_area.getText() ));
 			if (chan_other_rb.isSelected())
-				throw new Exception( "Illegal number of channels (" + chan_text_area.getText() + ").\n" +
-				                     "Only 1 or 2 channels are accepted under the current settings." );
+				throw new Exception(String.format(bundle.getString("illegal.number.of.channels.s.nonly.1.or.2.channels.are.accepted.under.the.current.settings"), chan_text_area.getText() ));
 		}
 
 		// Get sampling rate from GUI

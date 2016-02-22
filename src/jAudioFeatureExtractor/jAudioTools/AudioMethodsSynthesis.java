@@ -346,12 +346,12 @@ public class AudioMethodsSynthesis
 		if (sample_values == null)
 			throw new Exception(bundle.getString("empty.set.of.samples.provided") );
 		if (sample_rate <= 0.0F)
-			throw new Exception( String.format("Given sample rate is %f Hz.\nThis value should be greater than zero.",sample_rate) );
+			throw new Exception( String.format(bundle.getString("given.sample.rate.is.f.hz.nthis.value.should.be.greater.than.zero"),sample_rate) );
 		if (click_avoid_env_length < 0.0)
-			throw new Exception( String.format("Click avoidance envelope length is %f seconds.\nThis value should be 0.0 seconds or higher.", click_avoid_env_length ));
+			throw new Exception( String.format(bundle.getString("click.avoidance.envelope.length.is.f.seconds.nthis.value.should.be.0.0.seconds.or.higher"), click_avoid_env_length ));
 		double duration_of_audio = sample_values[0].length / sample_rate;
 		if ( (2.0 * click_avoid_env_length) >= duration_of_audio )
-			throw new Exception( String.format("Click avoidance envelope length is %f seconds.\nThis would lead to combined envelope lengths longer than the provided audio.",click_avoid_env_length) );
+			throw new Exception( String.format(bundle.getString("click.avoidance.envelope.length.is.f.seconds.nthis.would.lead.to.combined.envelope.lengths.longer.than.the.provided.audio"),click_avoid_env_length) );
 
 		// Find the duration in samples of each envelope
 		int sample_duration = (int) (click_avoid_env_length * sample_rate);
@@ -1072,9 +1072,9 @@ public class AudioMethodsSynthesis
         ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		// Throw exceptions for invalid number_of_channels or total_samples_per_chan
 		if (number_of_channels < 1)
-			throw new Exception( String.format("There must be 1 or more channels. You specified %d.",number_of_channels));
+			throw new Exception( String.format(bundle.getString("there.must.be.1.or.more.channels.you.specified.d"),number_of_channels));
 		if (total_samples_per_chan <= 0)
-			throw new Exception( String.format("Invalid total number of samples per channel of %d specified.\nMust be greater than 0.",total_samples_per_chan));
+			throw new Exception( String.format(bundle.getString("invalid.total.number.of.samples.per.channel.of.d.specified.nmust.be.greater.than.06"),total_samples_per_chan));
 
 		// Prepare the array to hold the samples for each channel
 		double[][] samples = new double[number_of_channels][total_samples_per_chan];

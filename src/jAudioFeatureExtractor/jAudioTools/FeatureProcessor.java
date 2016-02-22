@@ -440,7 +440,7 @@ public class FeatureProcessor {
 					for (int i = 0; i < dependencies[feat].length; i++) {
 						String name = dependencies[feat][i];
 						for (int j = 0; j < all_feature_names.length; j++) {
-							if (name.equals(all_feature_names[j])) {
+							if (name.compareTo(all_feature_names[j])==0) {
 								if (!features_to_extract[j]) {
 									features_to_extract[j] = true;
 									dependencies[j] = all_feature_extractors[j]
@@ -494,7 +494,7 @@ public class FeatureProcessor {
 								int num_defs = dependencies[i].length;
 								for (int j = 0; j < num_defs; j++) {
 									if (dependencies[i][j]
-											.equals(all_feature_names[feat])) {
+											.compareTo(all_feature_names[feat])==0) {
 										if (dependencies[i].length == 1) {
 											dependencies[i] = null;
 											j = num_defs;
@@ -549,7 +549,7 @@ public class FeatureProcessor {
 				for (int j = 0; j < feature_dependencies_str[i].length; j++)
 					for (int k = 0; k < feature_names.length; k++)
 						if (feature_dependencies_str[i][j]
-								.equals(feature_names[k]))
+								.compareTo(feature_names[k])==0)
 							feature_extractor_dependencies[i][j] = k;
 			}
 
