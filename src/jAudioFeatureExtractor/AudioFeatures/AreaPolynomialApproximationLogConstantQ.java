@@ -1,9 +1,9 @@
 package jAudioFeatureExtractor.AudioFeatures;
 
-import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
-import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.DoubleMatrix2D;
+import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
+import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
 /**
  * 2D Polynomial Approximation Feature
@@ -54,8 +54,8 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 			offsets[i] = 0 - i;
 		}
 		
-		terms = new DenseDoubleMatrix2D(k*l,windowLength*featureLength);
-		z = new DenseDoubleMatrix2D(1,featureLength*windowLength);
+		terms = new DenseDoubleMatrix2D(windowLength*featureLength,k*l);
+		z = new DenseDoubleMatrix2D(featureLength*windowLength,1);
 		calcTerms(terms);
 	}
 
@@ -83,13 +83,13 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 	public double[] extractFeature(double[] samples, double sampling_rate,
 			double[][] other_feature_values) throws Exception {
 		if((featureLength != other_feature_values[0].length)||(windowLength != other_feature_values.length)){
-			terms = new DenseDoubleMatrix2D(k*l,windowLength*featureLength);
+			terms = new DenseDoubleMatrix2D(windowLength*featureLength,k*l);
 			z = new DenseDoubleMatrix2D(1,featureLength*windowLength);
 			calcTerms(terms);
 		}
 		for(int i=0;i<windowLength;++i){
 			for(int j=0;j<featureLength;++j){
-				z.set(0,windowLength*i+j,other_feature_values[i][j]);
+				z.set(featureLength*i+j,0,other_feature_values[i][j]);
 			}
 		}
 		DoubleMatrix2D retMatrix = (new Algebra()).solve(terms,z);
@@ -116,7 +116,7 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 				dependencies[i] = "Magnitude Spectrum";
 				offsets[i] = 0 - i;
 			}
-			terms = new DenseDoubleMatrix2D(k*l,windowLength*featureLength);
+			terms = new DenseDoubleMatrix2D(windowLength*featureLength,k*l);
 			z = new DenseDoubleMatrix2D(1,featureLength*windowLength);
 			calcTerms(terms);
 		}
@@ -183,7 +183,7 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 						dependencies[i] = "Magnitude Spectrum";
 						offsets[i] = 0 - i;
 					}
-					terms = new DenseDoubleMatrix2D(k*l,windowLength*featureLength);
+					terms = new DenseDoubleMatrix2D(windowLength*featureLength,k*l);
 					z = new DenseDoubleMatrix2D(1,featureLength*windowLength);
 					calcTerms(terms);
 				}
@@ -202,7 +202,7 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 						"Area Polynomial Approximation feature dimension length must be positive");
 				} else {
 					featureLength = val;
-					terms = new DenseDoubleMatrix2D(k*l,windowLength*featureLength);
+					terms = new DenseDoubleMatrix2D(windowLength*featureLength,k*l);
 					z = new DenseDoubleMatrix2D(1,featureLength*windowLength);
 					calcTerms(terms);
 				}
@@ -221,7 +221,7 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 						"Number of x terms in Area Polynomial Approximation must be positive");
 				} else {
 					k = val;
-					terms = new DenseDoubleMatrix2D(k*l,windowLength*featureLength);
+					terms = new DenseDoubleMatrix2D(windowLength*featureLength,k*l);
 					z = new DenseDoubleMatrix2D(1,featureLength*windowLength);
 					calcTerms(terms);
 				}
@@ -240,7 +240,7 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 						"Number of y terms in Area Polynomial Approximation must be positive");
 				} else {
 					l = val;
-					terms = new DenseDoubleMatrix2D(k*l,windowLength*featureLength);
+					terms = new DenseDoubleMatrix2D(windowLength*featureLength,k*l);
 					z = new DenseDoubleMatrix2D(1,featureLength*windowLength);
 					calcTerms(terms);
 				}
@@ -272,7 +272,7 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 			for(int y=0;y<featureLength;++y){
 				for(int i=0;i<k;++i){
 					for(int j=0;j<l;++j){
-						terms.set(l*i+j,featureLength*x+y,Math.pow(x,i)*Math.pow(y,j));
+						terms.set(featureLength*x+y,l*i+j,Math.pow(x,i)*Math.pow(y,j));
 					}
 				}
 			}
