@@ -12,6 +12,7 @@ import jAudioFeatureExtractor.AudioFeatures.FeatureExtractor;
 import jAudioFeatureExtractor.GeneralTools.StringMethods;
 
 import java.io.DataOutputStream;
+import java.util.ResourceBundle;
 
 /**
  * <h2>Multiple Fetaure Histogram</h2>
@@ -39,18 +40,20 @@ public class MultipleFeatureHistogram extends Aggregator {
 	 * Constructs a new aggregator.  This aggregator is not valid until it has a feature list set as a parameter.
 	 */
 	public MultipleFeatureHistogram() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		metadata = new AggregatorDefinition("Multiple Feature Histogram",
-				"a histogram of categories of input", false,
-				new String[] { "Number of bins for 1st dimension" });
+				bundle.getString("a.histogram.of.categories.of.input"), false,
+				new String[] {bundle.getString("number.of.bins.for.1st.dimension") });
 	}
 
 	/**
 	 * Constructs a fully functional aggregator.
 	 */
 	public MultipleFeatureHistogram(String[] fe, int bins) {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		base = fe;
 		String name = "Histogram:";
-		String description = "Histogram of concurrent changes in";
+		String description = bundle.getString("histogram.of.concurrent.changes.in");
 		int dimensions = 0;
 		for (int i = 0; i < fe.length; ++i) {
 			name += " " + fe[i];
@@ -59,8 +62,8 @@ public class MultipleFeatureHistogram extends Aggregator {
 		definition = new FeatureDefinition(name, description, true, dimensions);
 		binsPerDimension = bins;
 		metadata = new AggregatorDefinition("Multiple Feature Histogram",
-				"a histogram of categories of input", false,
-				new String[] { "Number of bins for 1st dimension" });
+				bundle.getString("a.histogram.of.categories.of.input"), false,
+				new String[] {bundle.getString("number.of.bins.for.1st.dimension") });
 	}
 
 	/* (non-Javadoc)
@@ -74,16 +77,17 @@ public class MultipleFeatureHistogram extends Aggregator {
 	@Override
 	public void setParameters(String[] features, String[] params)
 			throws Exception {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		if (features == null) {
 			throw new Exception(
-					"MultipleFeatureHistogram requires a list of features to aggregate");
+					bundle.getString("multiplefeaturehistogram.requires.a.list.of.features.to.aggregate"));
 		}
 		if (params.length == 1) {
 			try {
 				binsPerDimension = Integer.parseInt(params[0]);
 				base = features;
 				String name = "Histogram:";
-				String description = "Histogram of concurrent changes in";
+				String description = bundle.getString("histogram.of.concurrent.changes.in");
 				int dimensions = 0;
 				for (int i = 0; i < features.length; ++i) {
 					name += " " + features[i];
@@ -97,11 +101,11 @@ public class MultipleFeatureHistogram extends Aggregator {
 
 			} catch (NumberFormatException e) {
 				throw new Exception(
-						"Parameters to MultipleFeatureHistogram must be an integer");
+						bundle.getString("parameters.to.multiplefeaturehistogram.must.be.an.integer"));
 			}
 		} else {
 			throw new Exception(
-					"MultipleFeatureHistogram takes exactly one argument of type integer");
+					bundle.getString("multiplefeaturehistogram.takes.exactly.one.argument.of.type.integer"));
 		}
 	}
 
@@ -115,9 +119,9 @@ public class MultipleFeatureHistogram extends Aggregator {
 		// FeatureDefinition accordingly
 		definition.dimensions = (int) Math.pow(binsPerDimension,
 				featureList.length);
-
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		if(definition.dimensions > 1048576){
-			throw new Exception("Number of dimensions for "+definition.name+" exceeds 1048576 - "+ definition.dimensions);
+			throw new Exception(String.format(bundle.getString("number.of.dimensions.for.s.exceeds.1048576.d"),definition.name,definition.dimensions));
 		}
 		
 		// calculate earliest window that has values for all features to be

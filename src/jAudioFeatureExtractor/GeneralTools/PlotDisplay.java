@@ -9,6 +9,7 @@ package jAudioFeatureExtractor.GeneralTools;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.util.ResourceBundle;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -104,6 +105,7 @@ public class PlotDisplay
 						boolean quit_on_exit )
 		throws Exception
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		// Assign data_points_to_plot and data_x_coordinates_to_plot to fields
 		data_points = data_points_to_plot;
 		data_x_coordinates = data_x_coordinates_to_plot;
@@ -183,32 +185,32 @@ public class PlotDisplay
 		control_panel.setBackground(this.getContentPane().getBackground());
 
 		// Set up button for replotting the graph
-		JButton replot_button = new JButton("Replot");
+		JButton replot_button = new JButton(bundle.getString("replot"));
 		replot_button.addActionListener(this);
 
 		// Populate each panel with a label and a text field
 		JPanel pan0 = new JPanel();
-		pan0.add(new JLabel("Minimum X"));
+		pan0.add(new JLabel(bundle.getString("minimum.x")));
 		pan0.add(x_min_tf);
 		pan0.setBackground(this.getContentPane().getBackground());
 		JPanel pan1 = new JPanel();
-		pan1.add(new JLabel("Maximum X"));
+		pan1.add(new JLabel(bundle.getString("maximum.x")));
 		pan1.add(x_max_tf);
 		pan1.setBackground(this.getContentPane().getBackground());
 		JPanel pan2 = new JPanel();
-		pan2.add(new JLabel("Minimum Y"));
+		pan2.add(new JLabel(bundle.getString("minimum.y")));
 		pan2.add(y_min_tf);
 		pan2.setBackground(this.getContentPane().getBackground());
 		JPanel pan3 = new JPanel();
-		pan3.add(new JLabel("Maximum Y"));
+		pan3.add(new JLabel(bundle.getString("maximum.y")));
 		pan3.add(y_max_tf);
 		pan3.setBackground(this.getContentPane().getBackground());
 		JPanel pan4 = new JPanel();
-		pan4.add(new JLabel("X Tic Interval"));
+		pan4.add(new JLabel(bundle.getString("x.tic.interval")));
 		pan4.add(x_tic_interval_tf);
 		pan4.setBackground(this.getContentPane().getBackground());
 		JPanel pan5 = new JPanel();
-		pan5.add(new JLabel("Y Tic Interval"));
+		pan5.add(new JLabel(bundle.getString("y.tic.interval")));
 		pan5.add(y_tic_interval_tf);
 		pan5.setBackground(this.getContentPane().getBackground());
 
@@ -269,7 +271,7 @@ public class PlotDisplay
 		int frame_height = 500;
 		setBounds(0, 0, frame_width, frame_height);
 		if (plot_name == null)
-			plot_name = new String("Data Plot");
+			plot_name = new String(bundle.getString("data.plot"));
 		setTitle(plot_name);
 		setVisible(true);
 
@@ -300,7 +302,8 @@ public class PlotDisplay
 		}
 		catch (NumberFormatException e)
 		{
-			JOptionPane.showMessageDialog(null, "Invalid text option: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			JOptionPane.showMessageDialog(null, String.format(bundle.getString("invalid.text.option.s"),e.getLocalizedMessage()), "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 
 		// Repaint the canases

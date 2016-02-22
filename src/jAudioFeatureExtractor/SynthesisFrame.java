@@ -654,7 +654,7 @@ public class SynthesisFrame
 		String ext = StringMethods.getExtension(path);
 		if (ext == null)
 			path += correct_extension;
-		else if (!ext.equals(correct_extension))
+		else if (ext.compareTo(correct_extension)!=0)
 			path = StringMethods.removeExtension(path) + correct_extension;
 		else
 			return file_to_verify;
@@ -702,7 +702,7 @@ public class SynthesisFrame
 			String synthesis_types[] = AudioMethodsSynthesis.getSynthesisNames();
 			boolean type_ok = false;
 			for (int i = 0; i < synthesis_types.length; i++)
-				if (synthesis_types[i].equals(synthesis_type))
+				if (synthesis_types[i].compareTo(synthesis_type)==0)
 					type_ok = true;
 			if (!type_ok)
 				throw new Exception(String.format(bundle.getString("synthesis.type.s.is.unknown"),synthesis_type));

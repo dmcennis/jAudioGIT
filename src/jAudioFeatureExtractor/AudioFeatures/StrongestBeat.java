@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A feature extractor that finds the strongest beat in a signal, int
@@ -31,9 +33,9 @@ public class StrongestBeat
 	 */
 	public StrongestBeat()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Strongest Beat";
-		String description = "The strongest beat in a signal, in beats per minute, " +
-		                     "found by finding the strongest bin in the beat histogram.";
+		String description = bundle.getString("the.strongest.beat.in.a.signal.in.beats.per.minute.found.by.finding.the.strongest.bin.in.the.beat.histogram");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition( name,

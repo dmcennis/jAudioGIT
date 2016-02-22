@@ -9,6 +9,8 @@ package jAudioFeatureExtractor.Aggregators;
 import jAudioFeatureExtractor.ACE.DataTypes.AggregatorDefinition;
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * <h2>Area Method of Moments Aggregator</h2>
  * <p></p>
@@ -39,8 +41,9 @@ public class ZernikeMoments extends Aggregator {
 	 * Constructs an AreaMoments aggregator.  This isn't valid until specific features are adde to the system (in a particular order).
 	 */
 	public ZernikeMoments(){
-		metadata = new AggregatorDefinition("Zernike Moments","Calculates the first 39 2D zernike moments for the given features",false,
-                new String[] { "largest order (number) of Zernike moment to calculate" });
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+		metadata = new AggregatorDefinition("Zernike Moments", bundle.getString("calculates.the.first.39.2d.zernike.moments.for.the.given.features"),false,
+                new String[] {bundle.getString("largest.order.number.of.zernike.moment.to.calculate") });
 	}
 	
 	@Override
@@ -160,7 +163,8 @@ public class ZernikeMoments extends Aggregator {
 	@Override
 	public void init(int[] featureIndecis) throws Exception {
 		if(featureIndecis.length != featureNames.length){
-			throw new Exception("INTERNAL ERROR (Agggregator.ZernikeMoments): number of feature indeci does not match number of features");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(bundle.getString("internal.error.agggregator.zernikemoments.number.of.feature.indeci.does.not.match.number.of.features1"));
 		}
 		this.featureNameIndecis = featureIndecis;
 	}
@@ -183,7 +187,8 @@ public class ZernikeMoments extends Aggregator {
         if((params != null) && (params.length > 0)){
             order = Integer.parseInt(params[0]);
         }
-		definition = new FeatureDefinition("Zernike Moments: "+names,"2D moments constructed from features "+names+".",true,zernikeCount(order));
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+		definition = new FeatureDefinition("Zernike Moments: "+names,String.format(bundle.getString("2d.moments.constructed.from.features.s"),names),true,zernikeCount(order));
 	}
 
     /**

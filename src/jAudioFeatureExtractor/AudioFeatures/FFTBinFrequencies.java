@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A "feature extractor" that calculates the bin labels, in Hz, of power spectrum
@@ -32,11 +34,9 @@ public class FFTBinFrequencies
 	 */
 	public FFTBinFrequencies()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "FFT Bin Frequency Labels";
-		String description = "The bin label, in Hz, of each power spectrum or " + 
-		                     "magnitude spectrum bin. Not useful as a feature in " +
-			                 "itself, but useful for calculating other features " +
-			                 "from the magnitude spectrum and power spectrum.";
+		String description = bundle.getString("the.bin.label.in.hz.of.each.power.spectrum.or.magnitude.spectrum.bin.not.useful.as.a.feature.in.itself.but.useful.for.calculating.other.features.from.the.magnitude.spectrum.and.power.spectrum");
 		boolean is_sequential = true;
 		int dimensions = 0;
 		definition = new FeatureDefinition( name,

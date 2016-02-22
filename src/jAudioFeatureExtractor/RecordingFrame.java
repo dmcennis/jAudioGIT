@@ -482,7 +482,7 @@ public class RecordingFrame
 		String ext = StringMethods.getExtension(path);
 		if (ext == null)
 			path += correct_extension;
-		else if (!ext.equals(correct_extension))
+		else if (ext.compareTo(correct_extension)!=0)
 			path = StringMethods.removeExtension(path) + correct_extension;
 		else
 			return file_to_verify;

@@ -52,7 +52,7 @@ public class AudioStreamProcessor {
                         try {
                             model.features[i].setElement(j, att[j]);
                         } catch (Exception e) {
-                            System.out.println(String.format("Feature %s failed apply its %d attribute",name,j));
+                            System.out.println(String.format(bundle.getString("feature.s.failed.apply.its.d.attribute"),name,j));
                             e.printStackTrace();
                         }
                     }

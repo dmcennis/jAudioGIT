@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A "feature extractor" that calculates the bin labels, in beats per minute, of 
@@ -37,11 +39,9 @@ public class BeatHistogramLabels
 	 */
 	public BeatHistogramLabels()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Beat Histogram Bin Labels";
-		String description = "The bin label, in beats per minute, of each beat " + 
-		                     "histogram bin. Not useful as a feature in itself, " +
-			                 "but useful for calculating other features from " +
-			                 "the beat histogram.";
+		String description = bundle.getString("the.bin.label.in.beats.per.minute.of.each.beat.histogram.bin.not.useful.as.a.feature.in.itself.but.useful.for.calculating.other.features.from.the.beat.histogram");
 		boolean is_sequential = true;
 		int dimensions = 0;
 		definition = new FeatureDefinition( name,
@@ -116,7 +116,8 @@ public class BeatHistogramLabels
 	 */
 	public void setBinNumber(int n) throws Exception{
 		if(n < 2){
-			throw new Exception("There must be at least 2 bins in Beat Histogram Labels");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(bundle.getString("there.must.be.at.least.2.bins.in.beat.histogram.labels"));
 		}else{
 			binNumber = n;
 		}
@@ -132,8 +133,8 @@ public class BeatHistogramLabels
 	 */
 	public String getElement(int index) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to BeatHistogramLabels:getElement");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.beathistogramlabels.getelement"),index));
 		} else {
 			return Integer.toString(binNumber);
 		}
@@ -152,15 +153,16 @@ public class BeatHistogramLabels
 	 */
 	public void setElement(int index, String value) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to BeatHistogramLabels:setElement");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.beathistogramlabels.setelement"),index));
 		} else {
 			try {
 				int type = Integer.parseInt(value);
 				setBinNumber(type);
 			} catch (Exception e) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 				throw new Exception(
-						"Length of Area Method of Moments must be an integer");
+						bundle.getString("length.of.area.method.of.moments.must.be.an.integer"));
 			}
 		}
 	}

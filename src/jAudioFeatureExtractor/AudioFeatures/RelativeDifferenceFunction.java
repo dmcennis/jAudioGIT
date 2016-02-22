@@ -2,6 +2,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * This feature calculates the log of the derivative of the RMS. This is useful
  * for onset detection.
@@ -15,8 +17,9 @@ public class RelativeDifferenceFunction extends FeatureExtractor {
 	 * offsets) of this feature.
 	 */
 	public RelativeDifferenceFunction() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Relative Difference Function";
-		String decsription = "log of the derivative of RMS.  Used for onset detection.";
+		String decsription = bundle.getString("log.of.the.derivative.of.rms.used.for.onset.detection");
 		definition = new FeatureDefinition(name, decsription, true, 1);
 		dependencies = new String[] { "Root Mean Square", "Root Mean Square" };
 		offsets = new int[] { 0, -1 };

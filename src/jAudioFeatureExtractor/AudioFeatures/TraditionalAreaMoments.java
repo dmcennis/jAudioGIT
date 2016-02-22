@@ -2,6 +2,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * This class implements 2D statistical methods of moments as implemented by
  * Fujinaga (1997). The number of consecutive windows that one can edit across
@@ -39,9 +41,10 @@ public class TraditionalAreaMoments extends FeatureExtractor {
 	 * FeatureExtractor
 	 */
 	public TraditionalAreaMoments() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = " Traditional Area Method of Moments";
-		String description = "2D statistical method of moments";
-		String[] attributes = new String[] { "Area Method of Moments Window Length" };
+		String description = bundle.getString("2d.statistical.method.of.moments");
+		String[] attributes = new String[] {bundle.getString("area.method.of.moments.window.length") };
 
 		definition = new FeatureDefinition(name, description, true, 10,
 				attributes);
@@ -128,8 +131,9 @@ public class TraditionalAreaMoments extends FeatureExtractor {
 	 */
 	public void setWindow(int n) throws Exception {
 		if (n < 2) {
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			throw new Exception(
-					"Area Method of Moment's Window length must be two or greater");
+					bundle.getString("area.method.of.moment.s.window.length.must.be.two.or.greater"));
 		} else {
 			lengthOfWindow = n;
 			dependencies = new String[lengthOfWindow];
@@ -151,8 +155,8 @@ public class TraditionalAreaMoments extends FeatureExtractor {
 	 */
 	public String getElement(int index) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to AreaMoments:getElement");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.areamoments.getelement3"),index));
 		} else {
 			return Integer.toString(lengthOfWindow);
 		}
@@ -171,15 +175,16 @@ public class TraditionalAreaMoments extends FeatureExtractor {
 	 */
 	public void setElement(int index, String value) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to AreaMoments:setElement");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.areamoments.setelement3"),index));
 		} else {
 			try {
 				int type = Integer.parseInt(value);
 				setWindow(type);
 			} catch (Exception e) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 				throw new Exception(
-						"Length of Area Method of Moments must be an integer");
+						bundle.getString("length.of.area.method.of.moments.must.be.an.integer"));
 			}
 		}
 	}

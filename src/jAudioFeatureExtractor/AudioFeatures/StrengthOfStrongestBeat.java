@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A feature extractor that extracts the Strength of Strongest Beat from
@@ -34,9 +36,9 @@ public class StrengthOfStrongestBeat
 	 */
 	public StrengthOfStrongestBeat()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Strength Of Strongest Beat";
-		String description = "How strong the strongest beat in the beat histogram " +
-						     "is compared to other potential beats.";
+		String description = bundle.getString("how.strong.the.strongest.beat.in.the.beat.histogram.is.compared.to.other.potential.beats");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition( name,

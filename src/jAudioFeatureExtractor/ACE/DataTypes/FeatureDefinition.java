@@ -144,7 +144,8 @@ public class FeatureDefinition implements Serializable {
 	 * @return The formatted description.
 	 */
 	public String getFeatureDescription() {
-		String info = String.format("NAME: %s\nDESCRIPTION: %s\nIS SEQUENTIAL: %b\nDIMENSIONS: %d\n\n",name,description,is_sequential,dimensions);
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+		String info = String.format(bundle.getString("name.s.ndescription.s.nis.sequential.b.ndimensions.d.n.n"),name,description,is_sequential,dimensions);
 		return info;
 	}
 

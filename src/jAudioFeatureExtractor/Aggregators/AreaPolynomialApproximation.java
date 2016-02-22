@@ -13,6 +13,8 @@ import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
 
+import java.util.ResourceBundle;
+
 /**
 <h2>2D Polynomial Approximation</h2>
 <p>This specific aggregator was first released in an August 2010 working paper by Daniel McEnnis.  It transforms
@@ -41,7 +43,8 @@ public class AreaPolynomialApproximation extends Aggregator {
 	int[] featureNameIndecis = null;
 	
 	public AreaPolynomialApproximation(){
-		metadata = new AggregatorDefinition("2D Polynomial Approximation of a signal","Calculates the coeefecients of a polynomial that approximates the signal",false,null);
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        metadata = new AggregatorDefinition("2D Polynomial Approximation of a signal", bundle.getString("calculates.the.coefficients.of.a.polynomial.that.approximates.the.signal"),false,null);
 	}
 	
 	@Override
@@ -88,7 +91,8 @@ public class AreaPolynomialApproximation extends Aggregator {
 	@Override
 	public void init(int[] featureIndecis) throws Exception {
 		if(featureIndecis.length != featureNames.length){
-			throw new Exception("INTERNAL ERROR (Agggregator.AreaPolynomialApproximation): number of feature indeci does not match number of features");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            throw new Exception(bundle.getString("internal.error.agggregator.areapolynomialapproximation.number.of.feature.indeci.does.not.match.number.of.features"));
 		}
 		this.featureNameIndecis = featureIndecis;
 	}
@@ -116,7 +120,8 @@ public class AreaPolynomialApproximation extends Aggregator {
 
 	@Override
 	public void setParameters(String[] featureNames, String[] params) throws Exception {
-				// get number of x terms
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        // get number of x terms
 			if (params.length != 2){
 				xDim = 20;
 				yDim = 5;
@@ -124,14 +129,15 @@ public class AreaPolynomialApproximation extends Aggregator {
 				try {
 					int val = Integer.parseInt(params[0]);
 					if (val < 1) {
+
 						throw new Exception(
-							"Number of x terms in Area Polynomial Approximation must be positive");
+                                bundle.getString("number.of.x.terms.in.area.polynomial.approximation.must.be.positive"));
 					} else {
 						xDim = val;
 					}
 				} catch (Exception e) {
 					throw new Exception(
-							"Number of x terms in Area Polynomial Approximation must be an integer");
+                            bundle.getString("number.of.x.terms.in.area.polynomial.approximation.must.be.an.integer"));
 				}
 				
 					// get number of y terms
@@ -139,13 +145,13 @@ public class AreaPolynomialApproximation extends Aggregator {
 					int val = Integer.parseInt(params[1]);
 					if (val < 1) {
 						throw new Exception(
-							"Number of y terms in Area Polynomial Approximation must be positive");
+                                bundle.getString("number.of.y.terms.in.area.polynomial.approximation.must.be.positive"));
 					} else {
 						yDim = val;
 					}
 				} catch (Exception e) {
 					throw new Exception(
-							"Number of y terms of Area Polynomial Approximation must be an integer");
+                            bundle.getString("number.of.y.terms.of.area.polynomial.approximation.must.be.an.integer"));
 				}
 			}
 		this.featureNames = featureNames;
@@ -153,6 +159,6 @@ public class AreaPolynomialApproximation extends Aggregator {
 		for(int i=1;i<featureNames.length;++i){
 			names += " " + featureNames[i];
 		}
-		definition = new FeatureDefinition("2D Polynomial Approximation: "+names,"2D moments constructed from features "+names+".",true,0);
+		definition = new FeatureDefinition("2D Polynomial Approximation: "+names,String.format(bundle.getString("2d.moments.constructed.from.features.s"),names),true,0);
 	}
 }

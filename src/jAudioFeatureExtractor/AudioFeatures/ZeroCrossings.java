@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A feature extractor that extracts the Zero Crossings from a set of
@@ -33,9 +35,9 @@ public class ZeroCrossings
 	 */
 	public ZeroCrossings()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Zero Crossings";
-		String description = "The number of times the waveform changed sign. " +
-		                     "An indication of frequency as well as noisiness.";
+		String description = bundle.getString("the.number.of.times.the.waveform.changed.sign.an.indication.of.frequency.as.well.as.noisiness");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition( name,

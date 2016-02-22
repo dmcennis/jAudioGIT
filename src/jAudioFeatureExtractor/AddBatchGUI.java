@@ -98,14 +98,14 @@ public class AddBatchGUI extends JFrame implements ActionListener {
 	protected void save() {
 		int count = 0;
 		int same = -1;
-		if (nameArea.getText().equals("")) {
+		if (nameArea.getText().compareTo("")==0) {
 			JOptionPane.showMessageDialog(null, bundle.getString("batch.names.cannot.be.empty"),
 					"ERROR", JOptionPane.ERROR_MESSAGE);
 		} else {
 			batch.setName(nameArea.getText());
 			for (Iterator<Batch> i = controller.batches.iterator(); i.hasNext();) {
 				Batch b = i.next();
-				if (b.getName().equals(nameArea.getText())) {
+				if (b.getName().compareTo(nameArea.getText())==0) {
 					same = count;
 				}
 				count++;

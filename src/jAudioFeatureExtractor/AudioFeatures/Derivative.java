@@ -2,6 +2,9 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+import java.util.StringTokenizer;
+
 /**
  * Class implementing the most basic discrete derivative of a dependant feature.
  * Extends the MetaFeatureFactory abstract class.
@@ -41,6 +44,7 @@ public class Derivative extends MetaFeatureFactory {
 	 *         extraction.
 	 */
 	public MetaFeatureFactory defineFeature(FeatureExtractor fe) {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		MetaFeatureFactory tmp = new Derivative();
 		if ((fe_ != null) & (fe_ instanceof MetaFeatureFactory)) {
 			tmp.fe_ = ((MetaFeatureFactory) fe_).defineFeature(fe);
@@ -48,10 +52,7 @@ public class Derivative extends MetaFeatureFactory {
 			tmp.fe_ = fe;
 		}
 		String name = "Derivative of " + tmp.fe_.getFeatureDefinition().name;
-		String description = "Derivative of " + tmp.fe_.getFeatureDefinition().name
-				+ "."
-				// + System.getProperty("line.separator")
-				+ tmp.fe_.getFeatureDefinition().description;
+		String description = String.format(bundle.getString("derivative.of.s.s"), tmp.fe_.getFeatureDefinition().name, tmp.fe_.getFeatureDefinition().description);
 		String[] oldAttributes = tmp.fe_.getFeatureDefinition().attributes;
 		tmp.definition = new FeatureDefinition(name, description, true, tmp.fe_
 				.getFeatureDefinition().dimensions, oldAttributes);
@@ -96,8 +97,8 @@ public class Derivative extends MetaFeatureFactory {
 	 */
 	public String getElement(int index) throws Exception {
 		if ((index >= definition.attributes.length) || (index < 0)) {
-			throw new Exception("INTERNAL ERROR: Request for an invalid index "
-					+ index);
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.request.for.an.invalid.index.d"),index));
 		} else {
 			return fe_.getElement(index);
 		}
@@ -119,8 +120,8 @@ public class Derivative extends MetaFeatureFactory {
 	 */
 	public void setElement(int index, String value) throws Exception {
 		if ((index >= definition.attributes.length) || (index < 0)) {
-			throw new Exception("INTERNAL ERROR: Request for an invalid index "
-					+ index);
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.request.for.an.invalid.index"), index));
 		} else {
 			fe_.setElement(index, value);
 		}
@@ -137,11 +138,9 @@ public Object clone() {
 		}else if(fe_ instanceof MetaFeatureFactory){
 			Derivative ret = new Derivative();
 			ret.fe_ = (FeatureExtractor)fe_.clone();
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			String name = "Derivative of " + ret.fe_.getFeatureDefinition().name;
-			String description = "Derivative of " + ret.fe_.getFeatureDefinition().name
-					+ "."
-					// + System.getProperty("line.separator")
-					+ ret.fe_.getFeatureDefinition().description;
+			String description = String.format(bundle.getString("derivative.of.s.s"), ret.fe_.getFeatureDefinition().name, ret.fe_.getFeatureDefinition().description);
 			String[] oldAttributes = ret.fe_.getFeatureDefinition().attributes;
 			ret.definition = new FeatureDefinition(name, description, true, ret.fe_
 					.getFeatureDefinition().dimensions, oldAttributes);

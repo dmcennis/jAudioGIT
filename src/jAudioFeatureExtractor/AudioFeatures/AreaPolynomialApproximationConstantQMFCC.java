@@ -5,6 +5,8 @@ import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * 2D Polynomial Approximation Feature
  *
@@ -34,12 +36,13 @@ public class AreaPolynomialApproximationConstantQMFCC extends FeatureExtractor {
 	 * FeatureExtractor
 	 */
 	public AreaPolynomialApproximationConstantQMFCC() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "2D Polynomial Approximation ConstantQ MFCC";
-		String description = "coeffecients of 2D polynomial best describing the input matrtix.";
-		String[] attributes = new String[] { "horizontal size (window length)",
-											"vertical size (number of feature dimensions)",
-											"number of x (horizontal) terms",
-											"number of y (vertical) terms" };
+		String description = bundle.getString("coeffecients.of.2d.polynomial.best.describing.the.input.matrtix");
+		String[] attributes = new String[] {bundle.getString("horizontal.size.window.length"),
+				bundle.getString("vertical.size.number.of.feature.dimensions"),
+				bundle.getString("number.of.x.horizontal.terms"),
+				bundle.getString("number.of.y.vertical.terms") };
 
 		definition = new FeatureDefinition(name, description, true, 0,
 				attributes);
@@ -105,9 +108,10 @@ public class AreaPolynomialApproximationConstantQMFCC extends FeatureExtractor {
 	 *            feature
 	 */
 	public void setWindow(int n) throws Exception {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		if (n < 1) {
 			throw new Exception(
-					"Area Polynomial Approximation window length must be positive");
+                    bundle.getString("area.polynomial.approximation.window.length.must.be.positive"));
 		} else {
 			windowLength = n;
 			dependencies = new String[windowLength];
@@ -150,8 +154,8 @@ public class AreaPolynomialApproximationConstantQMFCC extends FeatureExtractor {
 				
 			default:
 				// get number of y terms
-				throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to AreaPolynomialApproximation:getElement");
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.areapolynomialapproximation.getelement1"), index));
 		}
 	}
 

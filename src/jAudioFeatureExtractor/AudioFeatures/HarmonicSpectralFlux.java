@@ -21,6 +21,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * A variation on spectral flux that is based upon peaks instead of bins. Given
  * two sets of peaks, calculate the correlation between adjacent peaks. This
@@ -40,9 +42,10 @@ public class HarmonicSpectralFlux extends FeatureExtractor {
 	 *
 	 */
 	public HarmonicSpectralFlux() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = new String("Partial Based Spectral Flux");
 		String description = new String(
-				"Cacluate the correlation bettween adjacent frames based peaks instead of spectral bins.  Peak tracking is primitive - whe the number of bins changes, the bottom bins are matched sequentially and the extra unmatched bins are ignored.");
+				bundle.getString("cacluate.the.correlation.bettween.adjacent.frames.based.peaks.instead.of.spectral.bins.peak.tracking.is.primitive.whe.the.number.of.bins.changes.the.bottom.bins.are.matched.sequentially.and.the.extra.unmatched.bins.are.ignored"));
 		definition = new FeatureDefinition(name, description, true, 1);
 		dependencies = new String[] { "Peak Detection", "Peak Detection" };
 		offsets = new int[] { 0, -1 };

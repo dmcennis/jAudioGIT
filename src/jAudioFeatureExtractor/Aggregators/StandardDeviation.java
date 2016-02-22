@@ -12,6 +12,7 @@ import jAudioFeatureExtractor.AudioFeatures.FeatureExtractor;
 import jAudioFeatureExtractor.GeneralTools.StringMethods;
 
 import java.io.DataOutputStream;
+import java.util.ResourceBundle;
 
 /**
 <h2>Standard Deviation</h2>
@@ -28,7 +29,8 @@ public class StandardDeviation extends Aggregator {
 	 * Constructs a new standard deviation aggregator.
 	 */
 	public StandardDeviation(){
-		metadata = new AggregatorDefinition("Standard Deviation","Standard Deviation of the window-by-window data",true,null);
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+		metadata = new AggregatorDefinition("Standard Deviation", bundle.getString("standard.deviation.of.the.window.by.window.data"),true,null);
 	}
 
 	@Override
@@ -90,11 +92,10 @@ public class StandardDeviation extends Aggregator {
 
 	@Override
 	public void setSource(FeatureExtractor feature) {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		FeatureDefinition this_def = feature.getFeatureDefinition();
 		definition = new FeatureDefinition(this_def.name
-				+ " Overall Standard Deviation", this_def.description
-				+ LINE_SEP
-				+ "This is the overall standard deviation over all windows.",
+				+ " Overall Standard Deviation", String.format(bundle.getString("s.nthis.is.the.overall.standard.deviation.over.all.windows2"),this_def.description),
 				this_def.is_sequential, this_def.dimensions);
 	}
 

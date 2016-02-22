@@ -2,6 +2,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * This class implements 2D statistical methods of moments as implemented by
  * Fujinaga (1997). The number of consecutive windows that one can edit across
@@ -28,9 +30,11 @@ public class AreaMomentsMFCC extends FeatureExtractor {
 	 * FeatureExtractor
 	 */
 	public AreaMomentsMFCC() {
-		String name = "Area Method of Moments of MFCCs";
-		String description = "2D statistical method of moments of MFCCs";
-		String[] attributes = new String[] {"Area Method of Moments Window Length" };
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+		String name = bundle.getString("area.method.of.moments.of.mfccs");
+		String description = bundle.getString("2d.statistical.method.of.moments.of.mfccs");
+		String[] attributes = new String[] {bundle.getString("area.method.of.moments.window.length") };
 
 		definition = new FeatureDefinition(name, description, true, 0,
 				attributes);

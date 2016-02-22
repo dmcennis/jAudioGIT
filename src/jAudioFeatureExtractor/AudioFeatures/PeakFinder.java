@@ -3,6 +3,7 @@ package jAudioFeatureExtractor.AudioFeatures;
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 /**
  * Implements a very basic peak detection algorithm. Peaks are calculated by
@@ -21,10 +22,12 @@ public class PeakFinder extends FeatureExtractor {
 	 * offsets) of this feature.
 	 */
 	public PeakFinder() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
 		String name = "Peak Detection";
-		String description = "All peaks that are within an order of magnitude of the highest point";
+		String description = bundle.getString("all.peaks.that.are.within.an.order.of.magnitude.of.the.highest.point");
 		definition = new FeatureDefinition(name, description, true, 0,
-				new String[] { "Threshold for peak detection" });
+				new String[] {bundle.getString("threshold.for.peak.detection") });
 		dependencies = new String[] { "Magnitude Spectrum" };
 		offsets = new int[] { 0 };
 	}
@@ -87,8 +90,8 @@ public class PeakFinder extends FeatureExtractor {
 	 */
 	public String getElement(int index) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: PeakFinder index != 0 ("
-					+ index + ")");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.peakfinder.index.0.d"),index));
 		} else {
 			return Integer.toString(peakThreshold);
 		}
@@ -101,8 +104,9 @@ public class PeakFinder extends FeatureExtractor {
 	 */
 	public void setPeakThreshold(int peak) throws Exception {
 		if (peak <= 0) {
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			throw new Exception(
-					"PeakFinder peakThreshold must be a positive value.");
+					bundle.getString("peakfinder.peakthreshold.must.be.a.positive.value"));
 		} else {
 			peakThreshold = peak;
 		}
@@ -124,13 +128,14 @@ public class PeakFinder extends FeatureExtractor {
 	 */
 	public void setElement(int index, String value) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: PeakFinder index != 0 ("
-					+ index + ")");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.peakfinder.index.0.d1"),index));
 		} else {
 			try {
 				setPeakThreshold(Integer.parseInt(value));
 			} catch (NumberFormatException e) {
-				throw new Exception("Peak Threshold Must be an integer");
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new Exception(bundle.getString("peak.threshold.must.be.an.integer"));
 			}
 
 		}

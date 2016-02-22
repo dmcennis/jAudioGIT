@@ -5,6 +5,8 @@ import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * 2D Polynomial Approximation Feature
  *
@@ -34,12 +36,13 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 	 * FeatureExtractor
 	 */
 	public AreaPolynomialApproximationLogConstantQ() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "2D Polynomial Approximation of Log of ConstantQ";
-		String description = "coeffecients of 2D polynomial best describing the input matrix.";
-		String[] attributes = new String[] { "horizontal size (window length)",
-											"vertical size (number of feature dimensions)",
-											"number of x (horizontal) terms",
-											"number of y (vertical) terms" };
+		String description = bundle.getString("coeffecients.of.2d.polynomial.best.describing.the.input.matrix");
+		String[] attributes = new String[] {bundle.getString("horizontal.size.window.length"),
+				bundle.getString("vertical.size.number.of.feature.dimensions"),
+				bundle.getString("number.of.x.horizontal.terms"),
+				bundle.getString("number.of.y.vertical.terms") };
 
 		definition = new FeatureDefinition(name, description, true, 0,
 				attributes);
@@ -106,8 +109,9 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 	 */
 	public void setWindow(int n) throws Exception {
 		if (n < 1) {
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			throw new Exception(
-					"Area Polynomial Approximation window length must be positive");
+					bundle.getString("area.polynomial.approximation.window.length.must.be.positive"));
 		} else {
 			windowLength = n;
 			dependencies = new String[windowLength];
@@ -150,8 +154,8 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 				
 			default:
 				// get number of y terms
-				throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to AreaPolynomialApproximation:getElement");
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.areapolynomialapproximation.getelement2"),index));
 		}
 	}
 
@@ -173,8 +177,9 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 			try {
 				int val = Integer.parseInt(value);
 				if (val < 1) {
+					ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 					throw new Exception(
-						"Area Polynomial Approximation window length must be positive");
+							bundle.getString("area.polynomial.approximation.window.length.must.be.positive"));
 				} else {
 					windowLength = val;
 					dependencies = new String[windowLength];
@@ -188,8 +193,9 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 					calcTerms(terms);
 				}
 			} catch (Exception e) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 				throw new Exception(
-						"horizontal (windowLength) of Area Polynomial Approximation must be an integer");
+						bundle.getString("horizontal.windowlength.of.area.polynomial.approximation.must.be.an.integer"));
 			}
 			break;
 			
@@ -198,8 +204,9 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 			try {
 				int val = Integer.parseInt(value);
 				if (val < 1) {
+					ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 					throw new Exception(
-						"Area Polynomial Approximation feature dimension length must be positive");
+							bundle.getString("area.polynomial.approximation.feature.dimension.length.must.be.positive"));
 				} else {
 					featureLength = val;
 					terms = new DenseDoubleMatrix2D(windowLength*featureLength,k*l);
@@ -207,8 +214,9 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 					calcTerms(terms);
 				}
 			} catch (Exception e) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 				throw new Exception(
-						"vertical (feature dimensions) of Area Polynomial Approximation must be an integer");
+						bundle.getString("vertical.feature.dimensions.of.area.polynomial.approximation.must.be.an.integer"));
 			}
 			break;
 				
@@ -217,8 +225,9 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 			try {
 				int val = Integer.parseInt(value);
 				if (val < 1) {
+					ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 					throw new Exception(
-						"Number of x terms in Area Polynomial Approximation must be positive");
+							bundle.getString("number.of.x.terms.in.area.polynomial.approximation.must.be.positive"));
 				} else {
 					k = val;
 					terms = new DenseDoubleMatrix2D(windowLength*featureLength,k*l);
@@ -226,8 +235,9 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 					calcTerms(terms);
 				}
 			} catch (Exception e) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 				throw new Exception(
-						"Number of x terms in Area Polynomial Approximation must be an integer");
+						bundle.getString("number.of.x.terms.in.area.polynomial.approximation.must.be.an.integer"));
 			}
 			break;
 				
@@ -236,8 +246,9 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 			try {
 				int val = Integer.parseInt(value);
 				if (val < 1) {
+					ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 					throw new Exception(
-						"Number of y terms in Area Polynomial Approximation must be positive");
+							bundle.getString("number.of.y.terms.in.area.polynomial.approximation.must.be.positive"));
 				} else {
 					l = val;
 					terms = new DenseDoubleMatrix2D(windowLength*featureLength,k*l);
@@ -245,14 +256,15 @@ public class AreaPolynomialApproximationLogConstantQ extends FeatureExtractor {
 					calcTerms(terms);
 				}
 			} catch (Exception e) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 				throw new Exception(
-						"Number of y terms of Area Polynomial Approximation must be an integer");
+						bundle.getString("number.of.y.terms.of.area.polynomial.approximation.must.be.an.integer"));
 			}
 			break;
 				
 			default:
-				throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to AreaPolynomialApproximation:getElement");
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.areapolynomialapproximation.getelement3"),index));
 		}
 	}
 

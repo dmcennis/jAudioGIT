@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 /**
@@ -426,9 +427,10 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 					.getAudioInputStreamChannelSegregated();
 			int original_number_channels = original_audio_input_stream
 					.getFormat().getChannels();
-			if (original_number_channels != new_audio_format.getChannels())
-				throw new Exception(String.format("Original audio has %d channels but the\nnew format has %d channels.\n" + "These must match.",original_number_channels,new_audio_format.getChannels()));
-
+			if (original_number_channels != new_audio_format.getChannels()) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new Exception(String.format(MessageFormat.format(bundle.getString("original.audio.has.d.channels.but.the.nnew.format.has.d.channels.nthese.must.match"),original_number_channels,new_audio_format.getChannels() ), original_number_channels, new_audio_format.getChannels()));
+			}
 			AudioInputStream new_audio_input_stream = AudioSystem
 					.getAudioInputStream(new_audio_format,
 							original_audio_input_stream);
@@ -588,9 +590,10 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 					.getSamplesChannelSegregated(start_sample, end_sample);
 
 			// Fill and show the dialog box
-			text_area.append("SAMPLE\t");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			text_area.append(bundle.getString("sample.t"));
 			for (int chan = 0; chan < samples.length; chan++)
-				text_area.append("CHANNEL " + chan + "\t\t");
+				text_area.append(MessageFormat.format(bundle.getString("channel.0.t.t"), chan));
 			for (int samp = start_sample; samp <= end_sample; samp++) {
 				text_area.append("\n" + samp + "\t");
 				for (int chan = 0; chan < samples.length; chan++)
@@ -598,7 +601,7 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 			}
 			displayer.display();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR",
+			JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "ERROR",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}

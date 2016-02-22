@@ -205,7 +205,7 @@ public class AggregatorContainer {
 				for(int j=0;j<list.length;++j){
 					good = false;
 					for(int k=0;k<featureList.size();++k){
-						if(featureList.get(k).getFeatureDefinition().name.equals(list[j])){
+						if(featureList.get(k).getFeatureDefinition().name.compareTo(list[j])==0){
 							good = true;
 							indeci[j] = featureIndecis2FeatureListMapping.get(k);
 							break;

@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A feature extractor that finds the strongest frequency in Hz in a signal
@@ -32,9 +34,9 @@ public class StrongestFrequencyViaZeroCrossings
 	 */
 	public StrongestFrequencyViaZeroCrossings()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Strongest Frequency Via Zero Crossings";
-		String description = "The strongest frequency component of a signal, in Hz, " +
-		                     "found via the number of zero-crossings.";
+		String description = bundle.getString("the.strongest.frequency.component.of.a.signal.in.hz.found.via.the.number.of.zero.crossings");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition( name,

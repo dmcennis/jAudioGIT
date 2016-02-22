@@ -2,6 +2,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * This class implements 2D statistical methods of moments as implemented by
  * Fujinaga (1997). The number of consecutive windows that one can edit across
@@ -29,9 +31,10 @@ public class AreaMomentsLogConstantQ extends FeatureExtractor {
      * FeatureExtractor
      */
     public AreaMomentsLogConstantQ() {
-        String name = "Area Method of Moments Log Constant Q";
-        String description = "2D statistical method of moments";
-        String[] attributes = new String[] { "Area Method of Moments Window Length","Area Method Of Moments max order" };
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        String name = bundle.getString("area.method.of.moments.log.constant.q");
+        String description = bundle.getString("2d.statistical.method.of.moments");
+        String[] attributes = new String[] {bundle.getString("area.method.of.moments.window.length"), bundle.getString("area.method.of.moments.max.order") };
 
         definition = new FeatureDefinition(name, description, true, 0,
                 attributes);
@@ -98,15 +101,16 @@ public class AreaMomentsLogConstantQ extends FeatureExtractor {
      *            feature
      */
     public void setWindow(int n) throws Exception {
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
         if (n < 2) {
             throw new Exception(
-                    "Area Method of Moment Log Constant-Q's Window length must be two or greater");
+                    bundle.getString("area.method.of.moment.log.constant.q.s.window.length.must.be.two.or.greater"));
         } else {
             lengthOfWindow = n;
             dependencies = new String[lengthOfWindow];
             offsets = new int[lengthOfWindow];
             for (int i = 0; i < lengthOfWindow; ++i) {
-                dependencies[i] = "ConstantQ derived MFCCs";
+                dependencies[i] = bundle.getString("constantq.derived.mfccs");
                 offsets[i] = 0 - i;
             }
         }
@@ -122,8 +126,8 @@ public class AreaMomentsLogConstantQ extends FeatureExtractor {
      */
     public String getElement(int index) throws Exception {
         if (index > 1) {
-            throw new Exception("INTERNAL ERROR: invalid index " + index
-                    + " sent to AreaMomentsLogConstantQ:getElement");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.areamomentslogconstantq.getelement"),index));
         } else if (index == 1){
             return Integer.toString(order);
         } else{
@@ -144,24 +148,26 @@ public class AreaMomentsLogConstantQ extends FeatureExtractor {
      */
     public void setElement(int index, String value) throws Exception {
         if (index > 1) {
-            throw new Exception("INTERNAL ERROR: invalid index " + index
-                    + " sent to AreaMomentsLogConstantQ:setElement");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.areamomentslogconstantq.setelement"),index));
         } else if(index == 1){
             try {
                 int type = Integer.parseInt(value);
                 order = type;
                 definition.dimensions=order*order;
             } catch (Exception e) {
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
                 throw new Exception(
-                        "Order of Area Method Of Moments must be an integer");
+                        bundle.getString("order.of.area.method.of.moments.must.be.an.integer"));
             }
         } else {
             try {
                 int type = Integer.parseInt(value);
                 setWindow(type);
             } catch (Exception e) {
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
                 throw new Exception(
-                        "Length of Area Method of Moments must be an integer");
+                        bundle.getString("length.of.area.method.of.moments.must.be.an.integer"));
             }
         }
     }

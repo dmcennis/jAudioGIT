@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * A feature extractor that extracts the Beat Histogram from a signal. This is
  * histogram showing the strength of different rhythmic periodicities in a
@@ -40,10 +42,9 @@ public class BeatHistogram extends FeatureExtractor {
 	 * offsets) of this feature.
 	 */
 	public BeatHistogram() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Beat Histogram";
-		String description = "A histogram showing the relative strength of different "
-				+ "rhythmic periodicities (tempi) in a signal. Found by "
-				+ "calculating the auto-correlation of the RMS.";
+		String description = bundle.getString("a.histogram.showing.the.relative.strength.of.different.rhythmic.periodicities.tempi.in.a.signal.found.by.calculating.the.auto.correlation.of.the.rms");
 		boolean is_sequential = true;
 		int dimensions = 0;
 		definition = new FeatureDefinition(name, description, is_sequential,
@@ -112,8 +113,9 @@ public class BeatHistogram extends FeatureExtractor {
 	 */
 	public void setWindowLength(int n) throws Exception {
 		if (n < 2) {
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			throw new Exception(
-					"BeatHistogram window length must be greater than 1");
+					bundle.getString("beathistogram.window.length.must.be.greater.than.1"));
 		} else {
 			number_windows = n;
 			dependencies = new String[number_windows];
@@ -135,8 +137,8 @@ public class BeatHistogram extends FeatureExtractor {
 	 */
 	public String getElement(int index) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to AreaMoments:getElement");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.areamoments.getelement"),index));
 		} else {
 			return Integer.toString(number_windows);
 		}
@@ -155,15 +157,16 @@ public class BeatHistogram extends FeatureExtractor {
 	 */
 	public void setElement(int index, String value) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to AreaMoments:setElement");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.areamoments.setelement"),index));
 		} else {
 			try {
 				int type = Integer.parseInt(value);
 				setWindowLength(type);
 			} catch (Exception e) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 				throw new Exception(
-						"Length of Area Method of Moments must be an integer");
+						bundle.getString("length.of.area.method.of.moments.must.be.an.integer"));
 			}
 		}
 	}

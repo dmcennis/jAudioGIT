@@ -2,6 +2,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 public class ZernikeMoments extends FeatureExtractor {
 
 	int count=7;
@@ -10,9 +12,10 @@ public class ZernikeMoments extends FeatureExtractor {
 	
 	@Override
 	public FeatureDefinition getFeatureDefinition() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Zernike Moments";
-		String description = "2D moments of matrix data";
-		String[] attributes = new String[] { "Zernike Moments Window Length" };
+		String description = bundle.getString("2d.moments.of.matrix.data");
+		String[] attributes = new String[] {bundle.getString("zernike.moments.window.length") };
 
 		definition = new FeatureDefinition(name, description, true, 0,
 				attributes);
@@ -30,8 +33,9 @@ public class ZernikeMoments extends FeatureExtractor {
 	@Override
 	public void setWindow(int n) throws Exception {
 		if (n < 2) {
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			throw new Exception(
-					"Zernike Moment's Window length must be two or greater");
+					bundle.getString("zernike.moment.s.window.length.must.be.two.or.greater"));
 		} else {
 			lengthOfWindow = n;
 			dependencies = new String[lengthOfWindow];
@@ -51,8 +55,8 @@ public class ZernikeMoments extends FeatureExtractor {
 	@Override
 	public String getElement(int index) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to ZernikeMoments:getElement");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.zernikemoments.getelement"),index));
 		} else {
 			return Integer.toString(lengthOfWindow);
 		}
@@ -61,23 +65,25 @@ public class ZernikeMoments extends FeatureExtractor {
 	@Override
 	public void setElement(int index, String value) throws Exception {
 		if (index > 1) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to ernikeMoments:setElement");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.ernikemoments.setelement"),index));
 		} else if(index == 1){
 			try {
 				int type = Integer.parseInt(value);
 				count = type;
 			} catch (Exception e) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 				throw new Exception(
-						"Order of Zernike Moments must be an integer");
+						bundle.getString("order.of.zernike.moments.must.be.an.integer"));
 			}
 		} else {
 			try {
 				int type = Integer.parseInt(value);
 				setWindow(type);
 			} catch (Exception e) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 				throw new Exception(
-						"Window Length of Zernike Moments must be an integer");
+						bundle.getString("window.length.of.zernike.moments.must.be.an.integer"));
 			}
 		}
 	}

@@ -384,7 +384,7 @@ public class FeatureSelectorPanel extends JPanel implements ActionListener {
 
 		} catch (Throwable t) {
 			// React to the Java Runtime running out of memory
-			if (t.toString().equals("java.lang.OutOfMemoryError")) {
+			if (t.toString().compareTo("java.lang.OutOfMemoryError")==0) {
                 ResourceBundle bundle = ResourceBundle.getBundle("Translations");
                 JOptionPane
                         .showMessageDialog(

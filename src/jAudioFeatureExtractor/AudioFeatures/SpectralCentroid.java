@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A feature extractor that extracts the Spectral Cecntroid. This is a measure
@@ -35,8 +37,9 @@ public class SpectralCentroid
 	 */
 	public SpectralCentroid()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Spectral Centroid";
-		String description = "The centre of mass of the power spectrum.";
+		String description = bundle.getString("the.centre.of.mass.of.the.power.spectrum");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition( name,

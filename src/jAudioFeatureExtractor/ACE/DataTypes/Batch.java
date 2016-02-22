@@ -168,7 +168,7 @@ public class Batch implements Serializable {
 			} else {
 				recording = null;
                 ResourceBundle bundle = ResourceBundle.getBundle("Translations");
-				throw new Exception(String.format("The selected file %s does not exist.",files[i].getName()));
+				throw new Exception(String.format(bundle.getString("the.selected.file.s.does.not.exist"),files[i].getName()));
 			}
 		}
 	}

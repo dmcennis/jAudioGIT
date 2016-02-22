@@ -11,6 +11,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * Log Constant Q
  *
@@ -32,8 +34,9 @@ public class LogConstantQ extends FeatureExtractor
 	 */
 	public LogConstantQ()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Log of ConstantQ";
-		String description = "logarithm of each bin of exponentially-spaced frequency bins.";
+		String description = bundle.getString("logarithm.of.each.bin.of.exponentially.spaced.frequency.bins");
 		boolean is_sequential = true;
 		int dimensions = 0;
 //		String[] attributes = new String[]{"Percent of a semitone per bin"};

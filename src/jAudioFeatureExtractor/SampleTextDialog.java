@@ -8,6 +8,7 @@ package jAudioFeatureExtractor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ResourceBundle;
 
 
 /**
@@ -33,7 +34,8 @@ public class SampleTextDialog
 	{
 		// Give the dialog boxits title and make it modal
 		super();
-		setTitle("Sample Values");
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+		setTitle(bundle.getString("sample.values"));
 		setModal(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 

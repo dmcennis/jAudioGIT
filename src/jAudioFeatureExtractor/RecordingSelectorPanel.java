@@ -313,7 +313,7 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 				}
 			} else {
                 ResourceBundle bundle = ResourceBundle.getBundle("Translations");
-                JOptionPane.showMessageDialog(null, String.format("The selected file %s does not exist.",files_to_add[i].getName()),
+                JOptionPane.showMessageDialog(null, String.format(bundle.getString("the.selected.file.s.does.not.exist"),files_to_add[i].getName()),
 						"ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -342,7 +342,7 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 				for (int j = i + 1; j < temp_recording_list.length; j++)
 					if (temp_recording_list[j] != null)
 						if (current_path
-								.equals(temp_recording_list[j].file_path))
+								.compareTo(temp_recording_list[j].file_path)==0)
 							temp_recording_list[j] = null;
 			}
 
@@ -465,7 +465,8 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(null, data, "FILE INFORMATION",
 						JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
-				String message = String.format("Could not display file information for file %s\n%s", controller.dm_.recordingInfo[selected_rows[i]].file_path,e.getLocalizedMessage());
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				String message = String.format(bundle.getString("could.not.display.file.information.for.file.s.n.s"), controller.dm_.recordingInfo[selected_rows[i]].file_path,e.getLocalizedMessage());
 				JOptionPane.showMessageDialog(null, message, "ERROR",
 						JOptionPane.ERROR_MESSAGE);
 			}
@@ -690,7 +691,7 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 			if (ext == null) {
 				path += ".xml";
 				to_save_to = new File(path);
-			} else if (!ext.equals(".xml")) {
+			} else if (ext.compareTo(".xml")!=0) {
 				path = jAudioFeatureExtractor.GeneralTools.StringMethods
 						.removeExtension(path)
 						+ ".xml";

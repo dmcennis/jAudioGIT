@@ -9,6 +9,8 @@ package jAudioFeatureExtractor.Aggregators;
 import jAudioFeatureExtractor.ACE.DataTypes.AggregatorDefinition;
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * <h2>Area Method of Moments Aggregator</h2>
  * <p></p>
@@ -41,8 +43,10 @@ public class AreaMoments extends Aggregator {
 	 * Constructs an AreaMoments aggregator.  This isn't valid until specific features are adde to the system (in a particular order).
 	 */
 	public AreaMoments(){
-		metadata = new AggregatorDefinition("Area Moments","Calculates 2D statistical moments for the given features",false,
-                new String[]{"maximum order (length is order^2) of 2D statistical moments to calculate"});
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+        metadata = new AggregatorDefinition("Area Moments", bundle.getString("calculates.2d.statistical.moments.for.the.given.features"),false,
+                new String[]{bundle.getString("maximum.order.length.is.order.2.of.2d.statistical.moments.to.calculate")});
 	}
 	
 	@Override
@@ -93,7 +97,9 @@ public class AreaMoments extends Aggregator {
 	@Override
 	public void init(int[] featureIndecis) throws Exception {
 		if(featureIndecis.length != featureNames.length){
-			throw new Exception("INTERNAL ERROR (Agggregator.AreaMoments): number of feature indeci does not match number of features");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+            throw new Exception(bundle.getString("internal.error.agggregator.areamoments.number.of.feature.indeci.does.not.match.number.of.features1"));
 		}
 		this.featureNameIndecis = featureIndecis;
 	}
@@ -108,7 +114,9 @@ public class AreaMoments extends Aggregator {
         if((params != null) && (params.length > 0)){
             order = Integer.parseInt(params[0]);
         }
-		definition = new FeatureDefinition("Area Moments: "+names,"2D moments constructed from features "+names+".",true,order*order);
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+        definition = new FeatureDefinition("Area Moments: "+names,String.format(bundle.getString("2d.moments.constructed.from.features.s"),names),true,order*order);
 	}
 
     /**

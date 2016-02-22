@@ -1,7 +1,7 @@
 /*
  * @(#)RecordingInfo.java	1.0	April 5, 2005.
  *
- * McGill Univarsity
+ * McGill University
  */
 
 package jAudioFeatureExtractor.DataTypes;
