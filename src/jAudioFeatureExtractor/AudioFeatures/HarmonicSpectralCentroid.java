@@ -77,6 +77,8 @@ public class HarmonicSpectralCentroid extends FeatureExtractor {
 			total += peaks[i];
 		}
 		result[0] = weightedTotal / total;
+		//avoid NaN for windows without peaks
+		if(total == 0) result[0] = 0;
 		return result;
 	}
 

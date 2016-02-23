@@ -1,7 +1,6 @@
 package jAudioFeatureExtractor.ACE.DataTypes;
 
-import java.io.File;
-import java.io.Serializable;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -10,9 +9,12 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
+import jAudioFeatureExtractor.ACE.XMLParsers.XMLDocumentParser;
+import jAudioFeatureExtractor.Aggregators.ZernikeMoments;
 import jAudioFeatureExtractor.DataModel;
 import jAudioFeatureExtractor.Aggregators.Aggregator;
 import jAudioFeatureExtractor.DataTypes.RecordingInfo;
+import jAudioFeatureExtractor.ModelListener;
 import jAudioFeatureExtractor.jAudioTools.AudioSamples;
 
 
@@ -30,21 +32,21 @@ public class Batch implements Serializable {
 
 	static final long serialVersionUID = 1;
 
-	String name;
+	String name = "Batch";
 
 	RecordingInfo[] recording = new RecordingInfo[0];
 
-	int windowSize;
+	int windowSize=1024;
 
-	double windowOverlap;
+	double windowOverlap=0.0;
 
-	double samplingRate;
+	double samplingRate=44100.0;
 
-	boolean normalise;
+	boolean normalise=true;
 
-	boolean perWindow;
+	boolean perWindow=false;
 
-	boolean overall;
+	boolean overall=true;
 
 	String destinationFK = null;
 
@@ -52,11 +54,11 @@ public class Batch implements Serializable {
 
 	int outputType;
 
-	transient DataModel dm_;
+	transient DataModel dm_ ;
 
-	HashMap<String, Boolean> activated;
+	HashMap<String, Boolean> activated = new HashMap<String, Boolean>();
 
-	HashMap<String, String[]> attributes;
+	HashMap<String, String[]> attributes = new HashMap<String, String[]>();
 
 	String[] aggregatorNames;
 
@@ -64,6 +66,31 @@ public class Batch implements Serializable {
 
 	String[][] aggregatorParameters;
 
+    double[][][] results = null;
+
+    private String featureList;
+
+    private ModelListener l;
+
+
+    public Batch(){
+        init("features.xml",null);
+    }
+
+    public Batch(String features, ModelListener l){
+        init(features,l);
+    }
+
+    protected void init(String features, ModelListener l){
+        featureList = features;
+        this.l = l;
+        dm_ = new DataModel(features,l);
+        activated.put("ConstantQ",true);
+        aggregatorNames = new String[]{"Zernike Moments"};
+        aggregatorFeatures = new String[][]{new String[]{"ConstantQ"}};
+        aggregatorParameters = new String[][]{new String[]{"8"}};
+
+    }
 	/**
 	 * Set the data model against which this batch is executed.
 	 * 
@@ -81,10 +108,49 @@ public class Batch implements Serializable {
 	 * @throws Exception
 	 */
 	public void execute() throws Exception {
-		applyAttributes();
+		applyAttributes(this.dm_);
 		dm_.extract(windowSize, windowOverlap, samplingRate, normalise,
 				perWindow, overall, recording, outputType);
+        results = new double[1][][];
+        results[0] = dm_.container.getResults();
 	}
+
+    public double[][][] executeParallel(){
+        BatchThread[] threads = new BatchThread[recording.length];
+        results = new double[threads.length][][];
+        for(int i=0;i<recording.length;++i){
+            threads[i] = new BatchThread();
+            threads[i].run();
+        }
+        for(int i=0;i<threads.length;++i){
+            try {
+                threads[i].wait();
+                results[i] = threads[i].results;
+            }catch(InterruptedException e){
+                results[i] = new double[][]{};
+            }
+        }
+        return results;
+    }
+
+    protected class BatchThread extends Thread{
+        double[][] results;
+        @Override
+        public void run() {
+            try {
+                DataModel myDM = new DataModel(featureList, l);
+                applyAttributes(myDM);
+                myDM.extract(windowSize, windowOverlap, samplingRate, normalise,
+                        perWindow, overall, recording, outputType);
+                results = myDM.container.getResults();
+            }catch(Exception e){
+                System.err.println(e.getMessage());
+            }
+        }
+    }
+    public double[][][] getResults(){
+        return results;
+    }
 
 	/**
 	 * Sets the recordings that this batch will load and execute.
@@ -147,6 +213,67 @@ public class Batch implements Serializable {
 		this.outputType = outputType;
 	}
 
+    public void setSettings(String reader) throws Exception{
+        Object[] list = (Object[])XMLDocumentParser.parseXMLDocument(reader,"save_settings");
+        Object[] data = null;
+        try {
+            data = (Object[]) XMLDocumentParser.parseXMLDocument(reader,
+                    "save_settings");
+        } catch (Exception e) {
+            System.out.println("Error encountered parsing the settings file");
+            System.out.println(e.getMessage());
+        }
+        int windowLength = 512;
+        double offset = 0.0;
+        double samplingRate;
+        boolean saveWindows;
+        boolean saveOverall;
+        boolean normalise;
+        int outputType;
+        try {
+            windowLength = Integer.parseInt((String) data[0]);
+        } catch (NumberFormatException e) {
+            System.out.println("Error in settings file");
+            System.out.println("Window length of settings must be an integer");
+            System.exit(4);
+        }
+        try {
+            offset = Double.parseDouble((String) data[1]);
+        } catch (NumberFormatException e) {
+            System.out.println("Error in settings file");
+            System.out
+                    .println("Window offset of settings must be an double between 0 and 1");
+            System.exit(4);
+        }
+        samplingRate = ((Double) data[2]).doubleValue();
+        normalise = ((Boolean) data[3]).booleanValue();
+        saveWindows = ((Boolean) data[4]).booleanValue();
+        saveOverall = ((Boolean) data[5]).booleanValue();
+        String outputName = ((String) data[6]);
+        if (outputName.equals("ACE")) {
+            outputType = 0;
+        } else {
+            outputType = 1;
+        }
+
+        this.setSettings(windowLength,offset,samplingRate,normalise,saveWindows,saveOverall,outputType);
+
+        dm_.featureKey = null;
+        dm_.featureValue = null;
+
+        HashMap<String, Boolean> features = (HashMap<String, Boolean>) data[7];
+        HashMap<String, String[]> attributeFeatures = (HashMap<String, String[]>) data[8];
+
+        this.setFeatures(features,attributeFeatures);
+
+        // now process the aggregators
+        String[] names = ((LinkedList<String>)data[9]).toArray(new String[]{});
+        String[][] aggFeatures = ((LinkedList<String[]>)data[10]).toArray(new String[][]{});
+        String[][] parameters = ((LinkedList<String[]>)data[11]).toArray(new String[][]{});
+        this.setAggregators(names,aggFeatures,parameters);
+
+    }
+
 	/**
 	 * Sets where the extracted features should be stored.
 	 * 
@@ -198,7 +325,7 @@ public class Batch implements Serializable {
 	 * 
 	 * @throws Exception
 	 */
-	private void applyAttributes() throws Exception {
+	private void applyAttributes(DataModel dm_) throws Exception {
 
 		for (int i = 0; i < dm_.features.length; ++i) {
 			String name = dm_.features[i].getFeatureDefinition().name;
@@ -213,13 +340,20 @@ public class Batch implements Serializable {
 			}
 		}
 		LinkedList<Aggregator> aggregatorList = new LinkedList<Aggregator>();
-		for(int i=0;i<aggregatorNames.length;++i){
-			Aggregator tmp = (Aggregator)dm_.aggregatorMap.get(aggregatorNames[i]).clone();
+        if(aggregatorNames != null) {
+            for (int i = 0; i < aggregatorNames.length; ++i) {
+                Aggregator tmp;
+                if (dm_.aggregatorMap.containsKey(aggregatorNames[i])) {
+                    tmp = (Aggregator) dm_.aggregatorMap.get(aggregatorNames[i]).clone();
 //			if(!tmp.getAggregatorDefinition().generic){
-				tmp.setParameters(aggregatorFeatures[i],aggregatorParameters[i]);
+                    tmp.setParameters(aggregatorFeatures[i], aggregatorParameters[i]);
 //			}
-			aggregatorList.add(tmp);
-		}
+                    aggregatorList.add(tmp);
+                } else {
+                    throw new Exception("Aggregator " + aggregatorNames[i] + " is not known. Check the spelling?");
+                }
+            }
+        }
 		if(overall && (aggregatorList.size()==0)){
 			throw new Exception("Attempting to get overall stats without specifying any aggregators to create it");
 		}
@@ -354,29 +488,39 @@ public class Batch implements Serializable {
 			double[] windowOverlap, double[] samplingRate, boolean[] normalise,
 			boolean[] perWindow, boolean[] overall, String[] destinationFK,
 			String[] destinationFV, int[] outputType) {
-		try {
-			applyAttributes();
-			dm_.featureDefinitions = new FeatureDefinition[dm_.features.length];
-			for (int i = 0; i < dm_.featureDefinitions.length; ++i) {
-				dm_.featureDefinitions[i] = dm_.features[i]
-						.getFeatureDefinition();
-			}
-			dm_.recordingInfo = this.recording;
-		} catch (Exception e) {
-			System.err.println("INTERNAL ERROR: " + e.getMessage());
-			e.printStackTrace();
-		}
-		recording[0] = this.recording;
-		windowSize[0] = this.windowSize;
-		windowOverlap[0] = this.windowOverlap;
-		samplingRate[0] = this.samplingRate;
-		normalise[0] = this.normalise;
-		perWindow[0] = this.perWindow;
-		overall[0] = this.overall;
-		destinationFK[0] = this.destinationFK;
-		destinationFV[0] = this.destinationFV;
-		outputType[0] = this.outputType;
-	}
+        applySettings(this.dm_, recording, windowSize,
+        windowOverlap, samplingRate, normalise,
+         perWindow, overall,  destinationFK,
+                 destinationFV,  outputType);
+    }
+
+    public void applySettings(DataModel dm_, RecordingInfo[][] recording, int[] windowSize,
+                              double[] windowOverlap, double[] samplingRate, boolean[] normalise,
+                              boolean[] perWindow, boolean[] overall, String[] destinationFK,
+                              String[] destinationFV, int[] outputType) {
+            try {
+                applyAttributes(dm_);
+                dm_.featureDefinitions = new FeatureDefinition[dm_.features.length];
+                for (int i = 0; i < dm_.featureDefinitions.length; ++i) {
+                    dm_.featureDefinitions[i] = dm_.features[i]
+                            .getFeatureDefinition();
+                }
+                dm_.recordingInfo = this.recording;
+            } catch (Exception e) {
+                System.err.println("INTERNAL ERROR: " + e.getMessage());
+                e.printStackTrace();
+            }
+            recording[0] = this.recording;
+            windowSize[0] = this.windowSize;
+            windowOverlap[0] = this.windowOverlap;
+            samplingRate[0] = this.samplingRate;
+            normalise[0] = this.normalise;
+            perWindow[0] = this.perWindow;
+            overall[0] = this.overall;
+            destinationFK[0] = this.destinationFK;
+            destinationFV[0] = this.destinationFV;
+            outputType[0] = this.outputType;
+        }
 
 	/**
 	 * Returns a map of all parameters for all features in the feature set.
@@ -400,7 +544,7 @@ public class Batch implements Serializable {
 	 * sets parameter values for all features simultaneously. Exceptions for bad parameters
 	 * are thrown on application (i.e. Batch.execute()) not here.
 	 *
-	 * @param map of paramter settings.
+	 * @retun map of paramter settings.
 	 */
 	public void setAttributes(HashMap<String, String[]> attributes) {
 		this.attributes = attributes;
@@ -420,7 +564,7 @@ public class Batch implements Serializable {
 	 * sets the file location for the ACE key XML file. This location is not
 	 * validated until Batch.execute() is run.
 	 * 
-	 * @param location to store the ACE key XML file
+	 * @return location to store the ACE key XML file
 	 */
 	public void setDestinationFK(String destinationFK) {
 		this.destinationFK = destinationFK;
@@ -438,7 +582,7 @@ public class Batch implements Serializable {
 	 * sets the file location for the result file. This location is not
 	 * validated until Batch.execute() is run.
 	 * 
-	 * @param location to store the output data file in
+	 * @return location to store the output data file in
 	 */
 	public void setDestinationFV(String destinationFV) {
 		this.destinationFV = destinationFV;
@@ -474,7 +618,7 @@ public class Batch implements Serializable {
 	/**
 	 * Set the style of output (Weka, ACE, etc.)
 	 *
-	 * @param style of output by constant
+	 * @return style of output by constant
 	 */
 	public void setOutputType(int outputType) {
 		this.outputType = outputType;
@@ -510,7 +654,7 @@ public class Batch implements Serializable {
 	/**
 	 * Should per-window results be generated?
 	 *
-	 * @param overall sets whether to output per-window results or not.
+	 * @return overall sets whether to output per-window results or not.
 	 */
 	public void setPerWindow(boolean perWindow) {
 		this.perWindow = perWindow;

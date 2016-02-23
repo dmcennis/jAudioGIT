@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>Playback Menu</title>
+</head>
+<body>
+
+<table width="100%" height="100%">
+	<tr height="150">
+		<td width="100%"><img src="../jAudioLogo3-128.jpg" height="128"
+			width="128" alt="jAudio Logo" />
+		<h1>jAudio 1.0 Online Help</h1>
+		</td>
+	</tr>
+	<tr>
+		<td width="25%" valign="top" bgcolor="DDFFFF" align="left">
+		<ul>
+			<li><a href="../index.html">Overview</a></li>
+			<li><a href="top.html">1.0 GUI Documentation</a>
+			<ul>
+				<li><a href="recording.html">Working with Audio Files</a></li>
+				<li><a href="features.html">Working with jAudio Features</a></li>
+				<li><a href="analysis.html">Analysis Settings</a></li>
+				<li><a href="aggregators.html">Working with Aggregators</a></li>
+				<li><a href="batch.html">Working with Batches</a></li>
+				<li><a href="features/feature.html">Features Appendix</a></li>
+				<li><a href="aggregators/aggregator.html">Aggregator Appendix</a></li>
+			</ul></li>
+			<li><a href="embedding.html">Embedding jAudio 1.0</a></li>
+			<li><a href="javadoc/index.html">jAudio 1.0 Javadoc</a></li>
+			<li><a href="http://www.sourceforge.net/projects/jAudio">Project Page</a></li>
+			<li><a href="http://www.sourceforge.net/projects/jAudio/download">Latest Stable Version</a></li>
+			<li><a href="../roadmap.html">Development Roadmap</a></li>
+		</ul>
+			<a href="http://sourceforge.net/projects/jaudio"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=164405&amp;type=13" width="120" height="30" alt="Get jAudio at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
+		</td>
+		<td width="3%"></td>
+		<td width="72%" bgcolor="00FFFF" align="left">
+<h1>Playback options in jAudio</h1>
+
+There are three different playback options in jAudio.
+
+<ul>
+	<li><a href="#Fileplay">Playback from a File</a></li>
+	<li><a href="#Sampleplay">Playback from Samples</a></li>
+	<li><a href="#Midiplay">Playback from a MIDI File</a></li>
+</ul>
+
+<a name="Fileplay"></a>
+<h2>Playing directly from a file</h2>
+<p> This version of playback is safer than "Play Samples" because it is 
+interruptible via the "Stop Playback" menu option under the Playback menu.
+</p>
+<ol>
+	<li>Select a recording in the recordings table</li>
+	<li>Select "Play From File" from the Playback menu.</li>
+</ol>
+<br/>
+<a name="Sampleplay"></a>
+<h2>Playing from Samples</h2>
+<p><b>NOTE</b> This playback is uninterruptible.  <b>Do not use if you might want to 
+kill the recording before it is finished.</b> This file loads all the samples 
+from the file (if not already loaded) and then plays from them.</p>
+<ol>
+	<li>Select a recording from the recordings table</li>
+	<li>Select "Play from Samples..." from the RPlayback menu.</li>
+</ol>
+<br/>
+<a name="Midiplay"></a>
+<h2>Playing MIDI Files</h2>
+<p>To play a midi file:</p>
+<ol>
+	<li>Choose the "Play MIDI..." menu option. </li>
+	<li>left click on "Load MIDI File"</li>
+	<li>Click "Play"</li>
+</ol>
+Note that the text box is not editable.  It only shows the name of the midi file
+chosen via the file dialog.
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -46,7 +46,7 @@ public class AreaPolynomialApproximationConstantQMFCC extends FeatureExtractor {
 				
 		dependencies = new String[windowLength];
 		for (int i = 0; i < dependencies.length; ++i) {
-			dependencies[i] = "ConstantQ-derived MFCC";
+			dependencies[i] = "ConstantQ derived MFCCs";
 		}
 		
 		offsets = new int[windowLength];
