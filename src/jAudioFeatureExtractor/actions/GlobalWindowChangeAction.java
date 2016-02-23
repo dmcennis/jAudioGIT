@@ -24,7 +24,7 @@ public class GlobalWindowChangeAction extends AbstractAction {
 	 * Constructor that sets menu text and adds reference to the data model
 	 * where features are stored.
 	 * 
-	 * @param fm
+	 * @param fm data model to be altered
 	 */
 	public GlobalWindowChangeAction(DataModel fm) {
 		super("Global Window Change");

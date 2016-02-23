@@ -1,8 +1,6 @@
 package jAudioFeatureExtractor.actions;
 
 import jAudioFeatureExtractor.Controller;
-import jAudioFeatureExtractor.DataModel;
-import jAudioFeatureExtractor.FeatureSelectorPanel;
 import jAudioFeatureExtractor.FeatureSelectorTableModel;
 import jAudioFeatureExtractor.ACE.XMLParsers.FileFilterXML;
 import jAudioFeatureExtractor.Aggregators.Aggregator;
@@ -11,10 +9,10 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
@@ -39,13 +37,15 @@ public class SaveAction extends AbstractAction {
 	 */
 	private JCheckBox save_window_features_check_box;
 
-	private JCheckBox save_overall_file_featurese_check_box;
+	private JCheckBox save_overall_file_features_check_box;
 
 	private FeatureSelectorTableModel fstm_;
 
 	private JFileChooser save_file_chooser = null;
 
 	private Controller controller;
+
+	ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 
 	/**
 	 * Constructor that sets the menu text and stores a reference to the
@@ -89,7 +89,7 @@ public class SaveAction extends AbstractAction {
 			if (ext == null) {
 				path += ".xml";
 				to_save_to = new File(path);
-			} else if (!ext.equals(".xml")) {
+			} else if (ext.compareTo(".xml")!=0) {
 				path = jAudioFeatureExtractor.GeneralTools.StringMethods
 						.removeExtension(path)
 						+ ".xml";
@@ -99,10 +99,12 @@ public class SaveAction extends AbstractAction {
 			// See if user wishes to overwrite if a file with the same name
 			// exists
 			if (to_save_to.exists()) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
 				int overwrite = JOptionPane
 						.showConfirmDialog(
 								null,
-								"This file already exists.\nDo you wish to overwrite it?",
+								bundle.getString("this.file.already.exists.ndo.you.wish.to.overwrite.it"),
 								"WARNING", JOptionPane.YES_NO_OPTION);
 				if (overwrite != JOptionPane.YES_OPTION)
 					path = null;
@@ -118,7 +120,7 @@ public class SaveAction extends AbstractAction {
 			boolean normalise = controller.normalise.isSelected();
 			boolean perWindow = this.save_window_features_check_box
 					.isSelected();
-			boolean overall = this.save_overall_file_featurese_check_box
+			boolean overall = this.save_overall_file_features_check_box
 					.isSelected();
 			try {
 				FileWriter fw = new FileWriter(dest);
@@ -234,7 +236,7 @@ public class SaveAction extends AbstractAction {
 		window_length_text_field = win_length;
 		window_overlap_fraction_text_field = win_overlap;
 		save_window_features_check_box = save_window;
-		save_overall_file_featurese_check_box = save_overall;
+		save_overall_file_features_check_box = save_overall;
 	}
 
 }

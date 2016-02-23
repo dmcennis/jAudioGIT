@@ -9,6 +9,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 import jAudioFeatureExtractor.DataModel;
 
+import java.util.ResourceBundle;
+
 /**
  * The prototype for feature extractors. Each class that extends this class will
  * extract a particular feature from a window of audio samples. Such classes do
@@ -125,8 +127,9 @@ public abstract class FeatureExtractor {
 	 *            which of AreaMoment's attributes should be edited.
 	 */
 	public String getElement(int index) throws Exception {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		throw new Exception(
-				"INTERNAL ERROR: This feature has no method defined for editing attributes.  Perhaps the author forgot to define this method.");
+				bundle.getString("internal.error.this.feature.has.no.method.defined.for.editing.attributes.perhaps.the.author.forgot.to.define.this.method"));
 	}
 
 	/**
@@ -141,8 +144,9 @@ public abstract class FeatureExtractor {
 	 *            new value of the attribute
 	 */
 	public void setElement(int index, String value) throws Exception {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		throw new Exception(
-				"INTERNAL ERROR: This feature has no method defined for editing attributes.  Perhaps the author forgot to define this method.");
+				bundle.getString("internal.error.this.feature.has.no.method.defined.for.editing.attributes.perhaps.the.author.forgot.to.define.this.method1"));
 	}
 
 	/**

@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 /**
@@ -135,10 +136,13 @@ public class BatchExecutionThread extends Thread implements Updater {
 			SwingUtilities.invokeAndWait(restoreSettings);
 			sleep(1000);
 		} catch (InterruptedException e) {
-			System.err.println("INTERNAL ERROR: " + e.getMessage());
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+			System.err.println(String.format(bundle.getString("internal.error.s1"), e.getLocalizedMessage()));
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			System.err.println("INTERNAL ERROR: " + e.getMessage());
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			System.err.println(String.format(bundle.getString("internal.error.s2"), e.getLocalizedMessage()));
 			e.printStackTrace();
 		}
 
@@ -237,7 +241,8 @@ public class BatchExecutionThread extends Thread implements Updater {
 					try {
 						c.dm_.features[i].setElement(j, fe[i].getElement(j));
 					} catch (Exception e) {
-						System.err.println("INTERNAL ERROR: " + e.getMessage());
+                        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                        System.err.println(String.format(bundle.getString("internal.error.s3"),e.getLocalizedMessage()));
 						e.printStackTrace();
 					}
 				}

@@ -8,6 +8,7 @@ import jAudioFeatureExtractor.Aggregators.Aggregator;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ResourceBundle;
 
 /**
  * AggEditorFrame
@@ -67,6 +68,9 @@ public class AggEditorFrame extends JFrame {
 
 	private JPanel FeatureListPanel = null;
 
+	static final ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+
 	/**
 	 * This is the default constructor
 	 */
@@ -84,7 +88,7 @@ public class AggEditorFrame extends JFrame {
 	 */
 	private void initialize() {
 		this.setContentPane(getJContentPane());
-		this.setTitle("title");//aggregator.getAggregatorDefinition().name+" Editor");
+		this.setTitle(bundle.getString("title"));//aggregator.getAggregatorDefinition().name+" Editor");
 		this.setBounds(new Rectangle(0, 22, 800, 200));
 	}
 
@@ -145,7 +149,7 @@ public class AggEditorFrame extends JFrame {
 	private JPanel getAttributes() {
 		if (Attributes == null) {
 			AttributesLabel = new JLabel();
-			AttributesLabel.setText("Aggregator Attributes");
+			AttributesLabel.setText(bundle.getString("aggregator.attributes"));
 			Attributes = new JPanel();
 			Attributes.setLayout(new GridLayout(aggregator.getAggregatorDefinition().parameters.length+1,2,6,11));
 			Attributes.setBackground(new Color(192, 218, 255));
@@ -191,9 +195,9 @@ public class AggEditorFrame extends JFrame {
 	private JButton getSave() {
 		if (Save == null) {
 			Save = new JButton();
-			Save.setText("Save");
+			Save.setText(bundle.getString("save"));
 			Save.setBackground(new Color(192, 218, 255));
-			Save.setToolTipText("Save the changes made to this aggregator and return to the previous window");
+			Save.setToolTipText(bundle.getString("save.the.changes.made.to.this.aggregator.and.return.to.the.previous.window"));
 			Save.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					if(!aggregator.getAggregatorDefinition().generic && (aggregator.getFeaturesToApply()==null)){
@@ -238,7 +242,7 @@ public class AggEditorFrame extends JFrame {
 			gridBagConstraints.weighty = 1.0;
 			gridBagConstraints.weightx = 1.0;
 			DescriptionTitle = new JLabel();
-			DescriptionTitle.setText("Description");
+			DescriptionTitle.setText(bundle.getString("description"));
 			Description = new JPanel();
 			Description.setLayout(new BorderLayout());
 			Description.setBackground(new Color(192, 218, 255));
@@ -256,9 +260,9 @@ public class AggEditorFrame extends JFrame {
 	private JButton getCancel() {
 		if (Cancel == null) {
 			Cancel = new JButton();
-			Cancel.setText("Cancel");
+			Cancel.setText(bundle.getString("cancel"));
 			Cancel.setBackground(new Color(192, 218, 255));
-			Cancel.setToolTipText("Return to previous window without changing the aggregator");
+			Cancel.setToolTipText(bundle.getString("return.to.previous.window.without.changing.the.aggregator"));
 			Cancel.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					shutdown();
@@ -322,7 +326,7 @@ public class AggEditorFrame extends JFrame {
 		if (ChosenFieldTable == null) {
 			ChosenFieldTable = new JTable();
 			ChosenFieldTable.setLocation(new Point(0, 0));
-			DefaultTableModel model = new AggFeatureListModel(new Object[]{"Selected Features"},0);
+			DefaultTableModel model = new AggFeatureListModel(new Object[]{bundle.getString("selected.features")},0);
 			String[] names = aggregator.getFeaturesToApply();
 			if(names != null){
 				for(int i=0;i<names.length;++i){
@@ -375,7 +379,7 @@ public class AggEditorFrame extends JFrame {
 	private JTable getFeatureListTable() {
 		if (FeatureListTable == null) {
 			FeatureListTable = new JTable();
-			DefaultTableModel model = new AggFeatureListModel(new Object[]{"Feature List"},0);
+			DefaultTableModel model = new AggFeatureListModel(new Object[]{bundle.getString("feature.list")},0);
 			for(int i=0;i<controller.dm_.featureDefinitions.length;++i){
 				model.addRow(new Object[]{controller.dm_.featureDefinitions[i].name});
 			}
@@ -393,8 +397,8 @@ public class AggEditorFrame extends JFrame {
 		if (AddFeature == null) {
 			AddFeature = new JButton();
 			AddFeature.setBackground(new Color(192, 218, 255));
-			AddFeature.setText("Add");
-			AddFeature.setToolTipText("Add a feature to the list of features analyzed by this aggregator");
+			AddFeature.setText(bundle.getString("add"));
+			AddFeature.setToolTipText(bundle.getString("add.a.feature.to.the.list.of.features.analyzed.by.this.aggregator"));
 			AddFeature.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					int[] rows = FeatureListTable.getSelectedRows();
@@ -417,8 +421,8 @@ public class AggEditorFrame extends JFrame {
 		if (RemoveFeature == null) {
 			RemoveFeature = new JButton();
 			RemoveFeature.setBackground(new Color(192, 218, 255));
-			RemoveFeature.setToolTipText("Remove an aggregator from the list of applied features.");
-			RemoveFeature.setText("Remove");
+			RemoveFeature.setToolTipText(bundle.getString("remove.an.aggregator.from.the.list.of.applied.features"));
+			RemoveFeature.setText(bundle.getString("remove"));
 			RemoveFeature.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					int[] rows = ChosenFieldTable.getSelectedRows();

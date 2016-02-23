@@ -1,7 +1,6 @@
 package jAudioFeatureExtractor.actions;
 
 import jAudioFeatureExtractor.Controller;
-import jAudioFeatureExtractor.FeatureSelectorPanel;
 import jAudioFeatureExtractor.FeatureSelectorTableModel;
 import jAudioFeatureExtractor.ACE.XMLParsers.FileFilterXML;
 import jAudioFeatureExtractor.ACE.XMLParsers.XMLDocumentParser;
@@ -12,16 +11,16 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 /**
- * Reads a file containing settings and resets jAUdio to match those settings.
+ * Reads a file containing settings and resets jAudio to match those settings.
  * 
  * @author Daniel McEnnis
  */
@@ -38,7 +37,7 @@ public class LoadAction extends AbstractAction {
 	 */
 	private JCheckBox save_window_features_check_box;
 
-	private JCheckBox save_overall_file_featurese_check_box;
+	private JCheckBox save_overall_file_features_check_box;
 
 	private FeatureSelectorTableModel fstm_;
 
@@ -88,15 +87,16 @@ public class LoadAction extends AbstractAction {
 			if (ext == null) {
 				path += ".xml";
 				to_save_to = new File(path);
-			} else if (!ext.equals(".xml")) {
+			} else if (ext.compareTo(".xml")!=0) {
 				path = jAudioFeatureExtractor.GeneralTools.StringMethods
 						.removeExtension(path)
 						+ ".xml";
 				to_save_to = new File(path);
 			}
 			if (!to_save_to.exists()) {
-				JOptionPane.showMessageDialog(null, "The file '"
-						+ to_save_to.getName() + "' does not exist", "ERROR",
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+				JOptionPane.showMessageDialog(null, String.format(bundle.getString("the.file.s.does.not.exist"),to_save_to.getName()), "ERROR",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				try {
@@ -120,7 +120,7 @@ public class LoadAction extends AbstractAction {
 							.booleanValue());
 					save_window_features_check_box
 							.setSelected(((Boolean) tmp[4]).booleanValue());
-					save_overall_file_featurese_check_box
+					save_overall_file_features_check_box
 							.setSelected(((Boolean) tmp[5]).booleanValue());
 					if (tmp[6].equals("ACE")) {
 						controller.outputTypeAction.setSelected(0);
@@ -181,7 +181,7 @@ public class LoadAction extends AbstractAction {
 		window_length_text_field = win_length;
 		window_overlap_fraction_text_field = win_overlap;
 		save_window_features_check_box = save_window;
-		save_overall_file_featurese_check_box = save_overall;
+		save_overall_file_features_check_box = save_overall;
 	}
 
 }

@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A feature extractor that finds the strongest frequency component of a 
@@ -31,9 +33,9 @@ public class StrongestFrequencyViaFFTMax
 	 */
 	public StrongestFrequencyViaFFTMax()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Strongest Frequency Via FFT Maximum";
-		String description = "The strongest frequency component of a signal, in Hz, " +
-		                     "found via finding the FFT bin with the highest power.";
+		String description = bundle.getString("the.strongest.frequency.component.of.a.signal.in.hz.found.via.finding.the.fft.bin.with.the.highest.power");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition( name,

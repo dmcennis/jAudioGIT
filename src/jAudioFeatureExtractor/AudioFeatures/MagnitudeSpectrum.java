@@ -9,6 +9,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 import jAudioFeatureExtractor.jAudioTools.FFT;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A feature extractor that extracts the FFT magnitude spectrum from a set of
@@ -40,8 +42,9 @@ public class MagnitudeSpectrum
 	 */
 	public MagnitudeSpectrum()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Magnitude Spectrum";
-		String description = "A measure of the strength of different frequency components.";
+		String description = bundle.getString("a.measure.of.the.strength.of.different.frequency.components");
 		boolean is_sequential = true;
 		int dimensions = 0;
 		definition = new FeatureDefinition( name,

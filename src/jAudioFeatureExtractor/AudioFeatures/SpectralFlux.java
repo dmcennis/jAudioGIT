@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A feature extractor that extracts the Spectral Flux from a window of samples and
@@ -36,10 +38,9 @@ public class SpectralFlux
 	 */
 	public SpectralFlux()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Spectral Flux";
-		String description = "A measure of the amount of spectral change in a signal. "+//\n" +
-		                     "Found by calculating the change in the magnitude spectrum "+//\n" +
-			                 "from frame to frame.";
+		String description = bundle.getString("a.measure.of.the.amount.of.spectral.change.in.a.signal.found.by.calculating.the.change.in.the.magnitude.spectrum.from.frame.to.frame");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition( name,

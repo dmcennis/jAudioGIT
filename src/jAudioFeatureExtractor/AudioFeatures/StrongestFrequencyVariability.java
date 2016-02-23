@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A feature extractor that extracts the Strongest Frequency Variability
@@ -34,10 +36,9 @@ public class StrongestFrequencyVariability
 	 */
 	public StrongestFrequencyVariability()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Strongest Frequency Variability";
-		String description = "The standard deviation of the frequency of the" +
-							 "power spectrum bin with the highest power over" + 
-							 "the last 100 windows.";
+		String description = bundle.getString("the.standard.deviation.of.the.frequency.of.the.power.spectrum.bin.with.the.highest.power.over.the.last.100.windows");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition( name,

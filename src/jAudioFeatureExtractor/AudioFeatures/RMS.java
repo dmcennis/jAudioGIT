@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A feature extractor that extracts the Root Mean Square (RMS) from a set of
@@ -33,8 +35,9 @@ public class RMS
 	 */
 	public RMS()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Root Mean Square";
-		String description = "A measure of the power of a signal.";
+		String description = bundle.getString("a.measure.of.the.power.of.a.signal");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition( name,

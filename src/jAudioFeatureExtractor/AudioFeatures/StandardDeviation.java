@@ -2,6 +2,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * Calculates the Standard Deviation of a feature over a large running window.
  * 
@@ -41,6 +43,7 @@ public class StandardDeviation extends MetaFeatureFactory {
 	 * the underlying meta feature first.
 	 */
 	public MetaFeatureFactory defineFeature(FeatureExtractor fe) {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		MetaFeatureFactory ret = new StandardDeviation();
 		if ((fe_ != null) & (fe_ instanceof MetaFeatureFactory)) {
 			ret.fe_ = ((MetaFeatureFactory) fe_).defineFeature(fe);
@@ -49,17 +52,14 @@ public class StandardDeviation extends MetaFeatureFactory {
 		}
 		String name = "Standard Deviation of "
 				+ ret.fe_.getFeatureDefinition().name;
-		String description = "Standard Deviation of "
-				+ ret.fe_.getFeatureDefinition().name + "."
-				// + System.getProperty("line.separator")
-				+ ret.fe_.getFeatureDefinition().description;
+		String description = String.format(bundle.getString("standard.deviation.of.s.s"),ret.fe_.getFeatureDefinition().name,ret.fe_.getFeatureDefinition().description);
 
 		String[] oldAttributes = fe.getFeatureDefinition().attributes;
 		String[] myAttributes = new String[oldAttributes.length + 1];
 		for (int i = 0; i < oldAttributes.length; ++i) {
 			myAttributes[i] = oldAttributes[i];
 		}
-		myAttributes[myAttributes.length - 1] = "Size of Window to calculate accross";
+		myAttributes[myAttributes.length - 1] = bundle.getString("size.of.window.to.calculate.accross");
 
 		ret.definition = new FeatureDefinition(name, description, true, ret.fe_
 				.getFeatureDefinition().dimensions, myAttributes);
@@ -114,7 +114,8 @@ public class StandardDeviation extends MetaFeatureFactory {
 	 */
 	public void setWindow(int n) throws Exception {
 		if (n <= 1) {
-			throw new Exception("Width must be 2 or greater");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(bundle.getString("width.must.be.2.or.greater"));
 		} else {
 			sampleWidth = n;
 			String tmp;
@@ -143,14 +144,15 @@ public class StandardDeviation extends MetaFeatureFactory {
 	 */
 	public String getElement(int index) throws Exception {
 		if ((index >= definition.attributes.length) || (index < 0)) {
-			throw new Exception("INTERNAL ERROR: Request for an invalid index "
-					+ index);
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.request.for.an.invalid.index.d1"),index));
 		} else if (index == definition.attributes.length - 1) {
 			return Integer.toString(sampleWidth);
 		} else if (fe_ != null) {
 			return fe_.getElement(index);
 		} else {
-			throw new Exception("INTERNAL ERROR: Request for child attribute in Standrad Deviation when the child is null");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(bundle.getString("internal.error.request.for.child.attribute.in.standrad.deviation.when.the.child.is.null"));
 		}
 	}
 
@@ -164,24 +166,27 @@ public class StandardDeviation extends MetaFeatureFactory {
 	 */
 	public void setElement(int index, String value) throws Exception {
 		if ((index >= definition.attributes.length) || (index < 0)) {
-			throw new Exception("INTERNAL ERROR: Request for an invalid index "
-					+ index);
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.request.for.an.invalid.index.d2"),index));
 		} else if (index == definition.attributes.length - 1) {
 			try {
 				int type = Integer.parseInt(value);
 				if (type <= 1) {
+                    ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 					throw new Exception(
-							"width of the window must be greater than 1");
+                            bundle.getString("width.of.the.window.must.be.greater.than.1"));
 				} else {
 					setWindow(type);
 				}
 			} catch (NumberFormatException e) {
-				throw new Exception("Width of window must be an integer");
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new Exception(bundle.getString("width.of.window.must.be.an.integer"));
 			}
 		} else if (fe_ != null) {
 			fe_.setElement(index, value);
 		} else {
-			throw new Exception("Request to set a child in StandardDeviation attrbiute when the child is null");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(bundle.getString("request.to.set.a.child.in.standarddeviation.attrbiute.when.the.child.is.null"));
 		}
 	}
 
@@ -236,7 +241,8 @@ public class StandardDeviation extends MetaFeatureFactory {
 		for (int i = 0; i < childFD.attributes.length; ++i) {
 			attributes[i] = childFD.attributes[i];
 		}
-		attributes[attributes.length - 1] = "Size of Window for Standard Deviation";
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+		attributes[attributes.length - 1] = bundle.getString("size.of.window.for.standard.deviation");
 		dimensions = childFD.dimensions;
 		definition = new FeatureDefinition(name, description, true, dimensions,
 				attributes);

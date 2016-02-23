@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * A feature extractor that extracts the Spectral Rolloff Point. This is a
  * measure measure of the amount of the right-skewedness of the power spectrum.
@@ -30,16 +32,13 @@ public class SpectralRolloffPoint extends FeatureExtractor {
 	 * offsets) of this feature.
 	 */
 	public SpectralRolloffPoint() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Spectral Rolloff Point";
-		String description = "The fraction of bins in the power spectrum at which 85% "
-				+ // System.getProperty("line.separator") +
-				"of the power is at lower frequencies. This is a measure " + // System.getProperty("line.separator")
-				// +
-				"of the right-skewedness of the power spectrum.";
+		String description = bundle.getString("the.fraction.of.bins.in.the.power.spectrum.at.which.85.of.the.power.is.at.lower.frequencies.this.is.a.measure.of.the.right.skewedness.of.the.power.spectrum");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition(name, description, is_sequential,
-				dimensions, new String[] { "Cutoff point (0-1)" });
+				dimensions, new String[] {bundle.getString("cutoff.point.0.1") });
 
 		dependencies = new String[1];
 		dependencies[0] = "Power Spectrum";
@@ -117,8 +116,8 @@ public class SpectralRolloffPoint extends FeatureExtractor {
 	 */
 	public String getElement(int index) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to AreaMoments:getElement");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format("INTERNAL ERROR: invalid index %d sent to AreaMoments:getElement",index));
 		} else {
 			return Double.toString(cutoff);
 		}
@@ -137,15 +136,16 @@ public class SpectralRolloffPoint extends FeatureExtractor {
 	 */
 	public void setElement(int index, String value) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to AreaMoments:setElement");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format("INTERNAL ERROR: invalid index %d sent to AreaMoments:setElement",index));
 		} else {
 			try {
 				double type = Double.parseDouble(value);
 				setCutoff(type);
 			} catch (Exception e) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 				throw new Exception(
-						"Length of Area Method of Moments must be an integer");
+						bundle.getString("length.of.area.method.of.moments.must.be.an.integer"));
 			}
 		}
 	}
@@ -161,10 +161,12 @@ public class SpectralRolloffPoint extends FeatureExtractor {
 	 */
 	public void setCutoff(double c) throws Exception {
 		if (Double.isInfinite(c) || Double.isNaN(c)) {
-			throw new Exception("SpectralRolloff cutoff must be a real number");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(bundle.getString("spectralrolloff.cutoff.must.be.a.real.number"));
 		} else if ((c <= 0.0) || (c >= 1.0)) {
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			throw new Exception(
-					"SpectralRolloff cutoff must be gretaer than 0 and less than 1");
+					bundle.getString("spectralrolloff.cutoff.must.be.gretaer.than.0.and.less.than.1"));
 		} else {
 			cutoff = c;
 		}

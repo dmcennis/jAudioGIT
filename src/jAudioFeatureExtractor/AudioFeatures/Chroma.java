@@ -4,6 +4,7 @@ import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 import jAudioFeatureExtractor.DataModel;
 
 import java.util.Arrays;
+import java.util.ResourceBundle;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,8 +16,9 @@ import java.util.Arrays;
 public class Chroma extends FeatureExtractor {
 
     public Chroma(){
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
         String name = "Chroma";
-        String description = "Basic chroma feature derived from constant q function output";
+        String description = bundle.getString("basic.chroma.feature.derived.from.constant.q.function.output");
         boolean is_sequential = true;
         int dimensions = 12;
         String[] attributes = new String[]{};

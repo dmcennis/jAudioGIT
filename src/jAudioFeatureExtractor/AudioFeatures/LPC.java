@@ -5,6 +5,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * Calculates linear predictive coeffecients of an signal. Also includes a
  * warping factor lambda that is disabled by default. Based upon code published
@@ -27,10 +29,11 @@ public class LPC extends FeatureExtractor {
 	 * field.
 	 */
 	public LPC() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "LPC";
-		String description = "Linear Prediction Coeffecients calculated using autocorrelation and Levinson-Durbin recursion.";
-		String[] attributes = new String[] { "lambda for frequency warping",
-				"number of coeffecients to calculate" };
+		String description = bundle.getString("linear.prediction.coeffecients.calculated.using.autocorrelation.and.levinson.durbin.recursion");
+		String[] attributes = new String[] {bundle.getString("lambda.for.frequency.warping"),
+				bundle.getString("number.of.coeffecients.to.calculate") };
 		definition = new FeatureDefinition(name, description, true, 10,
 				attributes);
 		dependencies = null;
@@ -175,8 +178,8 @@ public class LPC extends FeatureExtractor {
 		case 1:
 			return Integer.toString(numDimensions);
 		default:
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " passed to LPC:getElement()");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(bundle.getString("internal.error.invalid.index.d.passed.to.lpc.getelement2"));
 		}
 	}
 
@@ -197,19 +200,22 @@ public class LPC extends FeatureExtractor {
 			try {
 				setLambda(Double.parseDouble(value));
 			} catch (NumberFormatException e) {
-				throw new Exception("Lambda value must be a double");
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new Exception(bundle.getString("lambda.value.must.be.a.double"));
 			}
 			break;
 		case 1:
 			try {
 				setNumDimensions(Integer.parseInt(value));
 			} catch (NumberFormatException e) {
-				throw new Exception("Number of Dimensions must be an integer");
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new Exception(bundle.getString("number.of.dimensions.must.be.an.integer"));
 			}
 			break;
 		default:
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			throw new Exception(
-					"INTERNAL ERROR: invalid index passed to LPC:setElement");
+					bundle.getString("internal.error.invalid.index.passed.to.lpc.setelement"));
 		}
 	}
 
@@ -226,8 +232,8 @@ public class LPC extends FeatureExtractor {
 	 */
 	public void setNumDimensions(int n) throws Exception {
 		if (n < 1) {
-			throw new Exception("Must have at least 1 LPC coeffecient - " + n
-					+ " provided");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("must.have.at.least.1.lpc.coeffecient.d.provided"),n));
 		} else {
 			numDimensions = n;
 			String name = definition.name;
@@ -252,7 +258,8 @@ public class LPC extends FeatureExtractor {
 	 */
 	public void setLambda(double l) throws Exception {
 		if (Double.isNaN(l) || Double.isInfinite(l)) {
-			throw new Exception("lambda must be a real number");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(bundle.getString("lambda.must.be.a.real.number"));
 		} else {
 			lambda = l;
 		}

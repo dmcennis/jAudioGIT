@@ -2,6 +2,7 @@ package jAudioFeatureExtractor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ResourceBundle;
 
 /**
  * This class provides a set of progress bars for the normal (non-batch) feature
@@ -28,16 +29,17 @@ public class ProgressFrame extends JFrame {
 	 *
 	 */
 	public ProgressFrame() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		fileProgressBar = new JProgressBar();
 		fileProgressBar.setStringPainted(true);
 		overallProgressBar = new JProgressBar();
 		overallProgressBar.setStringPainted(true);
 		setLayout(new GridLayout(4, 1, 6, 11));
-		JLabel tmp = new JLabel("File Progress");
+		JLabel tmp = new JLabel(bundle.getString("file.progress"));
 		tmp.setHorizontalAlignment(SwingConstants.CENTER);
 		add(tmp);
 		add(fileProgressBar);
-		tmp = new JLabel("Overall Progress");
+		tmp = new JLabel(bundle.getString("overall.progress"));
 		tmp.setHorizontalAlignment(SwingConstants.CENTER);
 		add(tmp);
 		add(overallProgressBar);

@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A feature extractor that extracts the Beat Sum from a signal. This is a good 
@@ -32,10 +34,9 @@ public class BeatSum
 	 */
 	public BeatSum()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Beat Sum";
-		String description = "The sum of all entries in the beat histogram. " +
-							 "This is a good measure of the importance of " +
-							 "regular beats in a signal.";
+		String description = bundle.getString("the.sum.of.all.entries.in.the.beat.histogram.this.is.a.good.measure.of.the.importance.of.regular.beats.in.a.signal");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition( name,

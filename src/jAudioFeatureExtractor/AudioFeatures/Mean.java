@@ -2,6 +2,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * Calculates the running mean of an underlying feature.
  * 
@@ -47,18 +49,16 @@ public class Mean extends MetaFeatureFactory {
 			tmp.fe_ = fe;
 		}
 			tmp.fe_ = fe;
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			String name = "Running Mean of " + fe.getFeatureDefinition().name;
-			String description = "Running Mean of "
-					+ fe.getFeatureDefinition().name + ". "
-//					+ System.getProperty("line.separator")
-					+ fe.getFeatureDefinition().description;
+			String description = String.format(bundle.getString("running.mean.of.s.s"),fe.getFeatureDefinition().name,fe.getFeatureDefinition().description);
 
 			String[] oldAttributes = fe.getFeatureDefinition().attributes;
 			String[] myAttributes = new String[oldAttributes.length + 1];
 			for (int i = 0; i < oldAttributes.length; ++i) {
 				myAttributes[i] = oldAttributes[i];
 			}
-			myAttributes[myAttributes.length - 1] = "Size of Window to Average accross";
+			myAttributes[myAttributes.length - 1] = bundle.getString("size.of.window.to.average.accross");
 
 			tmp.definition = new FeatureDefinition(name, description, true, fe
 					.getFeatureDefinition().dimensions, myAttributes);
@@ -105,8 +105,9 @@ public class Mean extends MetaFeatureFactory {
 	 */
 	public void setWindow(int n) throws Exception {
 		if (n <= 1) {
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			throw new Exception(
-					"new value for running average must be greater than one");
+					bundle.getString("new.value.for.running.average.must.be.greater.than.one"));
 		} else {
 			runningAverage = n;
 			if (fe_ != null) {
@@ -137,15 +138,15 @@ public class Mean extends MetaFeatureFactory {
 	 *            which of AreaMoment's attributes should be edited.
 	 */
 	public String getElement(int index) throws Exception {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		if ((index >= definition.attributes.length) || (index < 0)) {
-			throw new Exception("INTERNAL ERROR: Request for an invalid index "
-					+ index);
+			throw new Exception(String.format(bundle.getString("internal.error.request.for.an.invalid.index.d3"),index));
 		} else if (index == definition.attributes.length - 1) {
 			return Integer.toString(runningAverage);
 		} else if (fe_ != null) {
 			return fe_.getElement(index);
 		} else {
-			throw new Exception("INTERNAL ERROR: non-existant index for Mean:getElement - claims to have children, but child is null");
+			throw new Exception(bundle.getString("internal.error.non.existant.index.for.mean.getelement.claims.to.have.children.but.child.is.null"));
 		}
 	}
 
@@ -165,24 +166,27 @@ public class Mean extends MetaFeatureFactory {
 	 */
 	public void setElement(int index, String value) throws Exception {
 		if ((index >= definition.attributes.length) || (index < 0)) {
-			throw new Exception("INTERNAL ERROR: Request for an invalid index "
-					+ index);
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.request.for.an.invalid.index.d4"),index));
 		} else if (index == definition.attributes.length - 1) {
 			try {
 				int type = Integer.parseInt(value);
 				if (type <= 1) {
+					ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 					throw new Exception(
-							"width of the window must be greater than 1");
+							bundle.getString("width.of.the.window.must.be.greater.than.1"));
 				} else {
 					setWindow(type);
 				}
 			} catch (NumberFormatException e) {
-				throw new Exception("Width of window must be an integer");
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new Exception(bundle.getString("width.of.window.must.be.an.integer"));
 			}
 		} else if (fe_ != null) {
 			fe_.setElement(index, value);
 		} else {
-			throw new Exception("INTERNAL ERROR: non-existant index for Mean:getElement - claims to have children, but child is null");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(bundle.getString("internal.error.non.existant.index.for.mean.getelement.claims.to.have.children.but.child.is.null1"));
 		}
 	}
 
@@ -249,7 +253,8 @@ public class Mean extends MetaFeatureFactory {
 		for(int i=0;i<childFD.attributes.length;++i){
 			attributes[i] = childFD.attributes[i];
 		}
-		attributes[attributes.length-1] = "Size of Window to Average accross";
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+		attributes[attributes.length-1] = bundle.getString("size.of.window.to.average.accross");
 		dimensions = childFD.dimensions;
 		definition = new FeatureDefinition(name,description,true,dimensions,attributes);
 		return definition;

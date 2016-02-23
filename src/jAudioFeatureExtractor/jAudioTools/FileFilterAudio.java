@@ -7,6 +7,7 @@
 package jAudioFeatureExtractor.jAudioTools;
 
 import java.io.File;
+import java.util.ResourceBundle;
 import javax.swing.filechooser.FileFilter;
 
 
@@ -47,6 +48,7 @@ public class FileFilterAudio
 
 	public String getDescription()
 	{
-		return "Audio (wav, wave, aif, aiff, aifc, au and snd) files";
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+		return bundle.getString("audio.wav.wave.aif.aiff.aifc.au.and.snd.files");
 	}
 }

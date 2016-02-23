@@ -21,15 +21,15 @@ public class MultipleToggleAction extends AbstractAction {
 	private JTable features;
 
 	/**
-	 * Contructor that takes a reference to a table.
-	 * @param f fetaures table.
+	 * Constructor that takes a reference to a table.
+	 * @param f features table.
 	 */
 	public MultipleToggleAction(JTable f) {
 		features = f;
 	}
 
 	/**
-	 * Group select or deselct on all selected rows.
+	 * Group select or deselect on all selected rows.
 	 */
 	public void actionPerformed(ActionEvent e) {
 		int[] selectedRows = features.getSelectedRows();

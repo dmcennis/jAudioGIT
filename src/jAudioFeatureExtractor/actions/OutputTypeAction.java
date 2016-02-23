@@ -3,6 +3,7 @@ package jAudioFeatureExtractor.actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
@@ -31,13 +32,13 @@ public class OutputTypeAction extends AbstractAction {
 
 	/**
 	 * When an output type is selected, change the output type to match and
-	 * check against inconsistant states.
+	 * check against inconsistent states.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("ACE")) {
+		if (e.getActionCommand().compareTo("ACE")==0) {
 			outputType = 0;
 		}
-		if (e.getActionCommand().equals("ARFF")) {
+		if (e.getActionCommand().compareTo("ARFF")==0) {
 			checkConsistantState();
 			outputType = 1;
 		}
@@ -104,10 +105,11 @@ public class OutputTypeAction extends AbstractAction {
 
 	private void checkConsistantState() {
 		if (perWindow.isSelected() && overall.isSelected()) {
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			JOptionPane
 					.showMessageDialog(
 							null,
-							"Weka format only supports one type of output - either output per file or output per window.",
+							bundle.getString("weka.format.only.supports.one.type.of.output.either.output.per.file.or.output.per.window"),
 							"ERROR", JOptionPane.ERROR_MESSAGE);
 			overall.setSelected(false);
 		}

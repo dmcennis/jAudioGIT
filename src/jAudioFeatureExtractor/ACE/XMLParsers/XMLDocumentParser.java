@@ -10,6 +10,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import java.io.File;
+import java.util.ResourceBundle;
 
 
 /**
@@ -61,11 +62,14 @@ public class XMLDocumentParser
 	{
 		// Verify that the file referred to in file_path exists and is not a directory
 		File test_file = new File(file_path);
-		if (!test_file.exists())
-			throw new Exception("The specified path " + file_path + " does not refer to an existing file.");
-		if (test_file.isDirectory())
-			throw new Exception("The specified path " + file_path + " refers to a directory, not to a file.");
-
+		if (!test_file.exists()) {
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            throw new Exception(String.format(bundle.getString("the.specified.path.s.does.not.refer.to.an.existing.file"), file_path));
+        }
+		if (test_file.isDirectory()) {
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            throw new Exception(String.format(bundle.getString("the.specified.path.s.refers.to.a.directory.not.to.a.file"),file_path));
+        }
 		// Prepare the XML parser with the validation feature on and the error handler
 		// set to throw exceptions on all warnings and errors
 		javax.xml.parsers.SAXParser reader = javax.xml.parsers.SAXParserFactory.newInstance().newSAXParser();
@@ -73,40 +77,40 @@ public class XMLDocumentParser
 //		reader.setErrorHandler(new ParsingXMLErrorHandler());
 		ParseFileHandler handler;
 
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		// Choose the correct type handler based on the type of XML file
-		if (document_type.equals("feature_vector_file"))
+		if (document_type.compareTo("feature_vector_file")==0)
 			handler = new ParseDataSetFileHandler();
-		else if (document_type.equals("feature_key_file"))
+		else if (document_type.compareTo("feature_key_file")==0)
 			handler = new ParseFeatureDefinitionsFileHandler();
-		else if (document_type.equals("taxonomy_file"))
+		else if (document_type.compareTo("taxonomy_file")==0)
 			handler = new ParseTaxonomyFileHandler();
-		else if (document_type.equals("classifications_file"))
+		else if (document_type.compareTo("classifications_file")==0)
 			handler = new ParseClassificationsFileHandler();
-		else if (document_type.equals("save_settings"))
+		else if (document_type.compareTo("save_settings")==0)
 			handler = new ParseSaveSettings();
-		else if (document_type.equals("batchFile"))
+		else if (document_type.compareTo("batchFile")==0)
 			handler = new ParseBatchJobHandler();
-		else if (document_type.equals("feature_list"))
+		else if (document_type.compareTo("feature_list")==0)
 			handler = new FeatureListHandler();
 
 		// Throw an exception if an unknown type of XML file is specified
-		else throw new Exception(new String("Invalid type of XML file specified. The XML file type " + document_type + " is not known."));
+		else throw new Exception(String.format(bundle.getString("invalid.type.of.xml.file.specified.the.xml.file.type.s.is.not.known"),document_type));
 
 		// Parse the file so that the contents are available in the parsed_file_contents field of the handler
 //		reader.setContentHandler(handler);
 		try {reader.parse(file_path,handler);}
 		catch (SAXParseException e) // throw an exception if the file is not a valid XML file
 		{
-			throw new Exception("The " + file_path + " file is not a valid XML file.\n\nDetails of the problem: " + e.getMessage() +
-								"\n\nThis error is likely in the region of line " + e.getLineNumber() + ".");
+			throw new Exception(String.format(bundle.getString("the.s.file.is.not.a.valid.xml.file.n.ndetails.of.the.problem.s.n.nthis.error.is.likely.in.the.region.of.line.s"),file_path,e.getLocalizedMessage(),e.getLineNumber()));
 		}
 		catch (SAXException e) // throw an exception if the file is not an XML file of the correct type
 		{
-			throw new Exception("The " + file_path + " file must be of type " + document_type + ". " + e.getMessage());
+			throw new Exception(String.format(bundle.getString("the.s.file.must.be.of.type.s.s"),file_path,document_type,e.getLocalizedMessage()));
 		}
 		catch (Exception e) // throw an exception if the file is not an XML file of the correct type
 		{
-			throw new Exception("The " + file_path + " file is not formatted properly.\n\nDetails of the problem: " + e.getMessage());
+			throw new Exception(String.format(bundle.getString("the.s.file.is.not.formatted.properly.n.ndetails.of.the.problem.s"),file_path,e.getLocalizedMessage()));
 		}
 
 		// Return the contents of the parsed file

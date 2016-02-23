@@ -19,6 +19,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ResourceBundle;
 
 
 /**
@@ -116,8 +117,9 @@ public class RecordingFrame
 	 */
 	public RecordingFrame(Controller c)
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		// Set window title
-		setTitle("Record Audio");
+		setTitle(bundle.getString("record.audio"));
 		Color blue = new Color((float)0.75,(float)0.85,(float)1.0);
 		getContentPane().setBackground(blue);
 
@@ -147,22 +149,22 @@ public class RecordingFrame
 		int horizontal_gap = 6; // horizontal space between GUI elements
 		int vertical_gap = 11; // horizontal space between GUI elements
 		setLayout(new GridLayout(6, 2, horizontal_gap, vertical_gap));
-		choose_encoding_format_button = new JButton("Change Encoding Format");
+		choose_encoding_format_button = new JButton(bundle.getString("change.encoding.format"));
 		choose_encoding_format_button.addActionListener(this);
 		add(choose_encoding_format_button);
-		display_current_audio_format_button = new JButton("Display Current Encoding");
+		display_current_audio_format_button = new JButton(bundle.getString("display.current.encoding"));
 		display_current_audio_format_button.addActionListener(this);
 		add(display_current_audio_format_button);
-		record_button = new JButton("Record");
+		record_button = new JButton(bundle.getString("record"));
 		record_button.addActionListener(this);
 		add(record_button);
-		stop_recording_button = new JButton("Stop Recording");
+		stop_recording_button = new JButton(bundle.getString("stop.recording"));
 		stop_recording_button.addActionListener(this);
 		add(stop_recording_button);
-		play_recording_button = new JButton("Play Last Recording");
+		play_recording_button = new JButton(bundle.getString("play.last.recording"));
 		play_recording_button.addActionListener(this);
 		add(play_recording_button);
-		stop_playback_button = new JButton("Stop Playback");
+		stop_playback_button = new JButton(bundle.getString("stop.playback"));
 		stop_playback_button.addActionListener(this);
 		add(stop_playback_button);
 		choose_file_format_combo_box = new JComboBox();
@@ -170,14 +172,14 @@ public class RecordingFrame
 		for (int i = 0; i < file_types.length; i++)
 			choose_file_format_combo_box.addItem(file_types[i]);
 		choose_file_format_combo_box.setBackground(this.getContentPane().getBackground());
-		add(new JLabel("File Format For Saving:"));
+		add(new JLabel(bundle.getString("file.format.for.saving")));
 		add(choose_file_format_combo_box);
 		add(new JLabel(""));
 		add(new JLabel(""));
-		cancel_button = new JButton("Cancel");
+		cancel_button = new JButton(bundle.getString("cancel"));
 		cancel_button.addActionListener(this);
 		add(cancel_button);
-		save_button = new JButton("Save");
+		save_button = new JButton(bundle.getString("save"));
 		save_button.addActionListener(this);
 		add(save_button);
 
@@ -248,13 +250,14 @@ public class RecordingFrame
 	 */
 	private void displayCurrentAudioFormat()
 	{
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		if (last_recorded_audio != null)
 		{
 			String data = AudioMethods.getAudioFormatData(last_recorded_audio.getFormat());
-			JOptionPane.showMessageDialog(null, data, "Current Audio Encoding", JOptionPane.INFORMATION_MESSAGE);							
+			JOptionPane.showMessageDialog(null, data, bundle.getString("current.audio.encoding"), JOptionPane.INFORMATION_MESSAGE);
 		}
 		else
-			JOptionPane.showMessageDialog(null, "No audio has been stored.", "WARNING", JOptionPane.ERROR_MESSAGE);							
+			JOptionPane.showMessageDialog(null, bundle.getString("no.audio.has.been.stored"), "WARNING", JOptionPane.ERROR_MESSAGE);
 	}
 
 
@@ -271,7 +274,8 @@ public class RecordingFrame
 	 */
 	private void record()
 	{
-		try
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        try
 		{
 			stopRecording();
 			stopPlayback();
@@ -281,7 +285,7 @@ public class RecordingFrame
 		}
 		catch (Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Could not record because:\n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, String.format(bundle.getString("could.not.record.because.n.s"),e.getLocalizedMessage()), "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -322,7 +326,8 @@ public class RecordingFrame
 			}
 			catch (Exception e)
 			{
-				JOptionPane.showMessageDialog(null, "Could not play because:\n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                JOptionPane.showMessageDialog(null, String.format(bundle.getString("could.not.play.because.n.s"),e.getLocalizedMessage()), "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -344,7 +349,8 @@ public class RecordingFrame
 			}
 			catch (Exception e)
 			{
-				JOptionPane.showMessageDialog(null, "Could not reset playback position:\n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                JOptionPane.showMessageDialog(null, String.format(bundle.getString("could.not.reset.playback.position.n.s"),e.getLocalizedMessage()), "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		playback_thread = null;
@@ -377,8 +383,9 @@ public class RecordingFrame
 		// or of going back to make a recording.
 		if (last_recorded_audio == null)
 		{
-			int end = JOptionPane.showConfirmDialog( null,
-												     "No recording has been made.\nDo you wish to make a recording?",
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            int end = JOptionPane.showConfirmDialog( null,
+                    bundle.getString("no.recording.has.been.made.ndo.you.wish.to.make.a.recording"),
 													 "WARNING",
 													 JOptionPane.YES_NO_OPTION );
 			if (end == JOptionPane.NO_OPTION)
@@ -421,8 +428,9 @@ public class RecordingFrame
 				// See if user wishes to overwrite if a file with the same name exists
 				if (save_file.exists())
 				{
-					int overwrite = JOptionPane.showConfirmDialog( null,
-																  "This file already exists.\nDo you wish to overwrite it?",
+                    ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                    int overwrite = JOptionPane.showConfirmDialog( null,
+                            bundle.getString("this.file.already.exists.ndo.you.wish.to.overwrite.it2"),
 																  "WARNING",
 																  JOptionPane.YES_NO_OPTION );
 					if (overwrite != JOptionPane.YES_OPTION)
@@ -444,7 +452,7 @@ public class RecordingFrame
 					}
 					catch (Exception e)
 					{
-						JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);							
+						JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -474,11 +482,12 @@ public class RecordingFrame
 		String ext = StringMethods.getExtension(path);
 		if (ext == null)
 			path += correct_extension;
-		else if (!ext.equals(correct_extension))
+		else if (ext.compareTo(correct_extension)!=0)
 			path = StringMethods.removeExtension(path) + correct_extension;
 		else
 			return file_to_verify;
-		JOptionPane.showMessageDialog(null, "Incorrect file extension specified.\nChanged from " + ext + " to " + correct_extension + ".", "WARNING", JOptionPane.ERROR_MESSAGE);
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        JOptionPane.showMessageDialog(null, String.format(bundle.getString("incorrect.file.extension.specified.nchanged.from.s.to.s"),ext,correct_extension), "WARNING", JOptionPane.ERROR_MESSAGE);
 		return new File(path);
 	}
 }

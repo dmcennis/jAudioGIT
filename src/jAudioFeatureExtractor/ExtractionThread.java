@@ -3,6 +3,7 @@ package jAudioFeatureExtractor;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ResourceBundle;
 
 /**
  * This is a thread for executing the DataModel.extractFeatures without tying up
@@ -63,8 +64,10 @@ public class ExtractionThread extends Thread implements Updater {
 			public void run() {
 				outerFrame.setEnabled(true);
 				progressFrame.setVisible(false);
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
 				JOptionPane.showMessageDialog(null,
-						"Features successfully extracted and saved.", "DONE",
+						bundle.getString("features.successfully.extracted.and.saved"), "DONE",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		};

@@ -2,6 +2,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * Linear Prediction Coeffecients calculated according to 'Numerical Recipes in C' (Press at al. 1992)
  * <p>Press, W., and S. Teukolsky, and W. Vetterling, and B. Flannery. 1992. <i>Numerical Recipes in C</i>. Cambridge: Cambridge University Press.
@@ -14,12 +16,13 @@ public class LPCRemoved extends FeatureExtractor {
 	private int num_dimensions = 10;
 
 	public LPCRemoved() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "LPC";
-		String description = "Linear Predictive Encoding implemented from 'Numerical Recipes in C'";
+		String description = bundle.getString("linear.predictive.encoding.implemented.from.numerical.recipes.in.c");
 
 		definition = new FeatureDefinition(name, description, true,
 				num_dimensions,
-				new String[] { "Number of LPC Coeffecients to Calculate" });
+				new String[] {bundle.getString("number.of.lpc.coeffecients.to.calculate") });
 		dependencies = null;
 		offsets = null;
 	}
@@ -91,7 +94,8 @@ public class LPCRemoved extends FeatureExtractor {
 	 */
 	public void setNumberDimensions(int n) throws Exception {
 		if (n < 1) {
-			throw new Exception("LPC must have at least 1 dimension");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(bundle.getString("lpc.must.have.at.least.1.dimension"));
 		} else {
 			num_dimensions = n;
 			definition.dimensions = num_dimensions;
@@ -110,8 +114,8 @@ public class LPCRemoved extends FeatureExtractor {
 	 */
 	public String getElement(int index) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to AreaMoments:getElement");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.areamoments.getelement1"),index));
 		} else {
 			return Integer.toString(num_dimensions);
 		}
@@ -130,14 +134,15 @@ public class LPCRemoved extends FeatureExtractor {
 	 */
 	public void setElement(int index, String value) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to AreaMoments:setElement");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.areamoments.setelement1"),index));
 		} else {
 			try {
 				int type = Integer.parseInt(value);
 				setNumberDimensions(type);
 			} catch (NumberFormatException e) {
-				throw new Exception("Number of Coeffecients must be an integer");
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new Exception(bundle.getString("number.of.coeffecients.must.be.an.integer"));
 			} catch (Exception e) {
 				throw e;
 			}

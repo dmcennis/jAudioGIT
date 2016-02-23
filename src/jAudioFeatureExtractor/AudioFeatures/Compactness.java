@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * A feature extractor that extracts the Compactness. This is a measure of the
  * noisiness of a signal.
@@ -30,11 +32,9 @@ public class Compactness extends FeatureExtractor {
 	 * offsets) of this feature.
 	 */
 	public Compactness() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Compactness";
-		String description = "A measure of the noisiness of a signal. "
-				+ "Found by comparing the components of a window's "
-				+ "magnitude spectrum with the magnitude spectrum "
-				+ "of its neighbouring windows.";
+		String description = bundle.getString("a.measure.of.the.noisiness.of.a.signal.found.by.comparing.the.components.of.a.window.s.magnitude.spectrum.with.the.magnitude.spectrum.of.its.neighbouring.windows");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition(name, description, is_sequential,

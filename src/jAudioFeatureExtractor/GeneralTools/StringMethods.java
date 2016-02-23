@@ -225,7 +225,7 @@ public class StringMethods
 		throws Exception
 	{
 		for (int i = 0; i < possible_names.length; i++)
-			if (given_name.equals(possible_names[i]))
+			if (given_name.compareTo(possible_names[i])==0)
 				return i;
 		throw new Exception("Unable to find " + given_name + ".");
 	}
@@ -248,7 +248,7 @@ public class StringMethods
 		for (int i = 0; i < editable_strings.length - 1; i++)
 			for (int j = i + 1; j < editable_strings.length; j++)
 				if (editable_strings[i] != null && editable_strings[j] != null)
-					if (editable_strings[i].equals(editable_strings[j]))
+					if (editable_strings[i].compareTo(editable_strings[j])==0)
 						editable_strings[j] = null;
 
 		Object[] cleaned_obj = jAudioFeatureExtractor.GeneralTools.GeneralMethods.removeNullEntriesFromArray(editable_strings);

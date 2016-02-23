@@ -85,7 +85,7 @@ public class ViewBatchAction extends AbstractAction {
 	}
 
 	/**
-	 * Resets all gui paramters to the settings of the chosen batch file.
+	 * Resets all gui parameters to the settings of the chosen batch file.
 	 */
 	public void actionPerformed(ActionEvent e) {
 		int count = 0;
@@ -96,7 +96,7 @@ public class ViewBatchAction extends AbstractAction {
 			action = ((JMenuItem) src).getActionCommand();
 		}
 
-		while (!e.getActionCommand().equals(action)) {
+		while (e.getActionCommand().compareTo(action)!=0) {
 			src = controller.viewBatch.getMenuComponent(++count);
 			if (src instanceof JMenuItem) {
 				action = ((JMenuItem) src).getActionCommand();

@@ -19,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
 
 /**
  * A window that allows the user to process and edit the samples belonging to an
@@ -169,10 +171,12 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 	public ProcessSamplesFrame(Controller c, OuterFrame of,
 			RecordingInfo recording_info) throws Exception {
 		try {
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
 			outer_frame = of;
 			controller = c;
 			// Set window title and make window modal
-			setTitle("Process Audio Samples");
+			setTitle(bundle.getString("process.audio.samples"));
 			Color blue = new Color((float) 0.75, (float) 0.85, (float) 1.0);
 			this.getContentPane().setBackground(blue);
 			of.setEnabled(false);
@@ -190,7 +194,7 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 			// Derive the processed_audio_samples
 			if (recording_info == null)
 				throw new Exception(
-						"Reference to recording to process is empty");
+						bundle.getString("reference.to.recording.to.process.is.empty"));
 			processed_audio_samples = null;
 			if (recording_info.samples != null)
 				processed_audio_samples = recording_info.samples
@@ -227,7 +231,7 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 			JPanel top_right_panel = new JPanel();
 			top_right_panel
 					.setBackground(this.getContentPane().getBackground());
-			top_left_panel.add(new JLabel("Recording Info:"));
+			top_left_panel.add(new JLabel(bundle.getString("recording.info")));
 			audio_info_text_field = new JTextArea(12, 25);
 			audio_info_text_field.setEditable(false);
 			updateRecordingInformation();
@@ -238,37 +242,37 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 
 			// Set up the bottom_panel
 			choose_possible_format_button = new JButton(
-					"Choose Possible Format");
+					bundle.getString("choose.possible.format"));
 			choose_possible_format_button.addActionListener(this);
 			bottom_panel.add(choose_possible_format_button);
 			change_encoding_format_button = new JButton(
-					"Change to Possible Format");
+					bundle.getString("change.to.possible.format"));
 			change_encoding_format_button.addActionListener(this);
 			bottom_panel.add(change_encoding_format_button);
-			apply_gain_button = new JButton("Apply Gain:");
+			apply_gain_button = new JButton(bundle.getString("apply.gain"));
 			apply_gain_button.addActionListener(this);
 			bottom_panel.add(apply_gain_button);
 			choose_gain_text_field = new JTextArea();
 			bottom_panel.add(choose_gain_text_field);
-			normalize_button = new JButton("Normalize");
+			normalize_button = new JButton(bundle.getString("normalize"));
 			normalize_button.addActionListener(this);
 			bottom_panel.add(normalize_button);
-			mix_down_button = new JButton("Mix Down To One Channel");
+			mix_down_button = new JButton(bundle.getString("mix.down.to.one.channel"));
 			mix_down_button.addActionListener(this);
 			bottom_panel.add(mix_down_button);
 			bottom_panel.add(new JLabel(""));
 			bottom_panel.add(new JLabel(""));
-			bottom_panel.add(new JLabel("Limits Based On:"));
+			bottom_panel.add(new JLabel(bundle.getString("limits.based.on")));
 			bottom_panel.add(new JLabel(""));
 			start_end_type_radio_button_group = new ButtonGroup();
-			time_start_end_type_radio_button = new JRadioButton("Time");
+			time_start_end_type_radio_button = new JRadioButton(bundle.getString("time"));
 			time_start_end_type_radio_button.setBackground(this
 					.getContentPane().getBackground());
 			time_start_end_type_radio_button.addActionListener(this);
 			start_end_type_radio_button_group
 					.add(time_start_end_type_radio_button);
 			samples_start_end_type_radio_button = new JRadioButton(
-					"Sample Indices");
+					bundle.getString("sample.indices"));
 			samples_start_end_type_radio_button.setBackground(this
 					.getContentPane().getBackground());
 			samples_start_end_type_radio_button.addActionListener(this);
@@ -277,37 +281,37 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 					.add(samples_start_end_type_radio_button);
 			bottom_panel.add(time_start_end_type_radio_button);
 			bottom_panel.add(samples_start_end_type_radio_button);
-			bottom_panel.add(new JLabel("Start"));
+			bottom_panel.add(new JLabel(bundle.getString("start")));
 			start_text_field = new JTextArea();
 			bottom_panel.add(start_text_field);
-			bottom_panel.add(new JLabel("End"));
+			bottom_panel.add(new JLabel(bundle.getString("end")));
 			end_text_field = new JTextArea();
 			bottom_panel.add(end_text_field);
 			convertStartEndFields(true);
-			play_samples_button = new JButton("Play");
+			play_samples_button = new JButton(bundle.getString("play"));
 			play_samples_button.addActionListener(this);
 			bottom_panel.add(play_samples_button);
-			stop_playback_button = new JButton("Stop");
+			stop_playback_button = new JButton(bundle.getString("stop"));
 			stop_playback_button.addActionListener(this);
 			bottom_panel.add(stop_playback_button);
-			restore_button = new JButton("Restore");
+			restore_button = new JButton(bundle.getString("restore"));
 			restore_button.addActionListener(this);
 			bottom_panel.add(restore_button);
-			view_samples_button = new JButton("View Samples");
+			view_samples_button = new JButton(bundle.getString("view.samples"));
 			view_samples_button.addActionListener(this);
 			bottom_panel.add(view_samples_button);
-			plot_samples_button = new JButton("Plot Samples");
+			plot_samples_button = new JButton(bundle.getString("plot.samples"));
 			plot_samples_button.addActionListener(this);
 			bottom_panel.add(plot_samples_button);
-			plot_FFT_button = new JButton("Plot Spectrum");
+			plot_FFT_button = new JButton(bundle.getString("plot.spectrum"));
 			plot_FFT_button.addActionListener(this);
 			bottom_panel.add(plot_FFT_button);
 			bottom_panel.add(new JLabel(""));
 			bottom_panel.add(new JLabel(""));
-			cancel_button = new JButton("Canel");
+			cancel_button = new JButton(bundle.getString("canel"));
 			cancel_button.addActionListener(this);
 			bottom_panel.add(cancel_button);
-			save_button = new JButton("Save");
+			save_button = new JButton(bundle.getString("save"));
 			save_button.addActionListener(this);
 			bottom_panel.add(save_button);
 			add(bottom_panel, BorderLayout.CENTER);
@@ -413,21 +417,20 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 			if ((new_audio_format.getSampleSizeInBits() != 16 && new_audio_format
 					.getSampleSizeInBits() != 8)
 					|| !new_audio_format.isBigEndian()
-					|| new_audio_format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED)
-				throw new Exception(
-						"Only 8 or 16 bit signed PCM samples with a big-endian\n"
-								+ "byte order can be used currently.");
+					|| new_audio_format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                throw new Exception(
+                        bundle.getString("only.8.or.16.bit.signed.pcm.samples.with.a.big.endian.nbyte.order.can.be.used.currently"));
+            }
 
 			AudioInputStream original_audio_input_stream = processed_audio_samples
 					.getAudioInputStreamChannelSegregated();
 			int original_number_channels = original_audio_input_stream
 					.getFormat().getChannels();
-			if (original_number_channels != new_audio_format.getChannels())
-				throw new Exception("Original audio has "
-						+ original_number_channels + " channels but the\n"
-						+ "new format has " + new_audio_format.getChannels()
-						+ "channels.\n" + "These must match.");
-
+			if (original_number_channels != new_audio_format.getChannels()) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new Exception(String.format(MessageFormat.format(bundle.getString("original.audio.has.d.channels.but.the.nnew.format.has.d.channels.nthese.must.match"),original_number_channels,new_audio_format.getChannels() ), original_number_channels, new_audio_format.getChannels()));
+			}
 			AudioInputStream new_audio_input_stream = AudioSystem
 					.getAudioInputStream(new_audio_format,
 							original_audio_input_stream);
@@ -587,9 +590,10 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 					.getSamplesChannelSegregated(start_sample, end_sample);
 
 			// Fill and show the dialog box
-			text_area.append("SAMPLE\t");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			text_area.append(bundle.getString("sample.t"));
 			for (int chan = 0; chan < samples.length; chan++)
-				text_area.append("CHANNEL " + chan + "\t\t");
+				text_area.append(MessageFormat.format(bundle.getString("channel.0.t.t"), chan));
 			for (int samp = start_sample; samp <= end_sample; samp++) {
 				text_area.append("\n" + samp + "\t");
 				for (int chan = 0; chan < samples.length; chan++)
@@ -597,7 +601,7 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 			}
 			displayer.display();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR",
+			JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "ERROR",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -780,8 +784,9 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 				recording_info.samples = processed_audio_samples;
 			cancel();
 		} catch (Exception e) {
-			String message = "Unable to save changes:\n";
-			JOptionPane.showMessageDialog(null, message + e.getMessage(),
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            String message = String.format(bundle.getString("unable.to.save.changes.n.s"),e.getLocalizedMessage());
+			JOptionPane.showMessageDialog(null, message,
 					"ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -790,9 +795,9 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 	 * Update the audio_info_text_field to reflect any changes.
 	 */
 	private void updateRecordingInformation() {
-		String header = "FILE: " + recording_info.file_path + "\n";
-		audio_info_text_field.setText(header
-				+ processed_audio_samples.getRecordingInfo());
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        String header = String.format(bundle.getString("file.s.n.s"),recording_info.file_path,processed_audio_samples.getRecordingInfo());
+		audio_info_text_field.setText(header);
 	}
 
 	/**
@@ -854,26 +859,20 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 	 * fields.
 	 */
 	private void verifyStartAndEndFields() throws Exception {
-		if (time_start_end_type_radio_button.isSelected()) {
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        if (time_start_end_type_radio_button.isSelected()) {
 			double start_time = (new Double(start_text_field.getText()))
 					.doubleValue();
 			double end_time = (new Double(end_text_field.getText()))
 					.doubleValue();
 			double maximum_duration = processed_audio_samples.getDuration();
 			if (start_time < 0.0 || start_time > maximum_duration)
-				throw new Exception("Start time is specified to be "
-						+ start_time + ".\n"
-						+ "This value must be between 0 and "
-						+ maximum_duration + ".");
-			if (end_time <= start_time)
-				throw new Exception("End time is " + end_time
-						+ " and start time is " + start_time + ".\n"
-						+ "Start time must be after end time.");
+				throw new Exception(String.format(bundle.getString("start.time.is.specified.to.be.f.nthis.value.must.be.between.0.and.f"),start_time,maximum_duration));
+			if (end_time <= start_time) {
+                throw new Exception(String.format(bundle.getString("end.time.is.f.and.start.time.is.f.nstart.time.must.be.after.end.time"), end_time, start_time));
+            }
 			if (end_time > maximum_duration)
-				throw new Exception("End time of " + end_time
-						+ " is greater than the total duration of "
-						+ maximum_duration + ".\n"
-						+ "Start time must be after end time.");
+				throw new Exception(String.format(bundle.getString("end.time.of.f.is.greater.than.the.total.duration.of.f.nstart.time.must.be.after.end.time"),end_time,maximum_duration));
 			float sampling_rate = processed_audio_samples.getAudioFormat()
 					.getSampleRate();
 		} else {
@@ -883,19 +882,11 @@ public class ProcessSamplesFrame extends JFrame implements ActionListener {
 			int maximum_sample = processed_audio_samples
 					.getNumberSamplesPerChannel();
 			if (start_sample < 0 || start_sample > maximum_sample)
-				throw new Exception("Start sample is specified to be "
-						+ start_sample + ".\n"
-						+ "This value must be between 0 and " + maximum_sample
-						+ ".");
+				throw new Exception(String.format(bundle.getString("start.sample.is.specified.to.be.d.nthis.value.must.be.between.0.and.d"),start_sample,maximum_sample));
 			if (end_sample <= start_sample)
-				throw new Exception("End sample is " + end_sample
-						+ " and start sample is " + start_sample + ".\n"
-						+ "Start sample must be after end sample.");
+				throw new Exception(String.format(bundle.getString("end.sample.is.d.and.start.sample.is.d.nstart.sample.must.be.after.end.sample"),end_sample,start_sample));
 			if (end_sample > maximum_sample)
-				throw new Exception("End sample of " + end_sample
-						+ " is greater than the total samples of "
-						+ maximum_sample + ".\n"
-						+ "Start sample must be after end sample.");
+				throw new Exception(String.format(bundle.getString("end.sample.of.d.is.greater.than.the.total.samples.of.d.nstart.sample.must.be.after.end.sample"),end_sample,maximum_sample));
 		}
 	}
 }

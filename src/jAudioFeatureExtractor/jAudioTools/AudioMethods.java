@@ -11,6 +11,7 @@ import javax.sound.sampled.*;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
+import java.util.ResourceBundle;
 
 
 /**
@@ -56,34 +57,33 @@ public class AudioMethods
 	 */
 	public static String getAudioFormatData(AudioFormat audio_format)
 	{
-		String encoding = audio_format.getEncoding().toString() + "\n";
-		String endian;
-		if (audio_format.isBigEndian())
-			endian = "big-endian\n";
-		else
-			endian = "little-endian\n";
-		String sampling_rate = (audio_format.getSampleRate() / 1000) + " kHz\n";
-		String bit_depth = audio_format.getSampleSizeInBits() + " bits\n";
-		String channels;
-		if (audio_format.getChannels() == 1)
-			channels = "mono\n";
-		else if (audio_format.getChannels() == 2)
-			channels = "stereo\n";
-		else
-			channels = audio_format.getChannels() + " channels\n";
-		String frame_size = (8 * audio_format.getFrameSize()) + " bits\n";
-		String frame_rate = audio_format.getFrameRate() + " frames per second\n";
-		String additional_properties = audio_format.properties() + "\n";
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+//        String encoding = audio_format.getEncoding().toString() + "\n";
+//		String endian;
+//		String sampling_rate = (audio_format.getSampleRate() / 1000) + " kHz\n";
+//		String bit_depth = audio_format.getSampleSizeInBits() + " bits\n";
+//		String channels;
+//		String frame_size = (8 * audio_format.getFrameSize()) + " bits\n";
+//		String frame_rate = audio_format.getFrameRate() + " frames per second\n";
+//		String additional_properties = audio_format.properties() + "\n";
 
-		String data = new String();
-		data += new String("SAMPLING RATE: " + sampling_rate);
-		data += new String("BIT DEPTH: " + bit_depth);
-		data += new String("CHANNELS: " + channels);
-		data += new String("FRAME SIZE: " + frame_size);
-		data += new String("FRAME RATE: " + frame_rate);
-		data += new String("ENCODING: " + encoding);
-		data += new String("BYTE ORDER: " + endian);
-		data += new String("PROPERTIES: " + additional_properties);
+		String data;
+		data = String.format(bundle.getString("sampling.rate.f.khz.n"),(audio_format.getSampleRate() / 1000));
+		data = String.format(bundle.getString("sbit.depth.d.bits.n"),data,audio_format.getSampleSizeInBits());
+        if (audio_format.getChannels() == 1)
+            data = String.format(bundle.getString("schannels.mono.n"),data);
+        else if (audio_format.getChannels() == 2)
+            data = String.format(bundle.getString("schannels.stereo.n"),data);
+        else
+            data = String.format(bundle.getString("schannels.d.channels.n"),data, audio_format.getChannels());
+		data = String.format(bundle.getString("sframe.size.d.bits.n"),data,(8 * audio_format.getFrameSize()));
+		data = String.format(bundle.getString("sframe.rate.f.frames.per.second.n"), data, audio_format.getFrameRate());
+		data = String.format(bundle.getString("sencoding.s.n"),data,audio_format.getEncoding().toString());
+        if (audio_format.isBigEndian())
+            data = String.format(bundle.getString("sbyte.order.big.endian.n"),data);
+        else
+            data = String.format(bundle.getString("sbyte.order.little.endian.n"),data);
+		data = String.format(bundle.getString("sproperties.s.n1"),data,audio_format.properties());
 		return data;
 	}
 	
@@ -107,36 +107,36 @@ public class AudioMethods
 	public static String getAudioFileFormatData(File file)
 		throws Exception
 	{
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		try
 		{
 			AudioFileFormat audio_file_format = AudioSystem.getAudioFileFormat(file);
 			
-			String file_name = file.getName() + "\n";
-			String file_type = audio_file_format.getType().toString() + "\n";
-			String file_size = (audio_file_format.getByteLength() / 1024) + " kilobytes\n";
-			String length_of_audio_data = audio_file_format.getFrameLength() + " sample frames\n";
-			String time_duration = audio_file_format.getFrameLength() / audio_file_format.getFormat().getFrameRate() + " seconds\n";
-			String additional_properties = audio_file_format.properties() + "\n";
+//			String file_name = file.getName() + "\n";
+//			String file_type = audio_file_format.getType().toString() + "\n";
+//			String file_size = (audio_file_format.getByteLength() / 1024) + " kilobytes\n";
+//			String length_of_audio_data = audio_file_format.getFrameLength() + " sample frames\n";
+//			String time_duration = audio_file_format.getFrameLength() / audio_file_format.getFormat().getFrameRate() + " seconds\n";
+//			String additional_properties = audio_file_format.properties() + "\n";
 
-			String data = new String();
-			data += new String("FILE NAME: " + file_name);
-			data += new String("FILE TYPE: " + file_type);
-			data += new String("FILE SIZE: " + file_size);
-			data += new String("FRAMES OF AUDIO DATA: " + length_of_audio_data);
-			data += new String("TIME DURATION: " + time_duration);
-			data += new String("PROPERTIES: " + additional_properties);
-
-			data += "\n" + getAudioFormatData(audio_file_format.getFormat());
+			String data;
+			data = String.format(bundle.getString("file.name.s.n"), file.getName());
+			data = String.format(bundle.getString("sfile.type.s.n"),data, audio_file_format.getType().toString());
+			data = String.format(bundle.getString("sfile.size.d.kilobyes.n"),data,(audio_file_format.getByteLength() / 1024));
+			data = String.format(bundle.getString("sframes.of.audio.data.d.sample.frames.n"),data,audio_file_format.getFrameLength());
+			data = String.format(bundle.getString("stime.duration.d.seconds.n"),data,audio_file_format.getFrameLength() / audio_file_format.getFormat().getFrameRate());
+			data = String.format(bundle.getString("sproperties.s.n"),data,audio_file_format.properties());
+			data = String.format(bundle.getString("s.n.s"),data,getAudioFormatData(audio_file_format.getFormat()));
 
 			return data;
 		}
 		catch (UnsupportedAudioFileException ex)
 		{
-			throw new Exception("File " + file.getName() + " has an unsupported audio format.");
+			throw new Exception(String.format(bundle.getString("file.s.has.an.unsupported.audio.format"), file.getName()));
 		}
 		catch (IOException ex)
 		{
-			throw new Exception("File " + file.getName() + " is not readable.");
+			throw new Exception(String.format(bundle.getString("file.s.is.not.readable"),file.getName()));
 		}
 	}
 
@@ -173,15 +173,15 @@ public class AudioMethods
 	 */
 	public static AudioFileFormat.Type getAudioFileFormatType(String file_type_name)
 	{
-		if (file_type_name.equals("WAVE"))
+		if (file_type_name.compareTo("WAVE")==0)
 			return AudioFileFormat.Type.WAVE;
-		else if (file_type_name.equals("AIFF"))
+		else if (file_type_name.compareTo("AIFF")==0)
 			return AudioFileFormat.Type.AIFF;
-		else if (file_type_name.equals("AIFC"))
+		else if (file_type_name.compareTo("AIFC")==0)
 			return AudioFileFormat.Type.AIFC;
-		else if (file_type_name.equals("AU"))
+		else if (file_type_name.compareTo("AU")==0)
 			return AudioFileFormat.Type.AU;
-		else if (file_type_name.equals("SND"))
+		else if (file_type_name.compareTo("SND")==0)
 			return AudioFileFormat.Type.SND;
 		else
 			return null;
@@ -195,16 +195,16 @@ public class AudioMethods
 	 */
 	public static String getAvailableMixerData()
 	{
-		Mixer.Info[] mixer_info = AudioSystem.getMixerInfo();
-		String data = new String();
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        Mixer.Info[] mixer_info = AudioSystem.getMixerInfo();
+		String data="";
 		for(int i = 0; i < mixer_info.length; i++)
 		{
-			data += new String("INDEX: " + i + "\n");
-			data += new String("NAME: " + mixer_info[i].getName()) + "\n";
-      		data += new String("VERSION: " + mixer_info[i].getVersion()) + "\n";
-      		data += new String("VENDOR: " + mixer_info[i].getVendor()) + "\n";
-      		data += new String("DESCRIPTION: " + mixer_info[i].getDescription()) + "\n";
-			data += new String("\n");
+			data = String.format(bundle.getString("index.d.n"),i);
+			data = String.format(bundle.getString("sname.s.n"),data,mixer_info[i].getName());
+      		data = String.format(bundle.getString("sversion.s.n"),data,mixer_info[i].getVersion());
+      		data = String.format(bundle.getString("svendor.s.n"),data,mixer_info[i].getVendor());
+      		data = String.format(bundle.getString("sdescription.s.n.n"),data,mixer_info[i].getDescription());
 		}
 		return data;
 	}
@@ -430,11 +430,13 @@ public class AudioMethods
 		}
 		catch (UnsupportedAudioFileException ex)
 		{
-			throw new Exception("File " + audio_file.getName() + " has an unsupported audio format.");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("file.s.has.an.unsupported.audio.format"),audio_file.getName()));
 		}
 		catch (IOException ex)
 		{
-			throw new Exception("File " + audio_file.getName() + " is not readable.");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("file.s.is.not.readable"),audio_file.getName()));
 		}
 		return audio_input_stream;
 	}
@@ -550,9 +552,11 @@ public class AudioMethods
 		// Throw exception if incompatible this_audio_format provided
 		if ( (bit_depth != 16 && bit_depth != 8 )||
 		     !this_audio_format.isBigEndian() ||
-		     this_audio_format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED )
-			throw new Exception( "Only 8 or 16 bit signed PCM samples with a big-endian\n" +
-			                     "byte order can be analyzed currently." );
+		     this_audio_format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED ) {
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+            throw new Exception(bundle.getString("only.8.or.16.bit.signed.pcm.samples.with.a.big.endian.nbyte.order.can.be.analyzed.currently"));
+        }
 
 		// Find the number of samples in the audio_bytes
 		int number_of_bytes = audio_bytes.length;
@@ -561,8 +565,11 @@ public class AudioMethods
 
 		// Throw exception if incorrect number of bytes given
 		if ( ((number_samples == 2 || bytes_per_sample == 2) && (number_of_bytes % 2 != 0)) ||
-		     ((number_samples == 2 && bytes_per_sample == 2) && (number_of_bytes % 4 != 0)) )
-			throw new Exception("Uneven number of bytes for given bit depth and number of channels.");
+		     ((number_samples == 2 && bytes_per_sample == 2) && (number_of_bytes % 4 != 0)) ) {
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+            throw new Exception(bundle.getString("uneven.number.of.bytes.for.given.bit.depth.and.number.of.channels"));
+        }
 		
 		// Find the maximum possible value that a sample may have with the given
 		// bit depth
@@ -723,13 +730,20 @@ public class AudioMethods
 		throws Exception
 	{
 		// Throw exceptions for invalid parameters
-		if (sample_values == null)
-			throw new Exception( "Empty set of samples to write provided." );
-		if (bit_depth != 8 && bit_depth != 16)
-			throw new Exception( "Bit depth of " + bit_depth + " specified." +
-			                     "Only bit depths of 8 or 16 currently accepted." );
-		if (buffer == null)
-			throw new Exception("Null buffer for storing samples provided.");
+		if (sample_values == null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+            throw new Exception(bundle.getString("empty.set.of.samples.to.write.provided"));
+        }
+		if (bit_depth != 8 && bit_depth != 16) {
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+            throw new Exception(String.format(bundle.getString("bit.depth.of.d.specified.only.bit.depths.of.8.or.16.currently.accepted"),bit_depth));
+        }
+		if (buffer == null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            throw new Exception(bundle.getString("null.buffer.for.storing.samples.provided"));
+        }
 		
 		// Clip values above +1 or below -1
 		sample_values = clipSamples(sample_values);
@@ -783,8 +797,10 @@ public class AudioMethods
 		throws Exception
 	{
 		// Throw exceptions for invalid parameters
-		if (original_samples == null)
-			throw new Exception( "Empty set of samples to provided." );
+		if (original_samples == null) {
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            throw new Exception(bundle.getString("empty.set.of.samples.to.provided"));
+        }
 
 		// Perform clipping
 		double[][] clipped_samples = new double[original_samples.length][];

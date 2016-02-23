@@ -52,7 +52,7 @@
     <fail
             message="sdk.dir is missing. Make sure to generate local.properties using 'android update project' or to inject it through the ANDROID_HOME environment variable."
             unless="sdk.dir"
-            />
+    />
 
     <!--
         Import per project custom build rules if present at the root of the project.

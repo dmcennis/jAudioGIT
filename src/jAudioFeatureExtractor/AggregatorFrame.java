@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 /**
  * AggregatorFrame
@@ -49,6 +50,8 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 
 	private JButton Abort = null;
 
+	static final ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
 	/**
 	 * This is the default constructor
 	 */
@@ -66,7 +69,7 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 	 */
 	private void initialize() {
 		this.setContentPane(getJContentPane());
-		this.setTitle("Aggregators");
+		this.setTitle(bundle.getString("aggregators"));
 		this.setBounds(new Rectangle(0, 22, 1000, 1000));
 	}
 
@@ -208,8 +211,8 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 	private JButton getAggAdd() {
 		if (AggAdd == null) {
 			AggAdd = new JButton();
-			AggAdd.setText("Add");
-			AggAdd.setToolTipText("Add a new Aggregator to be applied");
+			AggAdd.setText(bundle.getString("add"));
+			AggAdd.setToolTipText(bundle.getString("add.a.new.aggregator.to.be.applied"));
 			AggAdd.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int row = AggListTable.getSelectedRow();
@@ -219,7 +222,7 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 						Aggregator newAgg = (Aggregator)prototype.clone();
 						((ActiveAggTableModel)ActiveAggTable.getModel()).addAggregator(newAgg);
 					}
-					System.out.println("actionPerformed()"); 				}
+					System.out.println(bundle.getString("actionperformed")); 				}
 			});
 		}
 		return AggAdd;
@@ -233,8 +236,8 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 	private JButton getAggRemove() {
 		if (AggRemove == null) {
 			AggRemove = new JButton();
-			AggRemove.setText("Remove");
-			AggRemove.setToolTipText("Remove an aggregator that has been previously defined");
+			AggRemove.setText(bundle.getString("remove"));
+			AggRemove.setToolTipText(bundle.getString("remove.an.aggregator.that.has.been.previously.defined"));
 			AggRemove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int row = ActiveAggTable.getSelectedRow();
@@ -255,8 +258,8 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 	private JButton getAggEdit() {
 		if (AggEdit == null) {
 			AggEdit = new JButton();
-			AggEdit.setText("Edit");
-			AggEdit.setToolTipText("Edit the properities of the defined aggregator");
+			AggEdit.setText(bundle.getString("edit"));
+			AggEdit.setToolTipText(bundle.getString("edit.the.properities.of.the.defined.aggregator"));
 			AggEdit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int row = ActiveAggTable.getSelectedRow();
@@ -279,8 +282,8 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 	private JButton getDoneButton() {
 		if (DoneButton == null) {
 			DoneButton = new JButton();
-			DoneButton.setText("Save");
-			DoneButton.setToolTipText("Save and exit aggregator editing.");
+			DoneButton.setText(bundle.getString("save"));
+			DoneButton.setToolTipText(bundle.getString("save.and.exit.aggregator.editing"));
 			DoneButton.addActionListener(this);
 		}
 		return DoneButton;
@@ -294,8 +297,8 @@ public class AggregatorFrame extends JFrame implements ActionListener {
 	private JButton getAbort() {
 		if (Abort == null) {
 			Abort = new JButton();
-			Abort.setText("Cancel");
-			Abort.setToolTipText("Exit without saving.");
+			Abort.setText(bundle.getString("cancel"));
+			Abort.setToolTipText(bundle.getString("exit.without.saving"));
 			Abort.addActionListener(this);
 		}
 		return Abort;

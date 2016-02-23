@@ -2,6 +2,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * Class that calculates the first 5 stastical method of moments (Fujinaga
  * 1997). Very similar to Area Method of Moments feature, but does not have the
@@ -18,8 +20,10 @@ public class Moments extends FeatureExtractor {
 	 * Base constructor that defines definition, dependencies, and offsets.
 	 */
 	public Moments() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
 		String name = "Method of Moments";
-		String description = "Statistical Method of Moments of the Magnitude Spectrum.";
+		String description = bundle.getString("statistical.method.of.moments.of.the.magnitude.spectrum");
 
 		definition = new FeatureDefinition(name, description, true, 5);
 		dependencies = new String[] { "Magnitude Spectrum" };

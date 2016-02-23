@@ -11,6 +11,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /*
  * Constant Q
  * 
@@ -38,11 +40,12 @@ public class ConstantQ extends FeatureExtractor
 	 */
 	public ConstantQ()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "ConstantQ";
-		String description = "signal to frequency transform using exponential-spaced frequency bins.";
+		String description = bundle.getString("signal.to.frequency.transform.using.exponential.spaced.frequency.bins");
 		boolean is_sequential = true;
 		int dimensions = 0;
-		String[] attributes = new String[]{"Percent of a semitone per bin"};
+		String[] attributes = new String[]{bundle.getString("percent.of.a.semitone.per.bin")};
 		definition = new FeatureDefinition( name,
 		                                    description,
 		                                    is_sequential,
@@ -177,8 +180,8 @@ public class ConstantQ extends FeatureExtractor
 		case 0:
 			return Double.toString(alpha);
 		default:
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " passed to LPC:getElement()");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.passed.to.lpc.getelement"),index));
 		}
 	}
 
@@ -199,17 +202,20 @@ public class ConstantQ extends FeatureExtractor
 			try {
 				double val = Double.parseDouble(value);
 				if(val <= 0.0){
-					throw new Exception("Alpha must be a positive value");
+					ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+					throw new Exception(bundle.getString("alpha.must.be.a.positive.value"));
 				}else{
 					alpha = val;
 				}
 			} catch (NumberFormatException e) {
-				throw new Exception("Alpha value must be a double");
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new Exception(bundle.getString("alpha.value.must.be.a.double"));
 			}
 			break;
 		default:
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			throw new Exception(
-					"INTERNAL ERROR: invalid index passed to ConstantQ:setElement");
+					bundle.getString("internal.error.invalid.index.passed.to.constantq.setelement"));
 		}
 	}
 

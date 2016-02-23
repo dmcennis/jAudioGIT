@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * Cut Action that is included for completenes only.
+ * Cut Action that is included for completeness only.
  * @author Daniel McEnnis
  *
  */
@@ -14,7 +14,7 @@ public class CutAction extends AbstractAction {
 	static final long serialVersionUID = 1;
 
 	/**
-	 * Constructore that sets the menu text.
+	 * Constructor that sets the menu text.
 	 *
 	 */
 	public CutAction(){

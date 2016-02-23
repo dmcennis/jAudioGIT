@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -38,6 +39,7 @@ public class SaveBatchAction extends AbstractAction {
 	 * Saves the current set of batches to file.
 	 */
 	public void actionPerformed(ActionEvent e) {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		JFileChooser chooser = new JFileChooser();
 		chooser
 				.setBackground(new Color((float) 0.75, (float) 0.85,
@@ -51,19 +53,20 @@ public class SaveBatchAction extends AbstractAction {
 					JOptionPane
 							.showMessageDialog(
 									null,
-									"No Batches have been prepared to save. Try adding batches first.",
+									bundle.getString("no.batches.have.been.prepared.to.save.try.adding.batches.first"),
 									"ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
 					if (path.exists()) {
 						int overwrite = JOptionPane
 								.showConfirmDialog(
 										null,
-										"This file already exists.\nDo you wish to overwrite it?",
+										bundle.getString("this.file.already.exists.ndo.you.wish.to.overwrite.it1"),
 										"WARNING", JOptionPane.YES_NO_OPTION);
 						if (overwrite != JOptionPane.YES_OPTION) {
 							save = false;
 						}
-					} else if (save == true) {
+					}
+					if (save == true) {
 						path.createNewFile();
 					}
 					FileWriter fw = new FileWriter(path);

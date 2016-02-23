@@ -5,6 +5,7 @@ import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 import jAudioFeatureExtractor.actions.*;
 
 import javax.swing.*;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 /**
@@ -14,6 +15,9 @@ import java.util.Vector;
  * @author Daniel McEnnis
  */
 public class Controller implements ModelListener {
+
+	public static final ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
 
 	/**
 	 * model controlling display of recordings
@@ -207,19 +211,19 @@ public class Controller implements ModelListener {
 	 * actions
 	 */
 	public JCheckBoxMenuItem storeSamples = new JCheckBoxMenuItem(
-			"Store Samples", false);
+			bundle.getString("store.samples"), false);
 
 	/**
 	 * validate needs to be available for saving settings and similar actions
 	 */
 	public JCheckBoxMenuItem validate = new JCheckBoxMenuItem(
-			"Validate Recordings", true);
+			bundle.getString("validate.recordings"), true);
 
 	/**
 	 * normalise needs to be available for saving settings and similar actions
 	 */
 	public JCheckBoxMenuItem normalise = new JCheckBoxMenuItem(
-			"Normalise Recordings", false);
+			bundle.getString("normalise.recordings"), false);
 
 	/**
 	 * @see jAudioFeatureExtractor.ExtractionThread
@@ -244,11 +248,11 @@ public class Controller implements ModelListener {
 	public Controller() {
 		dm_ = new DataModel("features.xml",this);
 		fstm_ = new FeatureSelectorTableModel(new Object[] {
-				new String("Save"), new String("Feature"),
-				new String("Dimensions"), new String("IsPrimary") },
+				new String(bundle.getString("save")), new String(bundle.getString("feature")),
+				new String(bundle.getString("dimensions")), new String(bundle.getString("isprimary")) },
 				dm_.features.length);
-		rtm_ = new RecordingsTableModel(new Object[] { new String("Name"),
-				new String("Path") }, 0);
+		rtm_ = new RecordingsTableModel(new Object[] { new String(bundle.getString("name")),
+				new String(bundle.getString("path")) }, 0);
 		aggList_ = new AggListTableModel();
 		activeAgg_ = new ActiveAggTableModel();
 		saveAction = new SaveAction(this, fstm_);

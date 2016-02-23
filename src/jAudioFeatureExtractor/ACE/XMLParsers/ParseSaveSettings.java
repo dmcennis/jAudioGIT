@@ -3,8 +3,9 @@ package jAudioFeatureExtractor.ACE.XMLParsers;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import java.util.HashMap;
+import java.text.MessageFormat;import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,7 +84,7 @@ public class ParseSaveSettings extends ParseFileHandler {
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
 		String tmp = new String(ch,start,length);
-
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		switch (tagType){
 			case 0:
 				break;
@@ -99,7 +100,7 @@ public class ParseSaveSettings extends ParseFileHandler {
 				try {
 					sampleRate = Double.parseDouble(tmp);
 				} catch (NumberFormatException e) {
-					throw new SAXException("sampleRate must be a double");
+					throw new SAXException(bundle.getString("samplerate.must.be.a.double"));
 				}
 				break;
 			case 5:
@@ -110,8 +111,7 @@ public class ParseSaveSettings extends ParseFileHandler {
 				} else if (fm.matches()) {
 					savePerWindow = false;
 				} else {
-					throw new SAXException("Valid states are true or false, not "
-							+ tmp);
+					throw new SAXException(MessageFormat.format(bundle.getString("valid.states.are.true.or.false.not.0"), tmp));
 				}
 				break;
 			case 6:
@@ -122,8 +122,7 @@ public class ParseSaveSettings extends ParseFileHandler {
 				} else if (fm.matches()) {
 					saveOverall = false;
 				} else {
-					throw new SAXException("Valid states are true or false, not "
-							+ tmp);
+					throw new SAXException(MessageFormat.format(bundle.getString("valid.states.are.true.or.false.not.0"), tmp));
 				}
 				break;
 			case 7:
@@ -134,8 +133,7 @@ public class ParseSaveSettings extends ParseFileHandler {
 				} else if (fm.matches()) {
 					normalise = false;
 				} else {
-					throw new SAXException("Valid states are true or false, not "
-							+ tmp);
+					throw new SAXException(MessageFormat.format(bundle.getString("valid.states.are.true.or.false.not.0"), tmp));
 				}
 				break;
 			case 8:
@@ -149,8 +147,7 @@ public class ParseSaveSettings extends ParseFileHandler {
 				} else if (fm.matches()) {
 					checkedMap_.put(name,false);
 				} else {
-					throw new SAXException("Valid states are true or false, not "
-							+ tmp);
+					throw new SAXException(MessageFormat.format(bundle.getString("valid.states.are.true.or.false.not.0"), tmp));
 				}
 				break;
 			case 10:
@@ -171,7 +168,7 @@ public class ParseSaveSettings extends ParseFileHandler {
 				tmpAggregatorParameters_.add(tmp);
 				break;
 			default:
-				throw new SAXException("Unknown Tag Type " + tagType + "in characters");
+				throw new SAXException(String.format(bundle.getString("unknown.tag.type.d.in.characters"),tagType));
 		}
 	}
 
@@ -202,23 +199,23 @@ public class ParseSaveSettings extends ParseFileHandler {
 	 */
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
-		if (localName.equals("name")||qName.equals("name")){
+		if ((localName.compareTo("name")==0)||(qName.compareTo("name")==0)){
 			tagType = 1;
-		}else if (localName.equals("active")||qName.equals("active")) {
+		}else if ((localName.compareTo("active")==0)||(qName.compareTo("active")==0)) {
 			tagType = 1;
-		} else if (localName.equals("attribute")||qName.equals("attribute")) {
+		} else if ((localName.compareTo("attribute")==0)||(qName.compareTo("attribute")==0)) {
 			tagType = 1;
-		} else if (localName.equals("feature")||qName.equals("feature")) {
+		} else if ((localName.compareTo("feature")==0)||(qName.compareTo("feature")==0)) {
 			attributeMap_.put(name,tmpAttributes_.toArray(new String[] {}));
 			tmpAttributes_.clear();
 			tagType = 0;
-		} else if (localName.equals("aggregatorName")||qName.equals("aggregatorName")){
+		} else if ((localName.compareTo("aggregatorName")==0)||(qName.compareTo("aggregatorName")==0)){
 			tagType=12;
-		}else if(localName.equals("aggregatorFeature")||qName.equals("aggregatorFeature")){
+		}else if((localName.compareTo("aggregatorFeature")==0)||(qName.compareTo("aggregatorFeature")==0)){
 			tagType=12;
-		}else if(localName.equals("aggregatorAttribute")||qName.equals("aggregatorAttribute")){
+		}else if((localName.compareTo("aggregatorAttribute")==0)||(qName.compareTo("aggregatorAttribute")==0)){
 			tagType=12;
-		}else if(localName.equals("aggregator")||qName.equals("aggregator")){
+		}else if((localName.compareTo("aggregator")==0)||(qName.compareTo("aggregator")==0)){
 			aggregatorFeatures.add(tmpAggregatorFeature_.toArray(new String[]{}));
 			aggregatorParameters.add(tmpAggregatorParameters_.toArray(new String[]{}));
 			tmpAggregatorFeature_.clear();
@@ -236,41 +233,41 @@ public class ParseSaveSettings extends ParseFileHandler {
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
 		if (count == 0) {
-			if (!localName.equals("save_settings")&&!qName.equals("save_settings")) {
+			if ((localName.compareTo("save_settings")!=0)&&(qName.compareTo("save_settings")!=0)) {
 				throw new SAXException("\n\nIt is in reality of the type ["
 						+ localName + "].");
 			}
 		}
 		count++;
-		if (localName.equals("feature")||qName.equals("feature")) {
+		if ((localName.compareTo("feature")==0)||(qName.compareTo("feature")==0)) {
 			tagType = 1;
-		} else if (localName.equals("windowSize")||qName.equals("windowSize")) {
+		} else if ((localName.compareTo("windowSize")==0)||(qName.compareTo("windowSize")==0)) {
 			tagType = 2;
-		} else if (localName.equals("windowOverlap")||qName.equals("windowOverlap")) {
+		} else if ((localName.compareTo("windowOverlap")==0)||(qName.compareTo("windowOverlap")==0)) {
 			tagType = 3;
-		} else if (localName.equals("samplingRate")||qName.equals("samplingRate")) {
+		} else if ((localName.compareTo("samplingRate")==0)||(qName.compareTo("samplingRate")==0)) {
 			tagType = 4;
-		} else if (localName.equals("perWindowStats")||qName.equals("perWindowStats")) {
+		} else if ((localName.compareTo("perWindowStats")==0)||(qName.compareTo("perWindowStats")==0)) {
 			tagType = 5;
-		} else if (localName.equals("overallStats")||qName.equals("overallStats")) {
+		} else if ((localName.compareTo("overallStats")==0)||(qName.compareTo("overallStats")==0)) {
 			tagType = 6;
-		} else if (localName.equals("normalise")||qName.equals("normalise")) {
+		} else if ((localName.compareTo("normalise")==0)||(qName.compareTo("normalise")==0)) {
 			tagType = 7;
-		} else if (localName.equals("outputType")||qName.equals("outputType")) {
+		} else if ((localName.compareTo("outputType")==0)||(qName.compareTo("outputType")==0)) {
 			tagType = 8;
-		} else if (localName.equals("active")||qName.equals("active")) {
+		} else if ((localName.compareTo("active")==0)||(qName.compareTo("active")==0)) {
 			tagType = 9;
-		} else if (localName.equals("attribute")||qName.equals("attribute")) {
+		} else if ((localName.compareTo("attribute")==0)||(qName.compareTo("attribute")==0)) {
 			tagType = 10;
-		} else if(localName.equals("name")||qName.equals("name")){
+		} else if((localName.compareTo("name")==0)||(qName.compareTo("name")==0)){
 			tagType = 11;
-		} else if(localName.equals("aggregator")||qName.equals("aggregator")){
+		} else if((localName.compareTo("aggregator")==0)||(qName.compareTo("aggregator")==0)){
 			tagType = 12;
-		} else if(localName.equals("aggregatorName")||qName.equals("aggregatorName")){
+		} else if((localName.compareTo("aggregatorName")==0)||(qName.compareTo("aggregatorName")==0)){
 			tagType = 13;
-		} else if(localName.equals("aggregatorFeature")||qName.equals("aggregatorFeature")){
+		} else if((localName.compareTo("aggregatorFeature")==0)||(qName.compareTo("aggregatorFeature")==0)){
 			tagType = 14;
-		} else if(localName.equals("aggregatorAttribute")||qName.equals("aggregatorAttribute")){
+		} else if((localName.compareTo("aggregatorAttribute")==0)||(qName.compareTo("aggregatorAttribute")==0)){
 			tagType = 15;
 		}
 	}

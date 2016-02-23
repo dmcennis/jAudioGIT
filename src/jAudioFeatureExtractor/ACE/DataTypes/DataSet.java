@@ -7,6 +7,8 @@
 package jAudioFeatureExtractor.ACE.DataTypes;
 
 import java.io.*;
+import java.util.ResourceBundle;
+
 import jAudioFeatureExtractor.ACE.XMLParsers.XMLDocumentParser;
 
 
@@ -175,15 +177,14 @@ public class DataSet
 				new_feature_values[def] = null;
 				
 				for (int feat = 0; feat < feature_names.length; feat++)
-					if ( definitions[def].name.equals(feature_names[feat]) )
+					if ( definitions[def].name.compareTo(feature_names[feat])==0 )
 					{
+						ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
 						if (!is_top_level && !definitions[def].is_sequential)
-							throw new Exception( "Feature " + feature_names[feat] + " is present in a sub-set of\n" +
-							                     "a DataSet, but is marked as non-sequential in its definition." );
+							throw new Exception( String.format(bundle.getString("feature.s.is.present.in.a.sub.set.of.na.dataset.but.is.marked.as.non.sequential.in.its.definition"),feature_names[feat]) );
 						if (feature_values[feat].length != definitions[def].dimensions)
-							throw new Exception( "Feature " + feature_names[feat] + " has " + feature_values[feat].length +
-												 " values, but should have " + definitions[def].dimensions + "\n" +
-												 "according to its definition." );
+							throw new Exception( String.format(bundle.getString("feature.s.has.d.values.but.should.have.d.naccording.to.its.definition"),feature_names[feat],feature_values[feat].length,definitions[def].dimensions) );
 						
 						new_feature_values[def] = feature_values[feat];
 						feat = feature_values.length;
@@ -502,10 +503,10 @@ public class DataSet
 		// feature definitions or the data sets themselves
 		if (definitions == null)
 			for (int set = 0; set < data_sets.length; set++)
-				if (data_sets[set].feature_names == null)
-					throw new Exception( "Could not save because no feature definitions\n" +
-										 "were provided and DataSet " + data_sets[set].identifier + "\n" +
-					                     "does not hold the names of its features." );
+				if (data_sets[set].feature_names == null) {
+                    ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                    throw new Exception(String.format(bundle.getString("could.not.save.because.no.feature.definitions.nwere.provided.and.dataset.s.ndoes.not.hold.the.names.of.its.features"),data_sets[set].identifier));
+                }
 
 		// Perform the save
 		try
@@ -596,7 +597,8 @@ public class DataSet
 		}
 		catch (Exception e)
 		{
-			throw new Exception("Unable to write file " + to_save_to.getName() + ".");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+            throw new Exception(String.format(bundle.getString("unable.to.write.file.s"),to_save_to.getName()));
 		}
 	}
 }

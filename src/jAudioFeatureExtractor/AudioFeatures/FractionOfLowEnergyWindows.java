@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * A feature extractor that extracts the Fraction Of Low Energy Windows from
  * window to window. This is a good measure of how much of a signal is quiet
@@ -36,11 +38,9 @@ public class FractionOfLowEnergyWindows extends FeatureExtractor {
 	 * offsets) of this feature.
 	 */
 	public FractionOfLowEnergyWindows() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Fraction Of Low Energy Windows";
-		String description = "The fraction of the last 100 windows that has an "
-				+ "RMS less than the mean RMS in the last 100 windows. "
-				+ "This can indicate how much of a signal is quiet "
-				+ "relative to the rest of the signal.";
+		String description = bundle.getString("the.fraction.of.the.last.100.windows.that.has.an.rms.less.than.the.mean.rms.in.the.last.100.windows.this.can.indicate.how.much.of.a.signal.is.quiet.relative.to.the.rest.of.the.signal");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition(name, description, is_sequential,
@@ -107,8 +107,9 @@ public class FractionOfLowEnergyWindows extends FeatureExtractor {
 	 */
 	public void setWindow(int n) throws Exception {
 		if (n < 2) {
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			throw new Exception(
-					"Fraction Of Low Energy Frames's window length must be 2 or greater");
+					bundle.getString("fraction.of.low.energy.frames.s.window.length.must.be.2.or.greater"));
 		} else {
 			number_windows = n;
 			dependencies = new String[number_windows];
@@ -130,8 +131,8 @@ public class FractionOfLowEnergyWindows extends FeatureExtractor {
 	 */
 	public String getElement(int index) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to FractionOfLowEnergyFrames:getElement");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.fractionoflowenergyframes.getelement"),index));
 		} else {
 			return Integer.toString(number_windows);
 		}
@@ -150,15 +151,16 @@ public class FractionOfLowEnergyWindows extends FeatureExtractor {
 	 */
 	public void setElement(int index, String value) throws Exception {
 		if (index != 0) {
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " sent to FractionOfLowEnergyFrames:setElement");
+			ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.sent.to.fractionoflowenergyframes.setelement"),index));
 		} else {
 			try {
 				int type = Integer.parseInt(value);
 				setWindow(type);
 			} catch (Exception e) {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 				throw new Exception(
-						"Length of Fraction Of Low Energy Frames's window must be an integer");
+						bundle.getString("length.of.fraction.of.low.energy.frames.s.window.must.be.an.integer"));
 			}
 		}
 	}

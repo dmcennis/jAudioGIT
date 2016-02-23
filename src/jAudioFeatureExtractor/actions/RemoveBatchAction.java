@@ -41,7 +41,7 @@ public class RemoveBatchAction extends AbstractAction {
 			action = ((JMenuItem) src).getActionCommand();
 		}
 
-		while (!e.getActionCommand().equals(action)) {
+		while (e.getActionCommand().compareTo(action)!=0) {
 			src = controller.removeBatch.getMenuComponent(++count);
 			if (src instanceof JMenuItem) {
 				action = ((JMenuItem) src).getActionCommand();

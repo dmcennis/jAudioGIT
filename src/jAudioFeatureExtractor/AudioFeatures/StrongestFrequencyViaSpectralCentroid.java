@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A feature extractor that finds the strongest frequency in Hz in a signal
@@ -32,9 +34,9 @@ public class StrongestFrequencyViaSpectralCentroid
 	 */
 	public StrongestFrequencyViaSpectralCentroid()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Strongest Frequency Via Spectral Centroid";
-		String description = "The strongest frequency component of a signal, in Hz, " +
-		                     "found via the spectral centroid.";
+		String description = bundle.getString("the.strongest.frequency.component.of.a.signal.in.hz.found.via.the.spectral.centroid");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition( name,

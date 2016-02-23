@@ -9,6 +9,7 @@ package jAudioFeatureExtractor;
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
 import javax.swing.table.DefaultTableModel;
+import java.util.ResourceBundle;
 
 
 /**
@@ -58,10 +59,12 @@ public class FeatureSelectorTableModel
 			Object[] row_contents = new Object[4];
 			row_contents[0] = new Boolean(feature_save_defaults[i]);
 			row_contents[1] = definitions[i].name;
-			if (definitions[i].dimensions > 0)
+			if (definitions[i].dimensions > 0) {
 				row_contents[2] = definitions[i].dimensions;
-			else
-				row_contents[2] = "variable";
+			}else {
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				row_contents[2] = bundle.getString("variable");
+			}
 			row_contents[3] = new Boolean(is_primary_feature[i]);
 			addRow(row_contents);
 		}

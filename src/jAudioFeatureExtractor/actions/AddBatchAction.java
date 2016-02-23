@@ -2,18 +2,18 @@ package jAudioFeatureExtractor.actions;
 
 import jAudioFeatureExtractor.AddBatchGUI;
 import jAudioFeatureExtractor.Controller;
-import jAudioFeatureExtractor.FeatureSelectorTableModel;
 import jAudioFeatureExtractor.ACE.DataTypes.Batch;
 import jAudioFeatureExtractor.Aggregators.Aggregator;
+import jAudioFeatureExtractor.OuterFrame;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
@@ -26,6 +26,8 @@ import javax.swing.JTextArea;
  */
 public class AddBatchAction extends AbstractAction {
 
+    static final ResourceBundle resourceBundle = OuterFrame.resourceBundle;
+
 	static final long serialVersionUID = 1;
 
 	private JTextArea window_length_text_field;
@@ -37,7 +39,7 @@ public class AddBatchAction extends AbstractAction {
 	 */
 	private JCheckBox save_window_features_check_box;
 
-	private JCheckBox save_overall_file_featurese_check_box;
+	private JCheckBox save_overall_file_features_check_box;
 
 	private JTextArea destinationFV;
 
@@ -77,7 +79,7 @@ public class AddBatchAction extends AbstractAction {
 			JOptionPane
 					.showMessageDialog(
 							null,
-							"Batches must contain files to record.  Add files to recording table.",
+                            OuterFrame.resourceBundle.getString("batches.must.contain.files.to.record.add.files.to.recording.table"),
 							"ERROR", JOptionPane.ERROR_MESSAGE);
 			good = false;
 		}
@@ -92,7 +94,7 @@ public class AddBatchAction extends AbstractAction {
 		// set the data model
 		b.setDataModel(controller.dm_);
 
-		// set fetures properly
+		// set features properly
 		// set boolean List
 		HashMap<String,Boolean> active = new HashMap<String,Boolean>();
 		HashMap<String,String[]> attributes = new HashMap<String,String[]>();
@@ -127,9 +129,8 @@ public class AddBatchAction extends AbstractAction {
 		} catch (NumberFormatException e1) {
 			good = false;
 			JOptionPane.showMessageDialog(null,
-					"window length must be an integer", "ERROR",
+                    resourceBundle.getString("window.length.must.be.an.integer"), "ERROR",
 					JOptionPane.ERROR_MESSAGE);
-			;
 		}
 		try {
 			windowOverlap = Double
@@ -137,7 +138,7 @@ public class AddBatchAction extends AbstractAction {
 		} catch (NumberFormatException e1) {
 			good = false;
 			JOptionPane.showMessageDialog(null,
-					"window overlap must be a double", "ERROR",
+                    resourceBundle.getString("window.overlap.must.be.a.double"), "ERROR",
 					JOptionPane.ERROR_MESSAGE);
 
 		}
@@ -146,13 +147,13 @@ public class AddBatchAction extends AbstractAction {
 			JOptionPane
 					.showMessageDialog(
 							null,
-							"Window Overlap must be equal or greater than 0 and less than 1.0",
+                            resourceBundle.getString("window.overlap.must.be.equal.or.greater.than.0.and.less.than.1.0"),
 							"ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 		if (windowLength <= 0) {
 			good = false;
 			JOptionPane.showMessageDialog(null,
-					"Window length must be greater than 0", "ERROR",
+                    resourceBundle.getString("window.length.must.be.greater.than.0"), "ERROR",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		
@@ -171,7 +172,7 @@ public class AddBatchAction extends AbstractAction {
 				controller.samplingRateAction.getSamplingRate(),
 				controller.normalise.isSelected(),
 				save_window_features_check_box.isSelected(),
-				save_overall_file_featurese_check_box.isSelected(),
+				save_overall_file_features_check_box.isSelected(),
 				controller.outputTypeAction.getSelected());
 
 		// set the destination
@@ -180,29 +181,29 @@ public class AddBatchAction extends AbstractAction {
 		if (good) {
 			addBatchGUI = new AddBatchGUI(controller, b);
 		} else {
-			JOptionPane.showMessageDialog(null, "Batch creation failed",
+			JOptionPane.showMessageDialog(null, resourceBundle.getString("batch.creation.failed"),
 					"ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	/**
-	 * Aquires references to GUI componenents needed to save settings for a batch.
+	 * Acquires references to GUI components needed to save settings for a batch.
 	 * 
 	 * @param saveWindow	Should features be saved from each window of data.
 	 * @param overall		Should features be saved from over the entire file.
-	 * @param windowLength	Size of the analysis windo in samples
+	 * @param windowLength	Size of the analysis window in samples
 	 * @param windowOverlap	Percent of the window that should be duplicated.
 	 */
 	public void setSettings(JCheckBox saveWindow, JCheckBox overall,
 			JTextArea windowLength, JTextArea windowOverlap) {
 		save_window_features_check_box = saveWindow;
-		save_overall_file_featurese_check_box = overall;
+		save_overall_file_features_check_box = overall;
 		window_length_text_field = windowLength;
 		window_overlap_fraction_text_field = windowOverlap;
 	}
 
 	/**
-	 * Aquires references to GUI componenents needed to save settings for a batch.
+	 * Acquires references to GUI components needed to save settings for a batch.
 	 * 
 	 * @param FV	TextArea containing the location to save feature values.
 	 * @param FK	TextArea containing the location to save feature definitions.

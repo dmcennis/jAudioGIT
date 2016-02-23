@@ -12,6 +12,7 @@ import jAudioFeatureExtractor.GeneralTools.Statistics;
 import jAudioFeatureExtractor.GeneralTools.StringMethods;
 
 import java.io.DataOutputStream;
+import java.util.ResourceBundle;
 
 import org.oc.ocvolume.dsp.featureExtraction;
 import org.oc.ocvolume.dsp.fft;
@@ -35,7 +36,9 @@ public class MFCC extends Aggregator {
 	 * Constructs a MFCC aggregator
 	 */
 	public MFCC() {
-		metadata = new AggregatorDefinition("MFCC","Treats the window-by-window data as a 16kHz signal",true,null);
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
+		metadata = new AggregatorDefinition("MFCC", bundle.getString("treats.the.window.by.window.data.as.a.16khz.signal"),true,null);
 	}
 
 	@Override
@@ -110,10 +113,10 @@ public class MFCC extends Aggregator {
 
 	@Override
 	public void setSource(FeatureExtractor feature) {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		FeatureDefinition source = feature.getFeatureDefinition();
 		definition = new FeatureDefinition("MFCC: " + source.name,
-				source.description + System.getProperty("line.separator")
-						+ "MFCC of each dimension of this feature",
+				String.format(bundle.getString("s.nmfcc.of.each.dimension.of.this.feature1"),source.description),
 				source.is_sequential, source.dimensions * 4);
 
 	}

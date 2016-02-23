@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.ResourceBundle;
 
 
 /**
@@ -88,8 +89,9 @@ public class MIDIFrame
 	 */
 	public MIDIFrame()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		// Set window title
-		setTitle("Load and Play MIDI Files");
+		setTitle(bundle.getString("load.and.play.midi.files"));
 		Color blue = new Color((float)0.75,(float)0.85,(float)1.0);
 		this.getContentPane().setBackground(blue);
 
@@ -115,13 +117,13 @@ public class MIDIFrame
 		midi_file_name_text_area.setRows(1);
 
 		// Initialize buttons
-		load_midi_file_button = new JButton("Load MID File");
+		load_midi_file_button = new JButton(bundle.getString("load.midi.file"));
 		load_midi_file_button.addActionListener(this);
-		play_midi_button = new JButton("Play MIDI");
+		play_midi_button = new JButton(bundle.getString("play.midi"));
 		play_midi_button.addActionListener(this);
-		stop_playing_midi_button = new JButton("Stop Playback");
+		stop_playing_midi_button = new JButton(bundle.getString("stop.playback"));
 		stop_playing_midi_button.addActionListener(this);
-		done_button = new JButton("Done");
+		done_button = new JButton(bundle.getString("done"));
 		done_button.addActionListener(this);
 
 		// Add elements
@@ -130,7 +132,7 @@ public class MIDIFrame
 		setLayout(new GridLayout(6, 2, horizontal_gap, vertical_gap));
 		add(load_midi_file_button);
 		add(new JLabel(""));
-		add(new JLabel("Currently Loaded File Name:"));
+		add(new JLabel(bundle.getString("currently.loaded.file.name")));
 		add(midi_file_name_text_area);
 		add(new JLabel(""));
 		add(new JLabel(""));
@@ -212,11 +214,13 @@ public class MIDIFrame
 				}
 				catch (Exception e)
 				{
-					JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);							
+					JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-			else
-				JOptionPane.showMessageDialog(null, "The selected file does not exist.", "ERROR", JOptionPane.ERROR_MESSAGE);
+			else {
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                JOptionPane.showMessageDialog(null, bundle.getString("the.selected.file.does.not.exist"), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
 		}
 	}
 
@@ -228,17 +232,18 @@ public class MIDIFrame
 	 */
 	private void playMIDI()
 	{
-		try
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        try
 		{
 			if (midi_sequencer != null)
 				stopMIDIPlayback();
 			if (midi_sequence == null)
-				throw new Exception("No MIDI file has been loaded yet.");
+				throw new Exception(bundle.getString("no.midi.file.has.been.loaded.yet"));
 			midi_sequencer = MIDIMethodsPlayback.playMIDISequence(midi_sequence);
 		}
 		catch (Exception e)
 		{
-			JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);							
+			JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

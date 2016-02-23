@@ -21,6 +21,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * A peak based calculation of smoothness. Caculated by evaluting the log of a
  * partial minus the average of the log of the surrounding partials. Is based
@@ -38,10 +40,9 @@ public class HarmonicSpectralSmoothness extends FeatureExtractor {
 	 *
 	 */
 	public HarmonicSpectralSmoothness() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Peak Based Spectral Smoothness";
-		String description = "Peak Based Spectral Smoothness is calculated from partials, not frequency bins. It is implemented accortding to McAdams 99 "
-				+ System.getProperty("line.separator")
-				+ System.getProperty("line.separator") + "McAdams, S. 1999. ";
+		String description = bundle.getString("peak.based.spectral.smoothness.is.calculated.from.partials.not.frequency.bins.it.is.implemented.accortding.to.mcadams.99.n.nmcadams.s.1999");
 		definition = new FeatureDefinition(name, description, true, 1);
 		dependencies = new String[] { "Peak Detection" };
 		offsets = new int[] { 0 };

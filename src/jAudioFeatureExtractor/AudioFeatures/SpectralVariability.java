@@ -8,6 +8,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 
 /**
  * A feature extractor that extracts the SpectralVariance. This is a measure
@@ -29,10 +31,9 @@ public class SpectralVariability
 	 */
 	public SpectralVariability()
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Spectral Variability";
-		String description = "The standard deviation of the magnitude spectrum. " +
-		                     "This is a measure of the variance of a signal's " +
-							 "magnitude spectrum.";
+		String description = bundle.getString("the.standard.deviation.of.the.magnitude.spectrum.this.is.a.measure.of.the.variance.of.a.signal.s.magnitude.spectrum");
 		boolean is_sequential = true;
 		int dimensions = 1;
 		definition = new FeatureDefinition( name,

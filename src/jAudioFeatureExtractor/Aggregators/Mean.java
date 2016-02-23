@@ -11,6 +11,7 @@ import jAudioFeatureExtractor.AudioFeatures.FeatureExtractor;
 import jAudioFeatureExtractor.GeneralTools.StringMethods;
 
 import java.io.DataOutputStream;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 /**
@@ -28,7 +29,8 @@ public class Mean extends Aggregator {
 	int feature;
 	
 	public Mean(){
-		metadata = new AggregatorDefinition("Mean","This is the overall average over all windows.",true,null);
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+		metadata = new AggregatorDefinition("Mean", bundle.getString("this.is.the.overall.average.over.all.windows"),true,null);
 	}
 
 	/**
@@ -69,10 +71,11 @@ public class Mean extends Aggregator {
 
 	@Override
 	public void setSource(FeatureExtractor feature) {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+
 		FeatureDefinition this_def = feature.getFeatureDefinition();
 		definition = new FeatureDefinition(this_def.name + " Overall Average",
-				this_def.description + System.getProperty("line.separator")
-						+ "This is the overall average over all windows.",
+				String.format(bundle.getString("s.nthis.is.the.overall.average.over.all.windows2"),this_def.description),
 				this_def.is_sequential, this_def.dimensions);
 		
 	}

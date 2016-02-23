@@ -1,15 +1,13 @@
 package jAudioFeatureExtractor.actions;
 
 import jAudioFeatureExtractor.Controller;
-import jAudioFeatureExtractor.FeatureSelectorPanel;
-import jAudioFeatureExtractor.RecordingSelectorPanel;
-import jAudioFeatureExtractor.RecordingsTableModel;
-import jAudioFeatureExtractor.ACE.XMLParsers.FileFilterXML;
 import jAudioFeatureExtractor.DataTypes.RecordingInfo;
 import jAudioFeatureExtractor.jAudioTools.AudioSamples;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.text.Collator;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -152,8 +150,8 @@ public class AddRecordingAction extends AbstractAction {
 							"ERROR", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "The selected file "
-						+ toBeAdded[i].getName() + " does not exist.", "ERROR",
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				JOptionPane.showMessageDialog(null, String.format(bundle.getString("the.selected.file.s.does.not.exist"),toBeAdded[i].getName()), "ERROR",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -181,8 +179,8 @@ public class AddRecordingAction extends AbstractAction {
 				String current_path = temp_recording_list[i].file_path;
 				for (int j = i + 1; j < temp_recording_list.length; j++)
 					if (temp_recording_list[j] != null)
-						if (current_path
-								.equals(temp_recording_list[j].file_path))
+						if (Collator.getInstance().compare(current_path
+								,temp_recording_list[j].file_path)==0)
 							temp_recording_list[j] = null;
 			}
 

@@ -2,6 +2,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 
+import java.util.ResourceBundle;
+
 /**
  * @author Daniel McEnnis
  *
@@ -39,8 +41,9 @@ public class HarmonicSpectralCentroid extends FeatureExtractor {
 	 *
 	 */
 	public HarmonicSpectralCentroid() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "Partial Based Spectral Centroid";
-		String description = "Spectral Centroid calculated based on the center of mass of partials instead of center of mass of bins.";
+		String description = bundle.getString("spectral.centroid.calculated.based.on.the.center.of.mass.of.partials.instead.of.center.of.mass.of.bins");
 		definition = new FeatureDefinition(name, description, true, 1);
 		dependencies = new String[] { "Peak Detection" };
 		offsets = new int[] { 0 };

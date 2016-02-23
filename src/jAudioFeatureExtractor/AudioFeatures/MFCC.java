@@ -3,6 +3,8 @@ package jAudioFeatureExtractor.AudioFeatures;
 import jAudioFeatureExtractor.ACE.DataTypes.FeatureDefinition;
 import org.oc.ocvolume.dsp.featureExtraction;
 
+import java.util.ResourceBundle;
+
 /**
  * Utilizes the MFCC code from the OrangeCow Volume project.
  * <p>
@@ -19,9 +21,10 @@ public class MFCC extends FeatureExtractor {
 	 * Construct a MFCC object, setting definition, dependencies, and offsets.
 	 */
 	public MFCC() {
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		String name = "MFCC";
-		String description = "MFCC calculations based upon Orange Cow code";
-		String[] attributes = new String[]{"Number of Coeffecients"};
+		String description = bundle.getString("mfcc.calculations.based.upon.orange.cow.code");
+		String[] attributes = new String[]{bundle.getString("number.of.coeffecients")};
 		definition = new FeatureDefinition(name, description, true, 13,attributes);
 		dependencies = new String[] { "Magnitude Spectrum" };
 		offsets = new int[] { 0 };
@@ -76,8 +79,8 @@ public class MFCC extends FeatureExtractor {
 		case 0:
 			return Integer.toString(fe.numCepstra);
 		default:
-			throw new Exception("INTERNAL ERROR: invalid index " + index
-					+ " passed to LPC:getElement()");
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+			throw new Exception(String.format(bundle.getString("internal.error.invalid.index.d.passed.to.lpc.getelement3"),index));
 		}
 	}
 
@@ -96,12 +99,14 @@ public class MFCC extends FeatureExtractor {
 					parent.updateTable();
 				}
 			} catch (NumberFormatException e) {
-				throw new Exception("Lambda value must be a double");
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				throw new Exception(bundle.getString("lambda.value.must.be.a.double"));
 			}
 			break;
 		default:
+            ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			throw new Exception(
-					"INTERNAL ERROR: invalid index passed to LPC:setElement");
+                    bundle.getString("internal.error.invalid.index.passed.to.lpc.setelement1"));
 		}
 	}
 

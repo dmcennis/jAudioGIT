@@ -8,6 +8,7 @@
 package jAudioFeatureExtractor.jAudioTools;
 
 import javax.sound.sampled.*;
+import java.util.ResourceBundle;
 
 
 /**
@@ -60,16 +61,8 @@ public class AudioEventLineListener
 		else
 			line_instance = event_overview.substring(dollar_location);
 
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		// Output data
-		System.out.print("---------------------------------------------\n");
-		System.out.print("LINE EVENT REPORT:\n");
-		System.out.print("---------------------------------------------\n");
-		System.out.print("EVENT TYPE: " + event_type + "\n");
-		System.out.print("LINE TYPE: " + line_type + "\n");
-		System.out.print("LINE INSTANCE: " + line_instance + "\n");
-		System.out.print("EVENT POSITION (in sample frames): " + event_position + "\n");
-		// System.out.print("LINE DETAILS: " + line_info + "\n");
-		// System.out.print("OVERVIEW: " + event.toString() + "\n");
-		System.out.print("---------------------------------------------\n\n");
+		System.out.print(String.format(bundle.getString("nline.event.report.n.nevent.type.s.nline.type.s.nline.instance.s.nevent.position.in.sample.frames.s.n.n.n"),event_type,line_type,line_instance,event_position));
 	}
 }

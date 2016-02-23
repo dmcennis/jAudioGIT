@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ResourceBundle;
 
 /**
  * A window that allows users to select audio files to extract features from,
@@ -193,7 +194,8 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 		setLayout(new BorderLayout(horizontal_gap, vertical_gap));
 
 		// Add an overall title for this panel
-		add(new JLabel("RECORDINGS:"), BorderLayout.NORTH);
+		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+		add(new JLabel(bundle.getString("recordings")), BorderLayout.NORTH);
 
 		// Set up the list of recordings (initially blank)
 		recordings_panel = null;
@@ -203,16 +205,16 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 		JPanel button_panel = new JPanel(new GridLayout(4, 2, horizontal_gap,
 				vertical_gap));
 		button_panel.setBackground(blue);
-		add_recordings_button = new JButton("Add Recordings");
+		add_recordings_button = new JButton(bundle.getString("add.recordings"));
 		add_recordings_button.addActionListener(controller.addRecordingsAction);
 		button_panel.add(add_recordings_button);
 
-		delete_recordings_button = new JButton("Delete Recordings");
+		delete_recordings_button = new JButton(bundle.getString("delete.recordings"));
 		delete_recordings_button
 				.addActionListener(controller.removeRecordingsAction);
 		button_panel.add(delete_recordings_button);
 
-		values_save_path_button = new JButton("Feature Values Save Path:");
+		values_save_path_button = new JButton(bundle.getString("feature.values.save.path"));
 		button_panel.add(values_save_path_button);
 		values_save_path_button.addActionListener(this);
 		values_save_path_text_field = new JTextArea("feature_values_1.xml", 1,
@@ -220,7 +222,7 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 		button_panel.add(values_save_path_text_field);
 
 		definitions_save_path_button = new JButton(
-				"Feature Definitions Save Path:");
+                bundle.getString("feature.definitions.save.path"));
 		button_panel.add(definitions_save_path_button);
 		definitions_save_path_button.addActionListener(this);
 		definitions_save_path_text_field = new JTextArea(
@@ -306,12 +308,12 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 							.getName(), files_to_add[i].getPath(),
 							audio_samples, false);
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, e.getMessage(),
+					JOptionPane.showMessageDialog(null, e.getLocalizedMessage(),
 							"ERROR", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "The selected file "
-						+ files_to_add[i].getName() + " does not exist.",
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                JOptionPane.showMessageDialog(null, String.format(bundle.getString("the.selected.file.s.does.not.exist"),files_to_add[i].getName()),
 						"ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -340,7 +342,7 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 				for (int j = i + 1; j < temp_recording_list.length; j++)
 					if (temp_recording_list[j] != null)
 						if (current_path
-								.equals(temp_recording_list[j].file_path))
+								.compareTo(temp_recording_list[j].file_path)==0)
 							temp_recording_list[j] = null;
 			}
 
@@ -442,7 +444,8 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 					row_clicked[0] = recordings_table.rowAtPoint(event
 							.getPoint());
 					viewRecordingInformation();
-					System.out.println("Clicked");
+                    ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                    System.out.println(bundle.getString("clicked"));
 				}
 			}
 		});
@@ -462,9 +465,8 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(null, data, "FILE INFORMATION",
 						JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
-				String message = "Could not display file information for file "
-						+ controller.dm_.recordingInfo[selected_rows[i]].file_path
-						+ "\n" + e.getMessage();
+				ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+				String message = String.format(bundle.getString("could.not.display.file.information.for.file.s.n.s"), controller.dm_.recordingInfo[selected_rows[i]].file_path,e.getLocalizedMessage());
 				JOptionPane.showMessageDialog(null, message, "ERROR",
 						JOptionPane.ERROR_MESSAGE);
 			}
@@ -477,11 +479,12 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 	 * the first one. Any previous playback is stopped.
 	 */
 	private void playRecordingDirectly() {
-		try {
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        try {
 			// Get the file selected for playback
 			int selected_row = recordings_table.getSelectedRow();
 			if (selected_row < 0)
-				throw new Exception("No file selcected for playback.");
+				throw new Exception(bundle.getString("no.file.selcected.for.playback"));
 			File play_file = new File(
 					controller.dm_.recordingInfo[selected_row].file_path);
 
@@ -505,14 +508,12 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 						.playAudioInputStreamInterruptible(audio_input_stream,
                                 source_data_line);
 			} catch (UnsupportedAudioFileException ex) {
-				throw new Exception("File " + play_file.getName()
-						+ " has an unsupported audio format.");
+				throw new Exception(String.format(bundle.getString("file.s.has.an.unsupported.audio.format"),play_file.getName()));
 			} catch (Exception ex) {
-				throw new Exception("File " + play_file.getName()
-						+ " is not playable.\n" + ex.getMessage());
+				throw new Exception(String.format(bundle.getString("file.s.is.not.playable.n"),play_file.getName(), ex.getLocalizedMessage()));
 			}
 		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR",
+			JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "ERROR",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -523,11 +524,12 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 	 * plays only the first one. Any previous playback is stopped.
 	 */
 	private void playRecordingSamples() {
-		try {
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+        try {
 			// Get the RecordingInfo selected for playback
 			int selected_row = recordings_table.getSelectedRow();
 			if (selected_row < 0)
-				throw new Exception("No file selcected for playback.");
+				throw new Exception(bundle.getString("no.file.selected.for.playback"));
 			RecordingInfo selected_audio = controller.dm_.recordingInfo[selected_row];
 
 			// Perform playback of the file
@@ -563,14 +565,12 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 						.playAudioInputStreamInterruptible(audio_input_stream,
                                 source_data_line);
 			} catch (UnsupportedAudioFileException ex) {
-				throw new Exception("File " + selected_audio.file_path
-						+ " has an unsupported audio format.");
+				throw new Exception(String.format(bundle.getString("file.s.has.an.unsupported.audio.format"),selected_audio.file_path));
 			} catch (Exception ex) {
-				throw new Exception("File " + selected_audio.file_path
-						+ " is not playable.\n" + ex.getMessage());
+				throw new Exception(String.format(bundle.getString("file.s.is.not.playable.n.s1"),selected_audio.file_path,ex.getLocalizedMessage()));
 			}
 		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR",
+			JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "ERROR",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -611,9 +611,9 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 		// Remove anything on the left side of the panel
 		if (recordings_table != null)
 			remove(recordings_table);
-
+        ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 		// Initialize recordings_table_model and recordings_table
-		Object[] column_names = { new String("Name"), new String("Path") };
+		Object[] column_names = { new String(bundle.getString("name")), new String(bundle.getString("path")) };
 		int number_recordings = 0;
 		if (controller.dm_.recordingInfo != null)
 			number_recordings = controller.dm_.recordingInfo.length;
@@ -691,7 +691,7 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 			if (ext == null) {
 				path += ".xml";
 				to_save_to = new File(path);
-			} else if (!ext.equals(".xml")) {
+			} else if (ext.compareTo(".xml")!=0) {
 				path = jAudioFeatureExtractor.GeneralTools.StringMethods
 						.removeExtension(path)
 						+ ".xml";
@@ -701,10 +701,11 @@ public class RecordingSelectorPanel extends JPanel implements ActionListener {
 			// See if user wishes to overwrite if a file with the same name
 			// exists
 			if (to_save_to.exists()) {
-				int overwrite = JOptionPane
+                ResourceBundle bundle = ResourceBundle.getBundle("Translations");
+                int overwrite = JOptionPane
 						.showConfirmDialog(
 								null,
-								"This file already exists.\nDo you wish to overwrite it?",
+                                bundle.getString("this.file.already.exists.ndo.you.wish.to.overwrite.it3"),
 								"WARNING", JOptionPane.YES_NO_OPTION);
 				if (overwrite != JOptionPane.YES_OPTION)
 					path = null;
