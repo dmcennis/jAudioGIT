@@ -30,7 +30,7 @@ import org.multihelp.HelpViewer;
 /**
  * FileNode
  * 
- * Base abstract class that represents a model of a help system resource.
+ * Base abstract class that represents a model of a org.multihelp system resource.
  *
  * @author Daniel McEnnis
  */

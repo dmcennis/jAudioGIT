@@ -48,7 +48,7 @@ public class ExternalNode extends FileNode {
 	private static final long serialVersionUID = 3159932910889236328L;
 
 	/**
-	 * Load the content of this external resource into the help viewer.
+	 * Load the content of this external resource into the org.multihelp viewer.
 	 * 
 	 * @see org.multihelp.file.FileNode#setPage(org.multihelp.HelpViewer)
 	 */

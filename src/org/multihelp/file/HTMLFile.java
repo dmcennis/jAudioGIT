@@ -140,7 +140,7 @@ public class HTMLFile extends FileNode {
 			ret.append("<ul></body></html>");
 			return ret.toString();
 		}else if(fileLocation.isDirectory()){
-			return "<html><body>ERROR: Empty directory in the help system.</body></html>";
+			return "<html><body>ERROR: Empty directory in the org.multihelp system.</body></html>";
 		}else{
 			return "<html><body>INTERNAL ERROR: Loading non-existant file</body></html>";
 		}
