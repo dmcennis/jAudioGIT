@@ -107,6 +107,7 @@ public class DataModel {
 		metaExtractors.add(new StandardDeviation());
 		metaExtractors.add(new Derivative(new Mean()));
 		metaExtractors.add(new Derivative(new StandardDeviation()));
+		metaExtractors.add(new AutocorrelationHistogram());
 
 		LinkedList<FeatureExtractor> extractors = new LinkedList<FeatureExtractor>();
 		LinkedList<Boolean> def = new LinkedList<Boolean>();

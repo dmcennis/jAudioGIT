@@ -48,7 +48,6 @@ public class Mean extends MetaFeatureFactory {
 		} else {
 			tmp.fe_ = fe;
 		}
-			tmp.fe_ = fe;
 		ResourceBundle bundle = ResourceBundle.getBundle("Translations");
 			String name = "Running Mean of " + fe.getFeatureDefinition().name;
 			String description = String.format(bundle.getString("running.mean.of.s.s"),fe.getFeatureDefinition().name,fe.getFeatureDefinition().description);
