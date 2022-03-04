@@ -1,5 +1,5 @@
 /*
-Copyright � 1999 CERN - European Organization for Nuclear Research.
+Copyright © 1999 CERN - European Organization for Nuclear Research.
 Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose 
 is hereby granted without fee, provided that the above copyright notice appear in all copies and 
 that both that copyright notice and this permission notice appear in supporting documentation. 
@@ -562,12 +562,12 @@ System.out.println("\n"+compose(parts3));
 
 DoubleMatrix2D A = ascending(2,2);
 DoubleMatrix2D B = descending(2,2);
-DoubleMatrix2D _ = null;
+DoubleMatrix2D X = null;
 
 DoubleMatrix2D[][] parts4 = 
 {
-	{ A, _, A, _ },
-	{ _, A, _, B }
+	{ A, X, A, X },
+	{ X, A, X, B }
 };
 System.out.println("\n"+compose(parts4));
 //System.out.println("\n"+cern.colt.matrixpattern.Converting.toHTML(make(parts4).toString()));
@@ -580,13 +580,13 @@ public void demo2() {
 System.out.println("\n\n");
 DoubleMatrix2D matrix;
 DoubleMatrix2D A,B,C,D,E,F,G;
-DoubleMatrix2D _ = null;
+DoubleMatrix2D X = null;
 A = make(2,2,1); B = make (4,4,2); C = make(4,3,3); D = make (2,2,4);
 DoubleMatrix2D[][] parts1 = 
 {
-	{ _, A, _ },
-	{ B, _, C },
-	{ _, D, _ }
+	{ X, A, X },
+	{ B, X, C },
+	{ X, D, X }
 };
 matrix = compose(parts1);
 System.out.println("\n"+matrix);
